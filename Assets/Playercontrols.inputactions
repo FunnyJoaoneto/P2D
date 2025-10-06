@@ -1,0 +1,99 @@
+{
+    "version": 1,
+    "name": "Playercontrols",
+    "maps": [
+        {
+            "name": "GamePlay",
+            "id": "bd8540d1-3222-4c56-9f76-ee654c37bdb9",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "52e87588-540e-4d4d-a7af-1d72ef5b63bd",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "0c3c9d36-23d2-4226-a2e8-ead44bcff148",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "cc234301-404b-40b2-9ba9-2b74ebdae0eb",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ef73e1a-c6c0-4c88-bac3-28a0556f92bc",
+                    "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "edc2e821-5bca-49a0-bb5a-e4a57c5b53b6",
+                    "path": "<HID::Sony Interactive Entertainment PC/PS3/Android Gamepad>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3280cc00-e4f5-4cb7-8876-fa5ad4462e05",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e67fe65a-2518-4cdf-9861-7c85a7f4077f",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5f950bc5-d9db-4ed9-8619-109011f8e574",
+                    "path": "<HID::Sony Interactive Entertainment PC/PS3/Android Gamepad>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
