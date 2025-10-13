@@ -23,14 +23,14 @@ public class PlayerController : MonoBehaviour
         var actions = playerInput.actions;
         actions["Move"].performed += ctx => {
             moveInput = ctx.ReadValue<Vector2>();
-            Debug.Log($"{gameObject.name} Move: {moveInput}");
+            //Debug.Log($"{gameObject.name} Move: {moveInput}");
         };
         actions["Move"].canceled += ctx => {
             moveInput = Vector2.zero;
-            Debug.Log($"{gameObject.name} Move canceled");
+            //Debug.Log($"{gameObject.name} Move canceled");
         };
         actions["Jump"].performed += ctx => {
-            Debug.Log($"{gameObject.name} Jump pressed");
+            //Debug.Log($"{gameObject.name} Jump pressed");
             Jump();
         };
     }

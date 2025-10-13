@@ -20,11 +20,17 @@ public class PlayerSpawnManager : MonoBehaviour
 
     private void OnPlayerJoined(PlayerInput player)
     {
+        Debug.Log($"Player joined: {player.name}, device: {player.devices.Count} devices");
+
         // ✅ Set spawn position
         if (spawnPoints != null && spawnPoints.Length > 0)
         {
             Transform spawn = spawnPoints[nextSpawnIndex % spawnPoints.Length];
             player.transform.position = spawn.position;
+
+            var respawn = player.GetComponent<PlayerRespawn>();
+            if (respawn != null)
+                respawn.SetSpawnPoint(spawn.position);
         }
 
         // ✅ Assign a color

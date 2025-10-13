@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 512886218288603719}
   - component: {fileID: 299585397989469277}
   - component: {fileID: 9042148552116888769}
+  - component: {fileID: -2892948482663150535}
   m_Layer: 0
   m_Name: Player1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -212,3 +213,15 @@ MonoBehaviour:
   moveSpeed: 5
   jumpForce: 7
   playerInput: {fileID: 299585397989469277}
+--- !u!114 &-2892948482663150535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520645146781339332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d181e572b681854187180daa7d71ea3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerRespawn
