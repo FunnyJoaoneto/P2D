@@ -10,6 +10,8 @@ public class PlayerSpawnManager : MonoBehaviour
     {
         var pim = GetComponent<PlayerInputManager>();
         pim.onPlayerJoined += OnPlayerJoined;
+
+        Debug.Log("Available control schemes: " + string.Join(", ", pim.playerPrefab.GetComponent<PlayerInput>().actions.controlSchemes));
     }
 
     private void OnDisable()
@@ -21,6 +23,7 @@ public class PlayerSpawnManager : MonoBehaviour
     private void OnPlayerJoined(PlayerInput player)
     {
         Debug.Log($"Player joined: {player.name}, device: {player.devices.Count} devices");
+        Debug.Log($"{player.name} joined with control scheme: {player.currentControlScheme}");
 
         // ✅ Set spawn position
         if (spawnPoints != null && spawnPoints.Length > 0)
