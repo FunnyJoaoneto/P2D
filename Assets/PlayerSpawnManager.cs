@@ -3,65 +3,83 @@ using UnityEngine.InputSystem;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
-    [SerializeField] private Transform[] spawnPoints; // assign in Inspector
+    [Header("Spawn Points")]
+    [SerializeField] private Transform[] spawnPoints;
+
+    [Header("Player Prefabs")]
+    [SerializeField] private GameObject lightGuyPrefab;
+    [SerializeField] private GameObject nightGirlPrefab;
+
     private int nextSpawnIndex = 0;
+    private int nextPrefabIndex = 0;
+
+    private PlayerInputManager pim;
+
+    private void Awake()
+    {
+        pim = GetComponent<PlayerInputManager>();
+    }
 
     private void OnEnable()
     {
-        var pim = GetComponent<PlayerInputManager>();
         pim.onPlayerJoined += OnPlayerJoined;
+        pim.onPlayerLeft += OnPlayerLeft;
 
-        Debug.Log("Available control schemes: " + string.Join(", ", pim.playerPrefab.GetComponent<PlayerInput>().actions.controlSchemes));
+        // Set the first prefab to use
+        pim.playerPrefab = GetNextPrefab();
     }
 
     private void OnDisable()
     {
-        var pim = GetComponent<PlayerInputManager>();
         pim.onPlayerJoined -= OnPlayerJoined;
+        pim.onPlayerLeft -= OnPlayerLeft;
     }
 
     private void OnPlayerJoined(PlayerInput player)
     {
-        Debug.Log($"Player joined: {player.name}, device: {player.devices.Count} devices");
-        Debug.Log($"{player.name} joined with control scheme: {player.currentControlScheme}");
+        Debug.Log($"✅ Player joined: {player.name} ({player.currentControlScheme})");
 
-        // ✅ Set spawn position
-        if (spawnPoints != null && spawnPoints.Length > 0)
+        // Set spawn point
+        if (spawnPoints.Length > 0)
         {
             Transform spawn = spawnPoints[nextSpawnIndex % spawnPoints.Length];
             player.transform.position = spawn.position;
+            nextSpawnIndex++;
 
             var respawn = player.GetComponent<PlayerRespawn>();
             if (respawn != null)
                 respawn.SetSpawnPoint(spawn.position);
         }
 
-        // ✅ Assign a color
-        var renderer = player.GetComponentInChildren<SpriteRenderer>();
-        if (renderer != null)
-        {
-            Color[] colors = { Color.red, Color.blue, Color.green, Color.yellow };
-            renderer.color = colors[nextSpawnIndex % colors.Length];
-        }
-
-        // ✅ Prevent collisions between all players
+        // Ignore collisions with other players
         var playerCollider = player.GetComponent<Collider2D>();
         if (playerCollider != null)
         {
-            var allPlayers = Object.FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
-            foreach (var other in allPlayers)
+            foreach (var other in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
             {
                 if (other != player)
                 {
                     var otherCollider = other.GetComponent<Collider2D>();
                     if (otherCollider != null)
-                    {
                         Physics2D.IgnoreCollision(playerCollider, otherCollider, true);
-                    }
                 }
             }
         }
 
-        nextSpawnIndex++;
+        // Prepare next prefab for next player that joins
+        pim.playerPrefab = GetNextPrefab();
+    }
+
+    private void OnPlayerLeft(PlayerInput player)
+    {
+        Debug.Log($"❌ Player left: {player.name}");
+    }
+
+    private GameObject GetNextPrefab()
+    {
+        // Alternate or choose based on your logic
+        GameObject prefab = (nextPrefabIndex % 2 == 0) ? lightGuyPrefab : nightGirlPrefab;
+        nextPrefabIndex++;
+        return prefab;
     }
 }
