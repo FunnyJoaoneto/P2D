@@ -1161,6 +1161,8 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 1853791831}
   - {fileID: 1764562044}
+  lightGuyPrefab: {fileID: 1520645146781339332, guid: 51f12e2b88a49b64a92d0e2df504562d, type: 3}
+  nightGirlPrefab: {fileID: 1520645146781339332, guid: c690bc5e63012104598385714a20db19, type: 3}
 --- !u!1 &1853791830
 GameObject:
   m_ObjectHideFlags: 0
