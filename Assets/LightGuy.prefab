@@ -244,19 +244,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 10
-  jumpForce: 15
+  jumpForce: 20
   maxJumps: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  fanLayer:
+    serializedVersion: 2
+    m_Bits: 64
   groundCheckPos: {fileID: 8079087717262962211}
   groundCheckSize: {x: 2.3, y: 0.4}
   baseGravity: 2
   fallSpeedMultiplier: 2
   maxFallSpeed: 20
-  canGlide: 0
+  lightPlayer: 1
   glideGravityScale: 0.3
   glideUpBoost: 2
+  isGliding: 0
   playerInput: {fileID: 299585397989469277}
 --- !u!114 &-2892948482663150535
 MonoBehaviour:
