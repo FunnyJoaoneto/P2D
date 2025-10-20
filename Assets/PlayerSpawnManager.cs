@@ -10,6 +10,10 @@ public class PlayerSpawnManager : MonoBehaviour
     [SerializeField] private GameObject lightGuyPrefab;
     [SerializeField] private GameObject nightGirlPrefab;
 
+    [Header("Health Bars")]
+    [SerializeField] private HealthBarUI lightBar;
+    [SerializeField] private HealthBarUI nightBar;
+
     private int nextSpawnIndex = 0;
     private int nextPrefabIndex = 0;
 
@@ -66,8 +70,33 @@ public class PlayerSpawnManager : MonoBehaviour
             }
         }
 
-        // Prepare next prefab for next player that joins
-        pim.playerPrefab = GetNextPrefab();
+        var hc = player.GetComponent<HealthController>();
+        if (hc != null)
+        {
+            HealthBarUI targetBar = null;
+
+            if (player.name.Contains("LightGuy"))
+                targetBar = lightBar;
+            else if (player.name.Contains("NightGirl"))
+                targetBar = nightBar;
+
+            if (targetBar != null)
+            {
+                targetBar.SetTarget(hc);
+                Debug.Log($"Linked {targetBar.name} to {player.name}");
+            }
+            else
+            {
+                Debug.LogWarning($"No HealthBar found for {player.name}");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"No HealthController found on {player.name}");
+        }
+
+            // Prepare next prefab for next player that joins
+            pim.playerPrefab = GetNextPrefab();
     }
 
     private void OnPlayerLeft(PlayerInput player)

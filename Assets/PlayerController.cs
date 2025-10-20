@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     // args: (player, isGliding)
 
     private Rigidbody2D rb;
+    private HealthController health;
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
 
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        health = GetComponent<HealthController>();
         if (!playerInput) playerInput = GetComponent<PlayerInput>();
     }
 
@@ -90,7 +92,33 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        CheckIlluminationEffects();
         Gravity();
+    }
+
+    private void CheckIlluminationEffects()
+    {
+        if (health == null) return;
+
+        bool bright = IlluminationManager.Instance.IsPointBright(transform.position);
+        float damagePerSecond = 10f;
+        float healPerSecond = 5f;
+        //Debug.Log($"Player at {transform.position} is in {(bright ? "bright" : "dark")} area.");
+
+        if (lightPlayer)
+        {
+            if (bright)
+                health.AddHealth(healPerSecond * Time.deltaTime);
+            else
+                health.TakeDamage(damagePerSecond * Time.deltaTime);
+        }
+        else
+        {
+            if (bright)
+                health.TakeDamage(damagePerSecond * Time.deltaTime);
+            else
+                health.AddHealth(healPerSecond * Time.deltaTime);
+        }
     }
 
     private void Gravity()

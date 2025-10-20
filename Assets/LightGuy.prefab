@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 299585397989469277}
   - component: {fileID: 9042148552116888769}
   - component: {fileID: -2892948482663150535}
+  - component: {fileID: -3172632827663703331}
   m_Layer: 0
   m_Name: LightGuy
   m_TagString: Player
@@ -249,9 +250,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  fanLayer:
-    serializedVersion: 2
-    m_Bits: 64
   groundCheckPos: {fileID: 8079087717262962211}
   groundCheckSize: {x: 2.3, y: 0.4}
   baseGravity: 2
@@ -274,6 +272,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d181e572b681854187180daa7d71ea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRespawn
+--- !u!114 &-3172632827663703331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520645146781339332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85bd620b7a4046741b15944076060ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthController
+  currentHealth: 100
+  maximumHealth: 100
 --- !u!1 &7586377688441383014
 GameObject:
   m_ObjectHideFlags: 0
