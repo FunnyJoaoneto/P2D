@@ -99,7 +99,6 @@ public class PlayerController : MonoBehaviour
     private void CheckIlluminationEffects()
     {
         if (health == null) return;
-        //Debug.Log("Checking illumination effects on health");
 
         bool bright = IlluminationManager.Instance.IsPointBright(transform.position);
         float damagePerSecond = 10f;

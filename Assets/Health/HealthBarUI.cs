@@ -12,11 +12,9 @@ public class HealthBarUI : MonoBehaviour
         {
             targetHealth.OnHealthChanged += UpdateHealthBar;
             UpdateHealthBar(targetHealth.currentHealth, targetHealth.maximumHealth);
-            Debug.Log("HealthBarUI: Subscribed to OnHealthChanged event.");
-            Debug.Log($"HealthBar linked to {targetHealth.name}");
+            //Debug.Log("HealthBarUI: Subscribed to OnHealthChanged event.");
+            //Debug.Log($"HealthBar linked to {targetHealth.name}");
         }
-        else
-            Debug.LogWarning("HealthBarUI: No target HealthController assigned.");
     }
 
     public void SetTarget(HealthController newTarget)
@@ -31,7 +29,7 @@ public class HealthBarUI : MonoBehaviour
             Debug.Log($"HealthBar linked to {targetHealth.name}");
             targetHealth.OnHealthChanged += UpdateHealthBar;
             UpdateHealthBar(targetHealth.currentHealth, targetHealth.maximumHealth);
-            Debug.Log("HealthBarUI: Target changed and subscribed to OnHealthChanged event.");
+            //Debug.Log("HealthBarUI: Target changed and subscribed to OnHealthChanged event.");
         }
     }
 

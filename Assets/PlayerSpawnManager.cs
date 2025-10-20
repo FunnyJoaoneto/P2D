@@ -10,6 +10,10 @@ public class PlayerSpawnManager : MonoBehaviour
     [SerializeField] private GameObject lightGuyPrefab;
     [SerializeField] private GameObject nightGirlPrefab;
 
+    [Header("Health Bars")]
+    [SerializeField] private HealthBarUI lightBar;
+    [SerializeField] private HealthBarUI nightBar;
+
     private int nextSpawnIndex = 0;
     private int nextPrefabIndex = 0;
 
@@ -67,20 +71,14 @@ public class PlayerSpawnManager : MonoBehaviour
         }
 
         var hc = player.GetComponent<HealthController>();
-        var hudBar = FindObjectOfType<HealthBarUI>();
         if (hc != null)
         {
             HealthBarUI targetBar = null;
 
-            // Check prefab type (you can also tag them if easier)
             if (player.name.Contains("LightGuy"))
-            {
-                targetBar = GameObject.Find("HealthBarLight")?.GetComponent<HealthBarUI>();
-            }
+                targetBar = lightBar;
             else if (player.name.Contains("NightGirl"))
-            {
-                targetBar = GameObject.Find("HealthBarNight")?.GetComponent<HealthBarUI>();
-            }
+                targetBar = nightBar;
 
             if (targetBar != null)
             {

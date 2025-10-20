@@ -19,10 +19,7 @@ public class HealthController : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
-        Debug.Log($"Taking damage: {damageAmount}");
-        Debug.Log($"Health before damage: {currentHealth}");
         currentHealth -= damageAmount;
-        Debug.Log($"Health after damage: {currentHealth}");
         if (currentHealth < 0)
             currentHealth = 0;
         NotifyHealthChanged();
@@ -38,8 +35,7 @@ public class HealthController : MonoBehaviour
 
     public void NotifyHealthChanged()
     {
-        Debug.Log("Notifying health change.");
         OnHealthChanged?.Invoke(currentHealth, maximumHealth);
-        Debug.Log($"Current Listneners: {OnHealthChanged?.GetInvocationList().Length ?? 0}");
+        //Debug.Log($"Current Listneners: {OnHealthChanged?.GetInvocationList().Length ?? 0}");
     }
 }
