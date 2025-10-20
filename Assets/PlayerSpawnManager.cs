@@ -66,8 +66,39 @@ public class PlayerSpawnManager : MonoBehaviour
             }
         }
 
-        // Prepare next prefab for next player that joins
-        pim.playerPrefab = GetNextPrefab();
+        var hc = player.GetComponent<HealthController>();
+        var hudBar = FindObjectOfType<HealthBarUI>();
+        if (hc != null)
+        {
+            HealthBarUI targetBar = null;
+
+            // Check prefab type (you can also tag them if easier)
+            if (player.name.Contains("LightGuy"))
+            {
+                targetBar = GameObject.Find("HealthBarLight")?.GetComponent<HealthBarUI>();
+            }
+            else if (player.name.Contains("NightGirl"))
+            {
+                targetBar = GameObject.Find("HealthBarNight")?.GetComponent<HealthBarUI>();
+            }
+
+            if (targetBar != null)
+            {
+                targetBar.SetTarget(hc);
+                Debug.Log($"Linked {targetBar.name} to {player.name}");
+            }
+            else
+            {
+                Debug.LogWarning($"No HealthBar found for {player.name}");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"No HealthController found on {player.name}");
+        }
+
+            // Prepare next prefab for next player that joins
+            pim.playerPrefab = GetNextPrefab();
     }
 
     private void OnPlayerLeft(PlayerInput player)
