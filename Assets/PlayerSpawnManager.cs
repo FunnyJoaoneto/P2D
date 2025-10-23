@@ -89,6 +89,8 @@ public class PlayerSpawnManager : MonoBehaviour
             {
                 Debug.LogWarning($"No HealthBar found for {player.name}");
             }
+            // Subscribe to death event
+            hc.OnDeath += HandlePlayerDeath;
         }
         else
         {
@@ -97,6 +99,31 @@ public class PlayerSpawnManager : MonoBehaviour
 
             // Prepare next prefab for next player that joins
             pim.playerPrefab = GetNextPrefab();
+    }
+
+    private void HandlePlayerDeath()
+    {
+        Debug.Log("💀 A player has died! Respawning both players...");
+
+        // optional: wait a bit before respawning (like 2 seconds)
+        Invoke(nameof(RespawnAllPlayers), 2f);
+    }
+
+    private void RespawnAllPlayers()
+    {
+        foreach (var player in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
+        {
+            var respawn = player.GetComponent<PlayerRespawn>();
+            var health = player.GetComponent<HealthController>();
+
+            if (respawn != null)
+                respawn.Respawn();
+
+            if (health != null)
+            {
+                health.AddHealth(health.maximumHealth); // restore full HP
+            }
+        }
     }
 
     private void OnPlayerLeft(PlayerInput player)
