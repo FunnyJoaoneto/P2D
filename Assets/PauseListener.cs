@@ -7,16 +7,10 @@ public class PauseListener : MonoBehaviour
 
     public PlayerInput playerInput;
 
-    void OnEnable()
+    public void HandlePause()
     {
-        var actions = playerInput.actions;
-        actions["Pause"].performed += _ => TogglePause();
-    }
-
-    void OnDisable()
-    {
-        var actions = playerInput.actions;
-        actions["Pause"].performed -= _ => TogglePause();
+        Debug.Log("Pause triggered!");
+        TogglePause();
     }
 
     void TogglePause()
