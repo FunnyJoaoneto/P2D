@@ -42,7 +42,7 @@ public class HealthBarUI : MonoBehaviour
 
     private void UpdateHealthBar(float current, float max)
     {
-        Debug.Log($"Updating health bar: {current}/{max}");
+        //Debug.Log($"Updating health bar: {current}/{max}");
         healthBarForegroundImage.fillAmount = current / max;
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class PlayerSpawnManager : MonoBehaviour
 {
     [Header("Spawn Points")]
