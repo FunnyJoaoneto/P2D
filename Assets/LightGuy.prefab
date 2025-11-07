@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: -3172632827663703331}
   - component: {fileID: 4383410643792069623}
   - component: {fileID: 6785294789101171052}
-  - component: {fileID: 8239396353381856845}
+  - component: {fileID: 8117512822253277744}
   m_Layer: 8
   m_Name: LightGuy
   m_TagString: Player
@@ -286,7 +286,7 @@ MonoBehaviour:
       Gamepad/button4,/Keyboard/e]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8239396353381856845}
+      - m_Target: {fileID: 8117512822253277744}
         m_TargetAssemblyTypeName: PauseRelay, Assembly-CSharp
         m_MethodName: OnPause
         m_Mode: 0
@@ -300,7 +300,7 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 73b1b6fd-2563-4bf2-9b32-3dce21f9decc
     m_ActionName: 'GamePlay/Pause[/Keyboard/escape]'
-  m_NeverAutoSwitchControlSchemes: 0
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: GamePlay
   m_SplitScreenIndex: 1
@@ -498,7 +498,7 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &8239396353381856845
+--- !u!114 &8117512822253277744
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -509,7 +509,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65dd72a55dfd5a542a88c1c8b61a0bfe, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::PauseRelay
 --- !u!1 &7586377688441383014
 GameObject:
   m_ObjectHideFlags: 0

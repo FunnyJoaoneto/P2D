@@ -47,7 +47,6 @@ GameObject:
   - component: {fileID: 9042148552116888769}
   - component: {fileID: -2892948482663150535}
   - component: {fileID: -2468097416323322027}
-  - component: {fileID: 8028164452442895243}
   m_Layer: 0
   m_Name: NightGirl
   m_TagString: Player
@@ -283,22 +282,10 @@ MonoBehaviour:
     m_ActionName: 'GamePlay/Interact[/Sony Interactive Entertainment PC PS3 Android
       Gamepad/button4,/Keyboard/e]'
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8028164452442895243}
-        m_TargetAssemblyTypeName: PauseRelay, Assembly-CSharp
-        m_MethodName: OnPause
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 73b1b6fd-2563-4bf2-9b32-3dce21f9decc
     m_ActionName: 'GamePlay/Pause[/Keyboard/escape]'
-  m_NeverAutoSwitchControlSchemes: 0
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: GamePlay
   m_SplitScreenIndex: 1
@@ -366,18 +353,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthController
   currentHealth: 100
   maximumHealth: 100
---- !u!114 &8028164452442895243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1520645146781339332}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65dd72a55dfd5a542a88c1c8b61a0bfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PauseRelay
 --- !u!1 &7586377688441383014
 GameObject:
   m_ObjectHideFlags: 0
