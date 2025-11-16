@@ -27,86 +27,129 @@ public class PlayerSpawnManager : MonoBehaviour
 
     private void OnEnable()
     {
-        pim.onPlayerJoined += OnPlayerJoined;
-        pim.onPlayerLeft += OnPlayerLeft;
-
-        // Set the first prefab to use
-        pim.playerPrefab = GetNextPrefab();
+        if (!PlayerMode.SingleKeyboard)
+        {
+            Debug.Log("Subscribing to PlayerInputManager events");
+            pim.onPlayerJoined += OnPlayerJoined;
+            pim.onPlayerLeft += OnPlayerLeft;
+            pim.playerPrefab = GetNextPrefab(); // first prefab
+        }
     }
 
     private void OnDisable()
     {
-        pim.onPlayerJoined -= OnPlayerJoined;
-        pim.onPlayerLeft -= OnPlayerLeft;
+        if (!PlayerMode.SingleKeyboard)
+        {
+            pim.onPlayerJoined -= OnPlayerJoined;
+            pim.onPlayerLeft -= OnPlayerLeft;
+        }
     }
 
+    private void Start()
+    {
+        //if (PlayerMode.SingleKeyboar)
+        //{
+            Debug.Log("Spawning players in Single Keyboard mode");
+            // Disable join-on-press flow
+            pim.enabled = false;
+
+            // Spawn two players immediately with different keyboard schemes
+            SpawnSingleKeyboardPlayers();
+        //}
+    }
+
+    // -------- Single Keyboard path --------
+    private void SpawnSingleKeyboardPlayers()
+    {
+        // Player 1 — WASD
+        var p1 = PlayerInput.Instantiate(
+            lightGuyPrefab,
+            controlScheme: "KeyboardWASD",
+            pairWithDevice: Keyboard.current);
+        SetupPlayer(p1);
+
+        // Player 2 — Arrows
+        var p2 = PlayerInput.Instantiate(
+            nightGirlPrefab,
+            controlScheme: "KeyboardArrows",
+            pairWithDevice: Keyboard.current);
+        SetupPlayer(p2);
+    }
+
+
+    // -------- Two Devices path (existing) --------
     private void OnPlayerJoined(PlayerInput player)
     {
         Debug.Log($"✅ Player joined: {player.name} ({player.currentControlScheme})");
+        // Position and spawnpoint assign
+        PlaceAtNextSpawn(player);
 
-        // Set spawn point
-        if (spawnPoints.Length > 0)
-        {
-            Transform spawn = spawnPoints[nextSpawnIndex % spawnPoints.Length];
-            player.transform.position = spawn.position;
-            nextSpawnIndex++;
+        // Collision ignore and UI hookup
+        PostJoinWiring(player);
 
-            var respawn = player.GetComponent<PlayerRespawn>();
-            if (respawn != null)
-                respawn.SetSpawnPoint(spawn.position);
-        }
+        // Prepare next prefab for the next join
+        if (pim) pim.playerPrefab = GetNextPrefab();
+    }
 
-        // Ignore collisions with other players
+    private void OnPlayerLeft(PlayerInput player)
+    {
+        Debug.Log($"❌ Player left: {player.name}");
+    }
+
+    // -------- Shared helpers --------
+    private Vector3 GetNextSpawn()
+    {
+        if (spawnPoints.Length == 0) return Vector3.zero;
+        var spawn = spawnPoints[nextSpawnIndex % spawnPoints.Length].position;
+        nextSpawnIndex++;
+        return spawn;
+    }
+
+    private void PlaceAtNextSpawn(PlayerInput player)
+    {
+        var pos = GetNextSpawn();
+        player.transform.position = pos;
+
+        var respawn = player.GetComponent<PlayerRespawn>();
+        if (respawn != null) respawn.SetSpawnPoint(pos);
+    }
+
+    private void SetupPlayer(PlayerInput player)
+    {
+        PlaceAtNextSpawn(player);
+        PostJoinWiring(player);
+    }
+
+    private void PostJoinWiring(PlayerInput player)
+    {
+        // Ignore collisions between players
         var playerCollider = player.GetComponent<Collider2D>();
         if (playerCollider != null)
         {
             foreach (var other in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
             {
-                if (other != player)
-                {
-                    var otherCollider = other.GetComponent<Collider2D>();
-                    if (otherCollider != null)
-                        Physics2D.IgnoreCollision(playerCollider, otherCollider, true);
-                }
+                if (other == player) continue;
+                var otherCol = other.GetComponent<Collider2D>();
+                if (otherCol != null) Physics2D.IgnoreCollision(playerCollider, otherCol, true);
             }
         }
 
+        // Health bar link and death handling
         var hc = player.GetComponent<HealthController>();
         if (hc != null)
         {
             HealthBarUI targetBar = null;
+            if (player.name.Contains("LightGuy")) targetBar = lightBar;
+            else if (player.name.Contains("NightGirl")) targetBar = nightBar;
 
-            if (player.name.Contains("LightGuy"))
-                targetBar = lightBar;
-            else if (player.name.Contains("NightGirl"))
-                targetBar = nightBar;
-
-            if (targetBar != null)
-            {
-                targetBar.SetTarget(hc);
-                Debug.Log($"Linked {targetBar.name} to {player.name}");
-            }
-            else
-            {
-                Debug.LogWarning($"No HealthBar found for {player.name}");
-            }
-            // Subscribe to death event
+            if (targetBar != null) targetBar.SetTarget(hc);
+            hc.OnDeath -= HandlePlayerDeath;
             hc.OnDeath += HandlePlayerDeath;
         }
-        else
-        {
-            Debug.LogWarning($"No HealthController found on {player.name}");
-        }
-
-            // Prepare next prefab for next player that joins
-            pim.playerPrefab = GetNextPrefab();
     }
 
     private void HandlePlayerDeath()
     {
-        Debug.Log("💀 A player has died! Respawning both players...");
-
-        // optional: wait a bit before respawning (like 2 seconds)
         Invoke(nameof(RespawnAllPlayers), 2f);
     }
 
@@ -116,26 +159,14 @@ public class PlayerSpawnManager : MonoBehaviour
         {
             var respawn = player.GetComponent<PlayerRespawn>();
             var health = player.GetComponent<HealthController>();
-
-            if (respawn != null)
-                respawn.Respawn();
-
-            if (health != null)
-            {
-                health.AddHealth(health.maximumHealth); // restore full HP
-            }
+            if (respawn != null) respawn.Respawn();
+            if (health != null) health.AddHealth(health.maximumHealth);
         }
-    }
-
-    private void OnPlayerLeft(PlayerInput player)
-    {
-        Debug.Log($"❌ Player left: {player.name}");
     }
 
     private GameObject GetNextPrefab()
     {
-        // Alternate or choose based on your logic
-        GameObject prefab = (nextPrefabIndex % 2 == 0) ? lightGuyPrefab : nightGirlPrefab;
+        var prefab = (nextPrefabIndex % 2 == 0) ? lightGuyPrefab : nightGirlPrefab;
         nextPrefabIndex++;
         return prefab;
     }
