@@ -10,6 +10,19 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private HealthController health;
 
+    private Animator controlledAnimator;
+    private bool isAnimatorInitialized = false;
+    private bool isGrounded = false;
+    private bool wasGroundedLastFrame = false;
+    private int jumpCount;
+
+    [Header("Efeitos Dia/Noite")]
+    [Tooltip("Dano (perda de vida) por segundo em ambiente desfavorável.")]
+    public float damagePerSecond = 10f;
+    [Tooltip("Cura (ganho de vida) por segundo em ambiente favorável.")]
+    public float healPerSecond = 5f;
+    
+
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
 
@@ -53,6 +66,7 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public bool isGrappling = false;
     private Vector2 grapplePoint;
+    private float lastMoveDirection = 1f;
 
     private InputAction moveAction;
     private InputAction jumpAction;
@@ -67,6 +81,8 @@ public class PlayerController : MonoBehaviour
         lr = GetComponent<LineRenderer>();
         dj = GetComponent<DistanceJoint2D>();
 
+        InitializeAnimator();
+
         // Configuração inicial do DistanceJoint2D
         if (dj != null)
         {
@@ -80,13 +96,42 @@ public class PlayerController : MonoBehaviour
         if (lr != null) lr.enabled = false;
     }
 
+    private void InitializeAnimator()
+    {
+        string spriteChildName = lightPlayer ? "SpriteKnight" : "nightgirl";
+        Transform spriteChild = transform.Find(spriteChildName);
+        if (spriteChild != null)
+        {
+            controlledAnimator = spriteChild.GetComponent<Animator>();
+        }
+        else
+        {
+            controlledAnimator = GetComponent<Animator>();
+        }
+        if (controlledAnimator == null)
+        {
+            Debug.LogError($"Animator Component not found for '{spriteChildName}'! Check if it's on the main GameObject or the '{spriteChildName}' child.");
+            isAnimatorInitialized = false;
+            return;
+        }
+        controlledAnimator.enabled = true;
+        isAnimatorInitialized = true;
+        if (controlledAnimator.isInitialized)
+        {
+            controlledAnimator.SetFloat("Speed", 0f);
+            controlledAnimator.SetFloat("Direction", lastMoveDirection);
+            controlledAnimator.SetBool("IsGrounded", true);
+            controlledAnimator.SetFloat("VerticalSpeed", 0f);
+        }
+    }
+
     private Vector2 GetAimDirection()
     {
         if (moveInput.magnitude > 0.1f)
         {
             return moveInput.normalized;
         }
-        float facingDirection = Mathf.Sign(transform.localScale.x);
+        float facingDirection = lastMoveDirection;
         return new Vector2(facingDirection, 0f).normalized;
     }
 
@@ -205,24 +250,20 @@ public class PlayerController : MonoBehaviour
                 rayDistance,
                 groundLayer
             );
-
             if (hit.collider != null)
             {
                 continue;
             }
-
             if (distanceToTarget < closestDistance)
             {
                 closestDistance = distanceToTarget;
                 bestGrapplePoint = targetPosition;
             }
         }
-
         if (bestGrapplePoint != Vector2.zero)
         {
             grapplePoint = bestGrapplePoint;
             isGrappling = true;
-
             if (lr != null && dj != null)
             {
                 lr.enabled = true;
@@ -267,23 +308,52 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        // Verifica se a colisão é com a porta em qualquer um dos seus estados.
+        // Isso garante que o contador de entrada funcione mesmo antes de coletar os itens.
+        if (other.CompareTag("ExitReady") || other.CompareTag("ExitGate"))
+        {
+            if (GoalManager.Instance != null)
+            {
+                // Informa ao GoalManager que um jogador entrou
+                GoalManager.Instance.EntrarPortao();
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        // Verifica se o jogador está saindo da área da porta em qualquer um dos seus estados.
+        // Isso garante que o contador de saída funcione, prevenindo o travamento da transição.
+        if (other.CompareTag("ExitReady") || other.CompareTag("ExitGate"))
+        {
+            if (GoalManager.Instance != null)
+            {
+                // Informa ao GoalManager que um jogador saiu
+                GoalManager.Instance.SairPortao();
+            }
+        }
+    }
+
     private void CheckIlluminationEffects()
     {
-        if (health == null) return;
-        bool bright = IlluminationManager.Instance.IsPointBright(transform.position);
-        float damagePerSecond = 10f;
-        float healPerSecond = 5f;
+        if (health == null || SistemaDiaNoite.Instance == null) return;
+        if (!health.isAlive) return;
+
+        // 1. Verifica se a zona atual é Dia (BrightZone)
+        bool isInBrightZone = SistemaDiaNoite.Instance.IsInBrightZone(transform.position.x);
 
         if (lightPlayer)
         {
-            if (bright)
+            if (isInBrightZone)
                 health.AddHealth(healPerSecond * Time.deltaTime);
             else
                 health.TakeDamage(damagePerSecond * Time.deltaTime);
         }
         else
         {
-            if (bright)
+            if (isInBrightZone)
                 health.TakeDamage(damagePerSecond * Time.deltaTime);
             else
                 health.AddHealth(healPerSecond * Time.deltaTime);
@@ -297,14 +367,12 @@ public class PlayerController : MonoBehaviour
             rb.gravityScale = baseGravity;
             return;
         }
-
         if (isGliding)
         {
             rb.gravityScale = glideGravityScale;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -maxFallSpeed / 3f));
             return;
         }
-
         if (rb.linearVelocity.y < 0)
         {
             rb.gravityScale = baseGravity * fallSpeedMultiplier;
@@ -318,18 +386,27 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // NOVO: Controle de Movimento Horizontal Condicional
-        // O jogador SÓ tem controle de movimento horizontal se NÃO estiver engatado.
-        if (!isGrappling)
-        {
-            rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
-        }
-        // Quando ISGRAPPLING é TRUE, o movimento horizontal é controlado APENAS pelo ApplySwingImpulse (abaixo).
 
+        CheckGroundState();
         if (isGrappling)
         {
             ApplySwingImpulse();
             LimitSwingHeight();
+            return;
+        }
+        if (rb == null) return;
+
+        rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+        if (isAnimatorInitialized)
+        {
+            if (isGrounded)
+            {
+                HandleMovementAnimation(moveInput.x);
+            }
+            else
+            {
+                HandleAirborneAnimation();
+            }
         }
 
         if (rb.linearVelocity.y > 25f)
@@ -338,41 +415,67 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Aplica força tangencial para impulsionar o balanço.
-    /// </summary>
-    private void ApplySwingImpulse()
+    private void CheckGroundState()
     {
-        // O vetor da corda (do player ao ponto de gancho)
-        Vector2 ropeVector = grapplePoint - (Vector2)transform.position;
-
-        // O vetor de velocidade tangencial (perpendicular à corda)
-        Vector2 swingDirection = new Vector2(-ropeVector.y, ropeVector.x).normalized;
-
-        if (moveInput.x != 0)
+        isGrounded = GroundCheck();
+        if (isGrounded && !wasGroundedLastFrame)
         {
-            // Aplica a força na direção tangencial (balanço), respeitando o input do jogador
-            rb.AddForce(swingDirection * moveInput.x * swingImpulseForce * Time.fixedDeltaTime, ForceMode2D.Force);
+            StopGlide();
+        }
+        if (controlledAnimator != null && isAnimatorInitialized)
+        {
+            controlledAnimator.SetBool("IsGrounded", isGrounded);
+            if (isGrounded)
+            {
+                controlledAnimator.SetFloat("VerticalSpeed", 0f);
+            }
+        }
+        wasGroundedLastFrame = isGrounded;
+    }
+
+    private void HandleMovementAnimation(float horizontalInput)
+    {
+        if (!isAnimatorInitialized || controlledAnimator == null) return;
+        float speed = Mathf.Abs(horizontalInput) > 0.1f ? 1f : 0f;
+        if (Mathf.Abs(horizontalInput) > 0.1f)
+        {
+            lastMoveDirection = Mathf.Sign(horizontalInput);
+        }
+        controlledAnimator.SetFloat("Speed", speed);
+        controlledAnimator.SetFloat("Direction", lastMoveDirection);
+    }
+    private void HandleAirborneAnimation()
+    {
+        if (!isAnimatorInitialized || controlledAnimator == null) return;
+        if (Mathf.Abs(moveInput.x) > 0.1f)
+        {
+            lastMoveDirection = Mathf.Sign(moveInput.x);
+        }
+        controlledAnimator.SetFloat("Direction", lastMoveDirection);
+        // CORREÇÃO DE SEGURANÇA: Evita erro se rb for destruído no meio da animação
+        if (rb != null)
+        {
+            controlledAnimator.SetFloat("VerticalSpeed", rb.linearVelocity.y);
         }
     }
 
-    /// <summary>
-    /// Limita a altura máxima que o jogador pode subir no balanço.
-    /// </summary>
+    private void ApplySwingImpulse()
+    {
+        Vector2 ropeVector = grapplePoint - (Vector2)transform.position;
+        Vector2 swingDirection = new Vector2(-ropeVector.y, ropeVector.x).normalized;
+        if (moveInput.x != 0)
+        {
+            rb.AddForce(swingDirection * moveInput.x * swingImpulseForce * Time.fixedDeltaTime, ForceMode2D.Force);
+        }
+    }
     private void LimitSwingHeight()
     {
         if (dj == null) return;
-
         float currentDistance = Vector2.Distance(transform.position, grapplePoint);
         float originalDistance = dj.distance;
-
-        // Limite de distância permitido (ex: 80% da distância original da corda)
         float maxAllowedDistance = originalDistance * maxSwingHeightRatio;
-
-        // Checa se o player está acima do limite E subindo.
         if (currentDistance < maxAllowedDistance && rb.linearVelocity.y > 0)
         {
-            // Reduz drasticamente a velocidade vertical para impedir que suba mais
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
         }
     }
@@ -394,6 +497,11 @@ public class PlayerController : MonoBehaviour
             ReleaseGrapple();
             // Dá um pequeno boost ao pular do gancho
             rb.linearVelocity = new Vector2(rb.linearVelocity.x * 1.5f, jumpForce * 1.2f);
+            if (controlledAnimator != null && isAnimatorInitialized)
+            {
+                controlledAnimator.SetBool("IsGrounded", false);
+                controlledAnimator.SetFloat("VerticalSpeed", rb.linearVelocity.y);
+            }
             return;
         }
         if (jumping)
@@ -401,6 +509,11 @@ public class PlayerController : MonoBehaviour
             if (GroundCheck())
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                if (controlledAnimator != null && isAnimatorInitialized)
+                {
+                    controlledAnimator.SetBool("IsGrounded", false);
+                    controlledAnimator.SetFloat("VerticalSpeed", rb.linearVelocity.y);
+                }
             }
         }
         else
@@ -420,7 +533,6 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;

@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - GrapplePoint
+  - DayNightZone
+  - ExitReady
+  - tile
+  - ExitGate
   layers:
   - Default
   - TransparentFX
@@ -15,7 +19,6 @@ TagManager:
   - Fan
   - GrapplePoint
   - Player1
-  - 
   - 
   - 
   - 

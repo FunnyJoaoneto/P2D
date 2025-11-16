@@ -1,0 +1,559 @@
+fileFormatVersion: 2
+guid: 180e8f02054617645afd9b7c65ed7b7f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3374528099249222506
+    second: lua3_0
+  - first:
+      213: 4384799954526054110
+    second: lua3_1
+  - first:
+      213: 683101171131539144
+    second: lua3_2
+  - first:
+      213: -1551146289583222830
+    second: lua3_3
+  - first:
+      213: 6961061247891938632
+    second: lua3_4
+  - first:
+      213: -906474682541862113
+    second: lua3_5
+  - first:
+      213: -519481084830774436
+    second: lua3_6
+  - first:
+      213: 3762277425527667994
+    second: lua3_7
+  - first:
+      213: -6316505289290331275
+    second: lua3_8
+  - first:
+      213: -8229985984050816680
+    second: lua3_9
+  - first:
+      213: -7592733631502517426
+    second: lua3_10
+  - first:
+      213: -6373669083684758598
+    second: lua3_11
+  - first:
+      213: 1081974934165221672
+    second: lua3_12
+  - first:
+      213: 653985349173767741
+    second: lua3_13
+  - first:
+      213: 6473254481196135802
+    second: lua3_14
+  - first:
+      213: 1867408486234730250
+    second: lua3_15
+  - first:
+      213: -3468286394738825558
+    second: lua3_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: lua3_0
+      rect:
+        serializedVersion: 2
+        x: 419
+        y: 1790
+        width: 21
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a63f2506d6bb4de20800000000000000
+      internalID: 3374528099249222506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_1
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 1793
+        width: 29
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed6aca4b350f9dc30800000000000000
+      internalID: 4384799954526054110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_2
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 1699
+        width: 34
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ced2fa55ecda7900800000000000000
+      internalID: 683101171131539144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_3
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 1720
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2df0abefaa8397ae0800000000000000
+      internalID: -1551146289583222830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_4
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 1698
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84d165cd258aa9060800000000000000
+      internalID: 6961061247891938632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_5
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 1702
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f131535341e8b63f0800000000000000
+      internalID: -906474682541862113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_6
+      rect:
+        serializedVersion: 2
+        x: 1477
+        y: 1639
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5b8027a4be6ac8f0800000000000000
+      internalID: -519481084830774436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_7
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 199
+        width: 1261
+        height: 1435
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1d3c07926b463430800000000000000
+      internalID: 3762277425527667994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_8
+      rect:
+        serializedVersion: 2
+        x: 1384
+        y: 1559
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57b49f9d7e34758a0800000000000000
+      internalID: -6316505289290331275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_9
+      rect:
+        serializedVersion: 2
+        x: 1624
+        y: 1467
+        width: 21
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85915321a5739cd80800000000000000
+      internalID: -8229985984050816680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_10
+      rect:
+        serializedVersion: 2
+        x: 1619
+        y: 1391
+        width: 18
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4b712c7df031a690800000000000000
+      internalID: -7592733631502517426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_11
+      rect:
+        serializedVersion: 2
+        x: 1528
+        y: 383
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abb941fccbd2c87a0800000000000000
+      internalID: -6373669083684758598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_12
+      rect:
+        serializedVersion: 2
+        x: 669
+        y: 109
+        width: 85
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8217bc65872f30f00800000000000000
+      internalID: 1081974934165221672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_13
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 138
+        width: 31
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3eefc9c53c631900800000000000000
+      internalID: 653985349173767741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_14
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 106
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a75b66467ae95d950800000000000000
+      internalID: 6473254481196135802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_15
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 107
+        width: 49
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0f2290df1e5ae910800000000000000
+      internalID: 1867408486234730250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lua3_16
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 109
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa6a54656eb2edfc0800000000000000
+      internalID: -3468286394738825558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      lua3_0: 3374528099249222506
+      lua3_1: 4384799954526054110
+      lua3_10: -7592733631502517426
+      lua3_11: -6373669083684758598
+      lua3_12: 1081974934165221672
+      lua3_13: 653985349173767741
+      lua3_14: 6473254481196135802
+      lua3_15: 1867408486234730250
+      lua3_16: -3468286394738825558
+      lua3_2: 683101171131539144
+      lua3_3: -1551146289583222830
+      lua3_4: 6961061247891938632
+      lua3_5: -906474682541862113
+      lua3_6: -519481084830774436
+      lua3_7: 3762277425527667994
+      lua3_8: -6316505289290331275
+      lua3_9: -8229985984050816680
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

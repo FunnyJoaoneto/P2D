@@ -63,7 +63,7 @@ Transform:
   m_GameObject: {fileID: 1520645146781339332}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.00000003952217, w: 1}
-  m_LocalPosition: {x: 4.00775, y: -1.9448608, z: 0}
+  m_LocalPosition: {x: 4.00775, y: -1.9448608, z: -2}
   m_LocalScale: {x: 5.0000005, y: 5.0000005, z: 5.0000005}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -302,6 +302,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 835f630e0af1e1c478a8610660b7d4c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  damagePerSecond: 10
+  healPerSecond: 8
   moveSpeed: 10
   jumpForce: 24
   maxJumps: 2
@@ -363,8 +365,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7599416087264428583}
   - component: {fileID: 6669280696248350153}
+  - component: {fileID: 8303625025138432708}
   m_Layer: 0
-  m_Name: Sprite
+  m_Name: nightgirl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -432,7 +435,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1786781638142776040, guid: 44986c9da7b404140b7e0c01d2681b70, type: 3}
+  m_Sprite: {fileID: 1786781638142776040, guid: a28829035e7d3de418830c15b1d04912, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -443,3 +446,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &8303625025138432708
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7586377688441383014}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4c8d1b6d25d9a55419d1c07392fdeca9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
