@@ -3,7 +3,7 @@ using UnityEngine.Rendering.Universal;
 
 public class SistemaDiaNoite : MonoBehaviour // Manager Global
 {
-    public static SistemaDiaNoite Instance; // Padrão Singleton
+    public static SistemaDiaNoite Instance; // Padrï¿½o Singleton
 
     [Header("Objetos de Background")]
     [Tooltip("O SpriteRenderer que cobre o lado esquerdo (X < 0)")]
@@ -11,21 +11,34 @@ public class SistemaDiaNoite : MonoBehaviour // Manager Global
     [Tooltip("O SpriteRenderer que cobre o lado direito (X >= 0)")]
     public SpriteRenderer backgroundLadoDireito;
 
-    [Header("Configurações de Cor")]
+    [Header("Configuraï¿½ï¿½es de Cor")]
     public Color corDia = new Color(0.7f, 0.7f, 1f, 1f); // Azul claro
     public Color corNoite = new Color(0.1f, 0.1f, 0.3f, 1f); // Azul escuro
 
-    [Header("Controle de Tempo e Transição")]
-    [Tooltip("Duração da transição em segundos.")]
+    [Header("Tutorial Control")]
+    public bool tutorialMode = false;
+
+    public float tutorialTriggerY = 10f; // Y threshold you want
+    private bool tutorialTriggered = false;
+
+    [Header("Spotlight")]
+    public Transform spotlight;
+    public float spotlightStartY = 0f;
+    public float spotlightEndY = 180f;
+
+    [Header("Controle de Tempo e Transiï¿½ï¿½o")]
+    [Tooltip("Duraï¿½ï¿½o da transiï¿½ï¿½o em segundos.")]
     public float duracaoTransicao = 3.0f;
-    [Tooltip("Tempo em segundos entre as trocas automáticas de estado.")]
+    [Tooltip("Tempo em segundos entre as trocas automï¿½ticas de estado.")]
     public float intervaloTroca = 15f;
 
-    // Variáveis de controle de estado
+    // Variï¿½veis de controle de estado
     private float proximaTrocaTempo;
     private float inicioTransicaoTempo;
-    private bool ladoEsquerdoAtualDia = true; // Lado Esquerdo começa como Dia
+    private bool ladoEsquerdoAtualDia = true; // Lado Esquerdo comeï¿½a como Dia
     private bool emTransicao = false;
+    private float spotlightInitialY;
+    private float spotlightTargetY;
 
     void Awake()
     {
@@ -46,17 +59,59 @@ public class SistemaDiaNoite : MonoBehaviour // Manager Global
 
     void Update()
     {
-        // Lógica de transição automática
-        if (!emTransicao && Time.time >= proximaTrocaTempo)
+        if (!tutorialMode)
         {
-            IniciarTransicao();
+            // Automatic switching (normal mode)
+            if (!emTransicao && Time.time >= proximaTrocaTempo)
+                IniciarTransicao();
+        }
+        else
+        {
+            // Tutorial mode: wait for players
+            CheckTutorialTrigger();
         }
 
-        // Executa a transição suave
-        if (emTransicao)
-        {
+        if (emTransicao){
             ExecutarTransicao();
         }
+    }
+
+    private void CheckTutorialTrigger()
+    {
+        if (tutorialTriggered)
+            return;
+
+        GameObject player1 = FindPlayerOnLayer("Player1");
+        GameObject player2 = FindPlayerOnLayer("Player2");
+
+        if (player1 == null || player2 == null)
+            return;
+
+        bool reached1 = player1.transform.position.y >= tutorialTriggerY;
+        bool reached2 = player2.transform.position.y >= tutorialTriggerY;
+
+        if (reached1 && reached2)
+        {
+            tutorialTriggered = true;
+            IniciarTransicao();
+        }
+    }
+
+    private GameObject FindPlayerOnLayer(string layerName)
+    {
+        int layer = LayerMask.NameToLayer(layerName);
+        if (layer == -1)
+            return null;
+
+        GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (GameObject obj in allPlayers)
+        {
+            if (obj.layer == layer)
+                return obj;
+        }
+
+        return null;
     }
 
     private void DefinirEstadoInicial()
@@ -68,9 +123,18 @@ public class SistemaDiaNoite : MonoBehaviour // Manager Global
 
     private void IniciarTransicao()
     {
+        spotlightInitialY = spotlightStartY;
+        spotlightTargetY = spotlightEndY;
+
+        // If direction reversed, swap
+        if (!ladoEsquerdoAtualDia)
+        {
+            spotlightInitialY = spotlightEndY;
+            spotlightTargetY = spotlightStartY;
+        }
         emTransicao = true;
         inicioTransicaoTempo = Time.time;
-        ladoEsquerdoAtualDia = !ladoEsquerdoAtualDia; // Inverte o lado que será Dia
+        ladoEsquerdoAtualDia = !ladoEsquerdoAtualDia; // Inverte o lado que serï¿½ Dia
     }
 
     private void ExecutarTransicao()
@@ -78,18 +142,24 @@ public class SistemaDiaNoite : MonoBehaviour // Manager Global
         float tempoDecorrido = Time.time - inicioTransicaoTempo;
         float percentualCompleto = Mathf.Clamp01(tempoDecorrido / duracaoTransicao);
 
+        if (spotlight != null)
+        {
+            float y = Mathf.Lerp(spotlightInitialY, spotlightTargetY, percentualCompleto);
+            spotlight.rotation = Quaternion.Euler(spotlight.rotation.eulerAngles.x, y, spotlight.rotation.eulerAngles.z);
+        }
+
         Color corAtualEsquerda;
         Color corAtualDireita;
 
         if (ladoEsquerdoAtualDia)
         {
-            // Transição para: Esquerda = Dia, Direita = Noite
+            // Transiï¿½ï¿½o para: Esquerda = Dia, Direita = Noite
             corAtualEsquerda = Color.Lerp(corNoite, corDia, percentualCompleto);
             corAtualDireita = Color.Lerp(corDia, corNoite, percentualCompleto);
         }
         else
         {
-            // Transição para: Esquerda = Noite, Direita = Dia
+            // Transiï¿½ï¿½o para: Esquerda = Noite, Direita = Dia
             corAtualEsquerda = Color.Lerp(corDia, corNoite, percentualCompleto);
             corAtualDireita = Color.Lerp(corNoite, corDia, percentualCompleto);
         }
@@ -107,7 +177,13 @@ public class SistemaDiaNoite : MonoBehaviour // Manager Global
     {
         emTransicao = false;
 
-        // Garante as cores finais exatas após a transição
+        if (spotlight != null)
+        {
+            float finalY = ladoEsquerdoAtualDia ? spotlightStartY : spotlightEndY;
+            spotlight.rotation = Quaternion.Euler(spotlight.rotation.eulerAngles.x, finalY, spotlight.rotation.eulerAngles.z);
+        }
+
+        // Garante as cores finais exatas apï¿½s a transiï¿½ï¿½o
         if (ladoEsquerdoAtualDia)
         {
             if (backgroundLadoEsquerdo != null) backgroundLadoEsquerdo.color = corDia;
@@ -122,20 +198,20 @@ public class SistemaDiaNoite : MonoBehaviour // Manager Global
         proximaTrocaTempo = Time.time + intervaloTroca;
     }
 
-    // --- Lógica Simples baseada na Posição do Player (X=0 é o centro) ---
+    // --- Lï¿½gica Simples baseada na Posiï¿½ï¿½o do Player (X=0 ï¿½ o centro) ---
     /// <summary>
-    /// Verifica se a posição dada está na zona 'Dia'.
+    /// Verifica se a posiï¿½ï¿½o dada estï¿½ na zona 'Dia'.
     /// </summary>
     /// <param name="pointX">A coordenada X do jogador.</param>
-    /// <returns>True se a posição estiver na Zona Dia, False se for Zona Noite.</returns>
+    /// <returns>True se a posiï¿½ï¿½o estiver na Zona Dia, False se for Zona Noite.</returns>
     public bool IsInBrightZone(float pointX)
     {
-        // Se o lado esquerdo (X < 0) é Dia, retornamos true se o jogador estiver à esquerda.
+        // Se o lado esquerdo (X < 0) ï¿½ Dia, retornamos true se o jogador estiver ï¿½ esquerda.
         if (ladoEsquerdoAtualDia)
         {
             return pointX < 0;
         }
-        // Se o lado direito (X >= 0) é Dia, retornamos true se o jogador estiver à direita ou no centro.
+        // Se o lado direito (X >= 0) ï¿½ Dia, retornamos true se o jogador estiver ï¿½ direita ou no centro.
         else
         {
             return pointX >= 0;
