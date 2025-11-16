@@ -53,6 +53,10 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool isGrappling = false;
     private Vector2 grapplePoint;
 
+    private InputAction moveAction;
+    private InputAction jumpAction;
+    private InputAction abilityAction;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -87,36 +91,41 @@ public class PlayerController : MonoBehaviour
 
     void OnEnable()
     {
-        var actions = playerInput.actions;
-        actions["Move"].performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-        actions["Move"].canceled += ctx => moveInput = Vector2.zero;
-        actions["Jump"].performed += ctx => Jump(true);
-        actions["Jump"].canceled += ctx => Jump(false);
-
-        actions["Ability"].performed += ctx =>
-        {
-            if (!lightPlayer)
-            {
-                StartGlide();
-            }
-            else
-            {
-                AttemptGrapple();
-            }
-        };
-
-        actions["Ability"].canceled += ctx =>
-        {
-            if (!lightPlayer)
-            {
-                StopGlide();
-            }
-            else
-            {
-                ReleaseGrapple();
-            }
-        };
+        //hmmmm
     }
+
+    void OnDisable()
+    {
+        //hmmmmmmm
+    }
+
+    public void OnMove(InputAction.CallbackContext ctx)
+    {
+        moveInput = ctx.ReadValue<Vector2>();
+    }
+
+    public void OnJump(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+            Jump(true);
+        else if (ctx.canceled)
+            Jump(false);
+    }
+
+    public void OnAbility(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            if (!lightPlayer) StartGlide();
+            else AttemptGrapple();
+        }
+        else if (ctx.canceled)
+        {
+            if (!lightPlayer) StopGlide();
+            else ReleaseGrapple();
+        }
+    }
+
 
     void StartGlide()
     {
@@ -224,11 +233,6 @@ public class PlayerController : MonoBehaviour
             lr.enabled = false;
             dj.enabled = false;
         }
-    }
-
-    void OnDisable()
-    {
-        playerInput.actions.Disable();
     }
 
     void Update()
