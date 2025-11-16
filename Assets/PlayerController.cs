@@ -338,19 +338,22 @@ public class PlayerController : MonoBehaviour
 
     private void CheckIlluminationEffects()
     {
-        if (health == null) return;
-        bool bright = IlluminationManager.Instance.IsPointBright(transform.position);
+        if (health == null || SistemaDiaNoite.Instance == null) return;
+        if (!health.isAlive) return;
+
+        // 1. Verifica se a zona atual é Dia (BrightZone)
+        bool isInBrightZone = SistemaDiaNoite.Instance.IsInBrightZone(transform.position.x);
 
         if (lightPlayer)
         {
-            if (bright)
+            if (isInBrightZone)
                 health.AddHealth(healPerSecond * Time.deltaTime);
             else
                 health.TakeDamage(damagePerSecond * Time.deltaTime);
         }
         else
         {
-            if (bright)
+            if (isInBrightZone)
                 health.TakeDamage(damagePerSecond * Time.deltaTime);
             else
                 health.AddHealth(healPerSecond * Time.deltaTime);
