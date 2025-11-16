@@ -1,63 +1,89 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(HealthController))]
 public class PlayerController : MonoBehaviour
 {
     public static event Action<PlayerController, bool> OnGlideStateChanged;
+
     private Rigidbody2D rb;
     private HealthController health;
+
     private Animator controlledAnimator;
     private bool isAnimatorInitialized = false;
     private bool isGrounded = false;
     private bool wasGroundedLastFrame = false;
     private int jumpCount;
 
-
     [Header("Efeitos Dia/Noite")]
     [Tooltip("Dano (perda de vida) por segundo em ambiente desfavorável.")]
-    public float damagePerSecond = 12f;
+    public float damagePerSecond = 10f;
     [Tooltip("Cura (ganho de vida) por segundo em ambiente favorável.")]
     public float healPerSecond = 5f;
+    
 
-
+    [Header("Movement Settings")]
     public float moveSpeed = 5f;
+
+    [Header("Jump Settings")]
     public float jumpForce = 7f;
-    public int maxJumps = 1;
+    public int maxJumps = 2;
+
+    [Header("Ground Check")]
     public LayerMask groundLayer;
     public Transform groundCheckPos;
     public Vector2 groundCheckSize = new Vector2(0.5f, 0.5f);
+
+    [Header("Gravity Settings")]
     public float baseGravity = 2f;
     public float fallSpeedMultiplier = 2f;
     public float maxFallSpeed = 18f;
-    [Tooltip("True para SunKnight (Luz), False para NightGirl (Noite)")]
+
+    [Header("Abilities")]
     public bool lightPlayer = true;
+
+    [Header("Glide Settings")]
     public float glideGravityScale = 0.3f;
     public float glideUpBoost = 3f;
     public bool isGliding = false;
+    private bool glideQueued = false;
+
+    [Header("Grapple Settings")]
     public float maxGrappleDistance = 15f;
     public LayerMask grapplePointLayer;
     public string grapplePointTag = "GrapplePoint";
+
+    // VARIÁVEIS PARA O BALANÇO
     public float swingImpulseForce = 15f;
     public float maxSwingHeightRatio = 0.8f;
+
     public PlayerInput playerInput;
     private Vector2 moveInput;
     public float grappleCheckRadius = 0.1f;
     private LineRenderer lr;
     private DistanceJoint2D dj;
+
     [HideInInspector] public bool isGrappling = false;
     private Vector2 grapplePoint;
     private float lastMoveDirection = 1f;
 
+    private InputAction moveAction;
+    private InputAction jumpAction;
+    private InputAction abilityAction;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        health = GetComponent<HealthController>(); // Vincula HealthController
+        health = GetComponent<HealthController>();
         if (!playerInput) playerInput = GetComponent<PlayerInput>();
+
         lr = GetComponent<LineRenderer>();
         dj = GetComponent<DistanceJoint2D>();
+
         InitializeAnimator();
+
+        // Configuração inicial do DistanceJoint2D
         if (dj != null)
         {
             dj.autoConfigureDistance = false;
@@ -66,8 +92,10 @@ public class PlayerController : MonoBehaviour
             dj.breakForce = Mathf.Infinity;
             dj.enabled = false;
         }
+
         if (lr != null) lr.enabled = false;
     }
+
     private void InitializeAnimator()
     {
         string spriteChildName = lightPlayer ? "SpriteKnight" : "nightgirl";
@@ -96,6 +124,7 @@ public class PlayerController : MonoBehaviour
             controlledAnimator.SetFloat("VerticalSpeed", 0f);
         }
     }
+
     private Vector2 GetAimDirection()
     {
         if (moveInput.magnitude > 0.1f)
@@ -106,70 +135,80 @@ public class PlayerController : MonoBehaviour
         return new Vector2(facingDirection, 0f).normalized;
     }
 
-
     void OnEnable()
     {
-        if (playerInput == null)
+        //hmmmm
+    }
+
+    void OnDisable()
+    {
+        //hmmmmmmm
+    }
+
+    public void OnMove(InputAction.CallbackContext ctx)
+    {
+        moveInput = ctx.ReadValue<Vector2>();
+    }
+
+    public void OnJump(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+            Jump(true);
+        else if (ctx.canceled)
+            Jump(false);
+    }
+
+    public void OnAbility(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
         {
-            playerInput = GetComponent<PlayerInput>();
+            if (!lightPlayer) StartGlide();
+            else AttemptGrapple();
         }
-        if (playerInput == null || playerInput.actions == null)
+        else if (ctx.canceled)
         {
-            Debug.LogError("PlayerInput component or actions not found. Cannot set up controls.");
-            return;
+            if (!lightPlayer) StopGlide();
+            else ReleaseGrapple();
         }
-        var actions = playerInput.actions;
-        actions["Move"].performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-        actions["Move"].canceled += ctx => moveInput = Vector2.zero;
-        actions["Jump"].performed += ctx => Jump(true);
-        actions["Jump"].canceled += ctx => Jump(false);
-        actions["Ability"].performed += ctx =>
-        {
-            if (!lightPlayer)
-            {
-                StartGlide();
-            }
-            else
-            {
-                AttemptGrapple();
-            }
-        };
-        actions["Ability"].canceled += ctx =>
-        {
-            if (!lightPlayer)
-            {
-                StopGlide();
-            }
-            else
-            {
-                ReleaseGrapple();
-            }
-        };
-        // Garante que as Actions estejam habilitadas ao ativar o script
-        actions.Enable();
     }
 
     void StartGlide()
     {
-        if (!lightPlayer && !GroundCheck())
+        if (GroundCheck())
+            return;
+
+        if (rb.linearVelocity.y > 0f)
         {
-            isGliding = true;
-            rb.gravityScale = glideGravityScale;
-            OnGlideStateChanged?.Invoke(this, true);
+            glideQueued = true;
+            return;
         }
+
+        ActivateGlide();
     }
+
+    void ActivateGlide()
+    {
+        isGliding = true;
+        rb.gravityScale = glideGravityScale;
+        OnGlideStateChanged?.Invoke(this, true);
+    }
+
     void StopGlide()
     {
-        if (!lightPlayer && isGliding)
+        glideQueued = false;
+
+        if (isGliding)
         {
             isGliding = false;
             rb.gravityScale = baseGravity;
             OnGlideStateChanged?.Invoke(this, false);
         }
     }
+
     private void AttemptGrapple()
     {
         if (!lightPlayer || isGrappling) return;
+
         int grappleLayerValue = LayerMask.NameToLayer("GrapplePoint");
         if (grappleLayerValue == -1)
         {
@@ -177,26 +216,34 @@ public class PlayerController : MonoBehaviour
             return;
         }
         LayerMask forcedGrappleLayer = 1 << grappleLayerValue;
+
         Vector2 aimDirection = GetAimDirection();
+
         Collider2D[] potentialTargets = Physics2D.OverlapCircleAll(
             transform.position,
             maxGrappleDistance,
             forcedGrappleLayer
         );
+
         Vector2 bestGrapplePoint = Vector2.zero;
         float closestDistance = float.MaxValue;
+
         foreach (Collider2D targetCollider in potentialTargets)
         {
             if (!targetCollider.CompareTag(grapplePointTag))
             {
                 continue;
             }
+
             Vector2 targetPosition = targetCollider.transform.position;
             Vector2 directionToTarget = (targetPosition - (Vector2)transform.position).normalized;
             float distanceToTarget = Vector2.Distance(transform.position, targetPosition);
+
+            // --- Filtro de Obstrução (Raycast) com Offset ---
             float offset = 0.1f;
             Vector2 startPoint = (Vector2)transform.position + directionToTarget * offset;
             float rayDistance = distanceToTarget - offset;
+
             RaycastHit2D hit = Physics2D.Raycast(
                 startPoint,
                 directionToTarget,
@@ -228,10 +275,13 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
     private void ReleaseGrapple()
     {
         if (!isGrappling) return;
+
         isGrappling = false;
+
         if (lr != null && dj != null)
         {
             lr.enabled = false;
@@ -239,36 +289,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // ***************************************************************
-    // MODIFICAÇÃO: Desativa as actions do Input System ao desabilitar o objeto
-    // e remove as referências (o que é crucial ao carregar uma nova cena).
-    // ***************************************************************
-    void OnDisable()
-    {
-        if (playerInput != null && playerInput.actions != null)
-        {
-            // É mais seguro desativar a ActionMap inteira para limpar os Listeners
-            // do que tentar desinscrever lambdas anônimas (como foi feito no OnEnable).
-            playerInput.actions.Disable();
-        }
-        // Se houver eventos estáticos ou outros Listeners, eles devem ser desinscritos aqui.
-    }
-    // ***************************************************************
-
     void Update()
     {
         CheckIlluminationEffects();
         Gravity();
+
+        // Auto-activate queued glide when falling
+        if (glideQueued && rb.linearVelocity.y <= 0f && !GroundCheck())
+        {
+            glideQueued = false;
+            ActivateGlide();
+        }
+
         if (isGrappling && lr != null)
         {
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, grapplePoint);
         }
     }
-
-    // ====================================================================
-    // 🟢 MÉTODOS DE COLISÃO CORRIGIDOS PARA CONTAR JOGADORES NO PORTÃO
-    // ====================================================================
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -298,40 +336,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // ====================================================================
-
     private void CheckIlluminationEffects()
     {
-        if (health == null || SistemaDiaNoite.Instance == null) return;
-        if (!health.isAlive) return;
+        if (health == null) return;
+        bool bright = IlluminationManager.Instance.IsPointBright(transform.position);
 
-        // 1. Verifica se a zona atual é Dia (BrightZone)
-        bool isInBrightZone = SistemaDiaNoite.Instance.IsInBrightZone(transform.position.x);
-
-        // 2. Lógica de Perda/Ganho de Vida
         if (lightPlayer)
         {
-            // SunKnight (Luz): Ganha vida no Dia, Perde vida na Noite
-            if (isInBrightZone)
-            {
+            if (bright)
                 health.AddHealth(healPerSecond * Time.deltaTime);
-            }
-            else // Zona Noite
-            {
+            else
                 health.TakeDamage(damagePerSecond * Time.deltaTime);
-            }
         }
-        else // NightGirl (Noite)
+        else
         {
-            // NightGirl (Noite): Ganha vida na Noite, Perde vida no Dia
-            if (isInBrightZone) // Zona Dia
-            {
+            if (bright)
                 health.TakeDamage(damagePerSecond * Time.deltaTime);
-            }
-            else // Zona Noite
-            {
+            else
                 health.AddHealth(healPerSecond * Time.deltaTime);
-            }
         }
     }
 
@@ -358,8 +380,10 @@ public class PlayerController : MonoBehaviour
             rb.gravityScale = baseGravity;
         }
     }
+
     void FixedUpdate()
     {
+
         CheckGroundState();
         if (isGrappling)
         {
@@ -367,8 +391,6 @@ public class PlayerController : MonoBehaviour
             LimitSwingHeight();
             return;
         }
-
-        // CORREÇÃO DE SEGURANÇA: Evita erro se rb for destruído no meio do FixedUpdate
         if (rb == null) return;
 
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
@@ -383,11 +405,13 @@ public class PlayerController : MonoBehaviour
                 HandleAirborneAnimation();
             }
         }
-        if (rb.linearVelocity.y > 21f)
+
+        if (rb.linearVelocity.y > 25f)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 21f);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 25f);
         }
     }
+
     private void CheckGroundState()
     {
         isGrounded = GroundCheck();
@@ -405,6 +429,7 @@ public class PlayerController : MonoBehaviour
         }
         wasGroundedLastFrame = isGrounded;
     }
+
     private void HandleMovementAnimation(float horizontalInput)
     {
         if (!isAnimatorInitialized || controlledAnimator == null) return;
@@ -430,6 +455,7 @@ public class PlayerController : MonoBehaviour
             controlledAnimator.SetFloat("VerticalSpeed", rb.linearVelocity.y);
         }
     }
+
     private void ApplySwingImpulse()
     {
         Vector2 ropeVector = grapplePoint - (Vector2)transform.position;
@@ -450,20 +476,23 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
         }
     }
-    void Balance() { }
-    void Glide() { }
 
-    // ***************************************************************
-    // MODIFICAÇÃO: Adiciona a verificação de nulo (null check) em 'rb'
-    // ***************************************************************
+    void Balance()
+    {
+        // Placeholder for future balance adjustments
+    }
+
+    void Glide()
+    {
+        // Placeholder for future glide mechanics
+    }
+
     void Jump(bool jumping)
     {
-        // VERIFICAÇÃO PRINCIPAL: Se o Rigidbody for nulo (objeto destruído), saia imediatamente.
-        if (rb == null) return;
-
-        if (lightPlayer && isGrappling && jumping)
+        if (isGrappling && jumping)
         {
             ReleaseGrapple();
+            // Dá um pequeno boost ao pular do gancho
             rb.linearVelocity = new Vector2(rb.linearVelocity.x * 1.5f, jumpForce * 1.2f);
             if (controlledAnimator != null && isAnimatorInitialized)
             {
@@ -474,7 +503,7 @@ public class PlayerController : MonoBehaviour
         }
         if (jumping)
         {
-            if (isGrounded)
+            if (GroundCheck())
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
                 if (controlledAnimator != null && isAnimatorInitialized)
@@ -492,7 +521,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    // ***************************************************************
 
     private bool GroundCheck()
     {

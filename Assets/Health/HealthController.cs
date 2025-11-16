@@ -10,6 +10,8 @@ public class HealthController : MonoBehaviour
     public bool isAlive => currentHealth > 0;
 
     public event Action<float, float> OnHealthChanged;
+    // args: (currentHealth, maximumHealth)
+
     public event Action OnDeath;
 
     private void Awake()
@@ -33,19 +35,18 @@ public class HealthController : MonoBehaviour
         currentHealth += healAmount;
         if (currentHealth > maximumHealth)
             currentHealth = maximumHealth;
-
-        NotifyHealthChanged(); // <-- ESSENCIAL para a UI
+        NotifyHealthChanged();
     }
 
     public void NotifyHealthChanged()
     {
         OnHealthChanged?.Invoke(currentHealth, maximumHealth);
+        //Debug.Log($"Current Listneners: {OnHealthChanged?.GetInvocationList().Length ?? 0}");
     }
 
     private void Die()
     {
-        if (currentHealth > 0) return;
-
+        if (isAlive) return; // prevents multiple triggers
         OnDeath?.Invoke();
         Debug.Log($"{gameObject.name} has died!");
     }
