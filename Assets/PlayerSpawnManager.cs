@@ -47,15 +47,15 @@ public class PlayerSpawnManager : MonoBehaviour
 
     private void Start()
     {
-        if (PlayerMode.SingleKeyboard)
-        {
+        //if (PlayerMode.SingleKeyboar)
+        //{
             Debug.Log("Spawning players in Single Keyboard mode");
             // Disable join-on-press flow
             pim.enabled = false;
 
             // Spawn two players immediately with different keyboard schemes
             SpawnSingleKeyboardPlayers();
-        }
+        //}
     }
 
     // -------- Single Keyboard path --------

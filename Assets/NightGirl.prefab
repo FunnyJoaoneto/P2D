@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 10
-  jumpForce: 20
+  jumpForce: 24
   maxJumps: 2
   groundLayer:
     serializedVersion: 2
@@ -314,7 +314,7 @@ MonoBehaviour:
   fallSpeedMultiplier: 2
   maxFallSpeed: 20
   lightPlayer: 0
-  glideGravityScale: 0.3
+  glideGravityScale: 1
   glideUpBoost: 3
   isGliding: 0
   maxGrappleDistance: 15

@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public float glideGravityScale = 0.3f;
     public float glideUpBoost = 3f;
     public bool isGliding = false;
+    private bool glideQueued = false;
 
     [Header("Grapple Settings")]
     public float maxGrappleDistance = 15f;
@@ -126,19 +127,31 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     void StartGlide()
     {
-        if (!GroundCheck())
+        if (GroundCheck())
+            return;
+
+        if (rb.linearVelocity.y > 0f)
         {
-            isGliding = true;
-            rb.gravityScale = glideGravityScale;
-            OnGlideStateChanged?.Invoke(this, true);
+            glideQueued = true;
+            return;
         }
+
+        ActivateGlide();
+    }
+
+    void ActivateGlide()
+    {
+        isGliding = true;
+        rb.gravityScale = glideGravityScale;
+        OnGlideStateChanged?.Invoke(this, true);
     }
 
     void StopGlide()
     {
+        glideQueued = false;
+
         if (isGliding)
         {
             isGliding = false;
@@ -240,6 +253,13 @@ public class PlayerController : MonoBehaviour
         CheckIlluminationEffects();
         Gravity();
 
+        // Auto-activate queued glide when falling
+        if (glideQueued && rb.linearVelocity.y <= 0f && !GroundCheck())
+        {
+            glideQueued = false;
+            ActivateGlide();
+        }
+
         if (isGrappling && lr != null)
         {
             lr.SetPosition(0, transform.position);
@@ -312,9 +332,9 @@ public class PlayerController : MonoBehaviour
             LimitSwingHeight();
         }
 
-        if (rb.linearVelocity.y > 21f)
+        if (rb.linearVelocity.y > 25f)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 21f);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 25f);
         }
     }
 
