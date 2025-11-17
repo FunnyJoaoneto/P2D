@@ -54,29 +54,66 @@ public class PlayerSpawnManager : MonoBehaviour
             pim.enabled = false;
 
             // Spawn two players immediately with different keyboard schemes
-            SpawnSingleKeyboardPlayers();
+            SpawnFromMenuSelections();
         //}
     }
 
     // -------- Single Keyboard path --------
-    private void SpawnSingleKeyboardPlayers()
+    private void SpawnFromMenuSelections()
     {
-        // Player 1 — WASD
-        var p1 = PlayerInput.Instantiate(
-            lightGuyPrefab,
-            controlScheme: "KeyboardWASD",
-            pairWithDevice: Keyboard.current);
-        SetupPlayer(p1);
+        var data = PlayerSelectionData.Instance;
 
-        // Player 2 — Arrows
-        var p2 = PlayerInput.Instantiate(
-            nightGirlPrefab,
-            controlScheme: "KeyboardArrows",
-            pairWithDevice: Keyboard.current);
-        SetupPlayer(p2);
+        // Detect which selection is Light and which is Night
+        bool p1IsLight = data.p1Character == "LightGuy";
+        bool p2IsLight = data.p2Character == "LightGuy";
+
+        // Choose prefabs
+        GameObject lightPrefab = lightGuyPrefab;
+        GameObject nightPrefab = nightGirlPrefab;
+
+        // Prepare spawn variables
+        GameObject firstPrefab;
+        string firstScheme;
+        GameObject secondPrefab;
+        string secondScheme;
+
+        if (p1IsLight)
+        {
+            // P1 = Light, P2 = Night
+            firstPrefab = lightPrefab;
+            firstScheme = data.p1Scheme;
+
+            secondPrefab = nightPrefab;
+            secondScheme = data.p2Scheme;
+        }
+        else
+        {
+            // P2 = Light, P1 = Night
+            firstPrefab = lightPrefab;
+            firstScheme = data.p2Scheme;
+
+            secondPrefab = nightPrefab;
+            secondScheme = data.p1Scheme;
+        }
+
+        Debug.Log($"Spawning players: 1st={firstPrefab.name}({firstScheme}), 2nd={secondPrefab.name}({secondScheme})");
+
+        // --- Spawn Light Player first ---
+        var pLight = PlayerInput.Instantiate(
+            firstPrefab,
+            controlScheme: firstScheme,
+            pairWithDevice: Keyboard.current
+        );
+        SetupPlayer(pLight);
+
+        // --- Spawn Night Player second ---
+        var pNight = PlayerInput.Instantiate(
+            secondPrefab,
+            controlScheme: secondScheme,
+            pairWithDevice: Keyboard.current
+        );
+        SetupPlayer(pNight);
     }
-
-
     // -------- Two Devices path (existing) --------
     private void OnPlayerJoined(PlayerInput player)
     {
