@@ -298,6 +298,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (PlayerGlobalLock.movementLocked)
+        {
+            moveInput = Vector2.zero;
+            Gravity(); // or even skip gravity if you want a full freeze
+            return;
+        }
+
         CheckIlluminationEffects();
         Gravity();
 
@@ -402,6 +409,23 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        // If movement is globally locked, clear input and stop horizontal movement
+        if (PlayerGlobalLock.movementLocked)
+        {
+            moveInput = Vector2.zero;
+
+            if (rb != null)
+            {
+                rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            }
+
+            // Optional: also stop grapple and glide while locked
+            if (isGrappling) ReleaseGrapple();
+            if (isGliding)  StopGlide();
+
+            // Skip the rest of FixedUpdate
+            return;
+        }
 
         CheckGroundState();
         if (isGrappling)
