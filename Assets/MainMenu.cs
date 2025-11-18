@@ -1,22 +1,92 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+    [Header("Buttons")]
+    public Button newGameButton;
+    public Button continueButton;
 
-    public void SelectSingleKeyboard()
+    [Header("First level scene name")]
+    public string firstLevelSceneName = "Level1";
+
+    [Header("Selection UI Reference")]
+    public MenuPlayerSelectUI selectionUI;
+
+    private void Start()
     {
-        PlayerMode.SingleKeyboard = true;
-        SceneManager.LoadSceneAsync(3);
+        // Enable or disable Continue depending on whether save exists
+        bool hasSave = SaveSystem.SaveExists();
+        continueButton.interactable = hasSave;
+        PlayerMode.SingleKeyboard = true; // Default to single keyboard mode
     }
 
-    public void SelectTwoDevices()
+    // Called by the New Game button OnClick
+    public void OnClickNewGame()
     {
-        //Needs to be true for now, because the game only supports single keyboard mode.
-        PlayerMode.SingleKeyboard = true;
-        SceneManager.LoadSceneAsync(3);
+        // 1. Write player selections into PlayerSelectionData
+        if (selectionUI != null)
+            selectionUI.OnClickPlay();
+
+        // Wipe old save (if any)
+        SaveSystem.DeleteSave();
+
+        // Create a fresh save, using the current player selection
+        SaveData data = new SaveData();
+
+        // Use your DontDestroyOnLoad singleton for character/control
+        if (PlayerSelectionData.Instance != null)
+        {
+            data.p1Character = PlayerSelectionData.Instance.p1Character;
+            data.p1Scheme    = PlayerSelectionData.Instance.p1Scheme;
+            data.p2Character = PlayerSelectionData.Instance.p2Character;
+            data.p2Scheme    = PlayerSelectionData.Instance.p2Scheme;
+        }
+
+        data.lastScene = firstLevelSceneName;
+
+        SaveSystem.Save(data);
+
+        // Load first level
+        SceneManager.LoadScene(firstLevelSceneName);
     }
 
+    // Called by the Continue button OnClick
+    public void OnClickContinue()
+    {
+        if (!SaveSystem.SaveExists())
+            return;
+
+        SaveData data = SaveSystem.Load();
+        if (data == null)
+            return;
+
+        // Make sure there is a PlayerSelectionData object
+        if (PlayerSelectionData.Instance == null)
+        {
+            GameObject go = new GameObject("PlayerSelectionData");
+            var selection = go.AddComponent<PlayerSelectionData>();
+
+            // Awake() in PlayerSelectionData will set Instance and DontDestroyOnLoad
+
+            selection.p1Character = data.p1Character;
+            selection.p1Scheme    = data.p1Scheme;
+            selection.p2Character = data.p2Character;
+            selection.p2Scheme    = data.p2Scheme;
+        }
+        else
+        {
+            var selection = PlayerSelectionData.Instance;
+            selection.p1Character = data.p1Character;
+            selection.p1Scheme    = data.p1Scheme;
+            selection.p2Character = data.p2Character;
+            selection.p2Scheme    = data.p2Scheme;
+        }
+
+        // Load the last saved scene
+        SceneManager.LoadScene(data.lastScene);
+    }
 
     public void QuitGame()
     {
