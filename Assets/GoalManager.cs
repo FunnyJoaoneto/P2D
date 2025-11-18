@@ -174,5 +174,8 @@ public class GoalManager : MonoBehaviour
             // Fallback in case something is misconfigured
             SceneManager.LoadScene(nomeDaProximaCena);
         }
+
+        // 3) Unlock player movement after scene load (handled in LevelTransitionManager)
+        PlayerGlobalLock.movementLocked = false;
     }
 }

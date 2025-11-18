@@ -56,8 +56,5 @@ public class MenuPlayerSelectUI : MonoBehaviour
 
         data.p2Character = p2.CharacterId;
         data.p2Scheme    = p2.SchemeId;
-
-        PlayerMode.SingleKeyboard = true;
-        SceneManager.LoadSceneAsync(3);
     }
 }
