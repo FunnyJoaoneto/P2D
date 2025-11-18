@@ -46,5 +46,23 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 2655716301
+    locked: 0
+  - name: Ground
+    uniqueID: 4141718891
+    locked: 0
+  - name: Fans
+    uniqueID: 3137624223
+    locked: 0
+  - name: PlatsTrees
+    uniqueID: 2481443235
+    locked: 0
+  - name: Interactables
+    uniqueID: 3979022973
+    locked: 0
+  - name: Players
+    uniqueID: 2767431199
+    locked: 0
   m_RenderingLayers:
   - Default

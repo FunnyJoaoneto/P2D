@@ -50,9 +50,21 @@ public class TutorialCameraSequence : MonoBehaviour
     private Vector3 initialCamPos;
     private float initialCamSize;
 
+    // Skip tutorial
+    private bool skipRequested = false;
+    public GameObject skipButton;
+
     private IEnumerator Start()
     {
+        //------------------------
+        // LOCK MOVEMENT
+        //------------------------
+        PlayerGlobalLock.movementLocked = true;
+
         yield return new WaitForSeconds(startDelay);
+
+        if (skipRequested)
+            yield return SkipToGameplay();
 
         initialCamPos = cam.transform.position;
         initialCamSize = cam.orthographicSize;
@@ -82,11 +94,6 @@ public class TutorialCameraSequence : MonoBehaviour
         }
 
         //------------------------
-        // LOCK MOVEMENT
-        //------------------------
-        PlayerGlobalLock.movementLocked = true;
-
-        //------------------------
         // DISABLE COOP CAMERA
         //------------------------
         if (coopCam != null)
@@ -101,6 +108,7 @@ public class TutorialCameraSequence : MonoBehaviour
             cameraWallsRoot.SetActive(false);
         }
 
+        skipButton.SetActive(true);
         tutorialText.gameObject.SetActive(true);
         //------------------------
         // INTRO STEP (NO CAMERA MOVE)
@@ -111,6 +119,9 @@ public class TutorialCameraSequence : MonoBehaviour
             2f
         );
 
+        if (skipRequested)
+            yield return SkipToGameplay();
+
         yield return new WaitForSeconds(2f);
 
         //------------------------
@@ -118,11 +129,24 @@ public class TutorialCameraSequence : MonoBehaviour
         //------------------------
         foreach (var step in steps)
         {
+            if (skipRequested)
+                break;
             // Show message + pings
             yield return ShowStepMessage(step.message, step.pingTargets, step.pingDuration);
 
+            if (skipRequested)
+                break;
             // Move camera to step target
             yield return MoveToStep(step);
+
+            if (skipRequested)
+                break;
+        }
+
+        if (skipRequested)
+        {
+            yield return SkipToGameplay();
+            yield break;
         }
 
         //------------------------
@@ -146,6 +170,28 @@ public class TutorialCameraSequence : MonoBehaviour
         //------------------------
         PlayerGlobalLock.movementLocked = false;
     }
+
+    private IEnumerator SkipToGameplay()
+    {
+        // smooth move to initial camera state
+        yield return SmoothBackToInitial(1.5f);
+
+        // enable coop cam
+        if (coopCam != null)
+            coopCam.enabled = true;
+
+        // restore camera walls
+        if (cameraWallsRoot != null)
+            cameraWallsRoot.SetActive(wallsInitiallyActive);
+
+        // hide UI
+        tutorialText.text = "";
+        tutorialText.gameObject.SetActive(false);
+
+        // unlock movement
+        PlayerGlobalLock.movementLocked = false;
+    }
+
 
     //-----------------------------------------
     // CAMERA MOVEMENT
@@ -198,6 +244,7 @@ public class TutorialCameraSequence : MonoBehaviour
 
     private IEnumerator SmoothBackToInitial(float duration)
     {
+        skipButton.SetActive(false);
         Vector3 startPos = cam.transform.position;
         float startSize = cam.orthographicSize;
 
@@ -223,5 +270,14 @@ public class TutorialCameraSequence : MonoBehaviour
         ping.transform.position = screenPos;
 
         Destroy(ping, duration);
+    }
+
+    //-----------------------------------------
+    // SKIP TUTORIAL
+    //-----------------------------------------
+    public void RequestSkip()
+    {
+        skipRequested = true;
+        skipButton.SetActive(false);
     }
 }

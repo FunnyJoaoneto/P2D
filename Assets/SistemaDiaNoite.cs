@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using System.Collections;
 
 public class SistemaDiaNoite : MonoBehaviour // Manager Global
 {
@@ -25,6 +26,12 @@ public class SistemaDiaNoite : MonoBehaviour // Manager Global
     public Transform spotlight;
     public float spotlightStartY = 0f;
     public float spotlightEndY = 180f;
+
+    [Header("Tutorial Behaviour")]
+    public TMPro.TextMeshProUGUI tutorialText;
+
+    public string tutorialText_Wait = "Wait... something is happening";
+    public string tutorialText_Explain = "The world is turning, get to your zone fast";
 
     [Header("Controle de Tempo e Transi��o")]
     [Tooltip("Dura��o da transi��o em segundos.")]
@@ -67,7 +74,6 @@ public class SistemaDiaNoite : MonoBehaviour // Manager Global
         }
         else
         {
-            // Tutorial mode: wait for players
             CheckTutorialTrigger();
         }
 
@@ -93,9 +99,49 @@ public class SistemaDiaNoite : MonoBehaviour // Manager Global
         if (reached1 && reached2)
         {
             tutorialTriggered = true;
-            IniciarTransicao();
+            StartCoroutine(TutorialSequence());
         }
     }
+
+    private IEnumerator TutorialSequence()
+    {
+        // 1) Lock player movement globally
+        PlayerGlobalLock.movementLocked = true;
+
+        // 4) Show first message
+        if (tutorialText != null)
+        {
+            tutorialText.gameObject.SetActive(true);
+            tutorialText.text = tutorialText_Wait;
+        }
+
+        yield return new WaitForSeconds(2f);
+
+        // 5) Second message
+        if (tutorialText != null)
+        {
+            tutorialText.text = tutorialText_Explain;
+        }
+
+        yield return new WaitForSeconds(2f);
+
+        // 7) Hide text
+        if (tutorialText != null)
+        {
+            tutorialText.text = "";
+            tutorialText.gameObject.SetActive(false);
+        }
+
+        PlayerGlobalLock.movementLocked = false;
+
+        // 6) Start your normal transition
+        IniciarTransicao();
+
+        while (emTransicao)
+            yield return null;
+    }
+
+
 
     private GameObject FindPlayerOnLayer(string layerName)
     {
