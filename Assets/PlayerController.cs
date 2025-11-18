@@ -16,47 +16,42 @@ public class PlayerController : MonoBehaviour
     private bool wasGroundedLastFrame = false;
     private int jumpCount;
 
-    [Header("Efeitos Dia/Noite")]
-    [Tooltip("Dano (perda de vida) por segundo em ambiente desfavorável.")]
     public float damagePerSecond = 10f;
-    [Tooltip("Cura (ganho de vida) por segundo em ambiente favorável.")]
     public float healPerSecond = 5f;
-    
 
-    [Header("Movement Settings")]
+
     public float moveSpeed = 5f;
 
-    [Header("Jump Settings")]
     public float jumpForce = 7f;
     public int maxJumps = 2;
 
-    [Header("Ground Check")]
     public LayerMask groundLayer;
     public Transform groundCheckPos;
     public Vector2 groundCheckSize = new Vector2(0.5f, 0.5f);
 
-    [Header("Gravity Settings")]
     public float baseGravity = 2f;
     public float fallSpeedMultiplier = 2f;
     public float maxFallSpeed = 18f;
 
-    [Header("Abilities")]
     public bool lightPlayer = true;
 
-    [Header("Glide Settings")]
     public float glideGravityScale = 0.3f;
     public float glideUpBoost = 3f;
     public bool isGliding = false;
     private bool glideQueued = false;
 
-    [Header("Grapple Settings")]
     public float maxGrappleDistance = 15f;
     public LayerMask grapplePointLayer;
     public string grapplePointTag = "GrapplePoint";
 
-    // VARIÁVEIS PARA O BALANÇO
     public float swingImpulseForce = 15f;
     public float maxSwingHeightRatio = 0.8f;
+
+    public float forceChargeRate = 50f;
+    public float minReboundForce = 15f;
+
+    private float currentSwingForce = 0f;
+    private bool isAbilityButtonHeld = false;
 
     public PlayerInput playerInput;
     private Vector2 moveInput;
@@ -67,6 +62,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool isGrappling = false;
     private Vector2 grapplePoint;
     private float lastMoveDirection = 1f;
+    private float lockedSwingDirection = 0f;
 
     private InputAction moveAction;
     private InputAction jumpAction;
@@ -83,7 +79,6 @@ public class PlayerController : MonoBehaviour
 
         InitializeAnimator();
 
-        // Configuração inicial do DistanceJoint2D
         if (dj != null)
         {
             dj.autoConfigureDistance = false;
@@ -137,17 +132,21 @@ public class PlayerController : MonoBehaviour
 
     void OnEnable()
     {
-        //hmmmm
+
     }
 
     void OnDisable()
     {
-        //hmmmmmmm
+
     }
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
         moveInput = ctx.ReadValue<Vector2>();
+        if (isGrappling && Mathf.Abs(moveInput.x) > 0.1f)
+        {
+            lockedSwingDirection = Mathf.Sign(moveInput.x);
+        }
     }
 
     public void OnJump(InputAction.CallbackContext ctx)
@@ -162,11 +161,13 @@ public class PlayerController : MonoBehaviour
     {
         if (ctx.performed)
         {
+            isAbilityButtonHeld = true;
             if (!lightPlayer) StartGlide();
             else AttemptGrapple();
         }
         else if (ctx.canceled)
         {
+            isAbilityButtonHeld = false;
             if (!lightPlayer) StopGlide();
             else ReleaseGrapple();
         }
@@ -207,7 +208,7 @@ public class PlayerController : MonoBehaviour
 
     private void AttemptGrapple()
     {
-        if (!lightPlayer || isGrappling) return;
+        if (!lightPlayer || isGrappling || dj == null) return;
 
         int grappleLayerValue = LayerMask.NameToLayer("GrapplePoint");
         if (grappleLayerValue == -1)
@@ -239,7 +240,11 @@ public class PlayerController : MonoBehaviour
             Vector2 directionToTarget = (targetPosition - (Vector2)transform.position).normalized;
             float distanceToTarget = Vector2.Distance(transform.position, targetPosition);
 
-            // --- Filtro de Obstrução (Raycast) com Offset ---
+            if (targetPosition.y <= transform.position.y)
+            {
+                continue;
+            }
+
             float offset = 0.1f;
             Vector2 startPoint = (Vector2)transform.position + directionToTarget * offset;
             float rayDistance = distanceToTarget - offset;
@@ -254,6 +259,7 @@ public class PlayerController : MonoBehaviour
             {
                 continue;
             }
+
             if (distanceToTarget < closestDistance)
             {
                 closestDistance = distanceToTarget;
@@ -264,12 +270,18 @@ public class PlayerController : MonoBehaviour
         {
             grapplePoint = bestGrapplePoint;
             isGrappling = true;
+            currentSwingForce = 0f;
+
+            lockedSwingDirection = (grapplePoint.x > transform.position.x) ? 1f : -1f;
+
             if (lr != null && dj != null)
             {
                 lr.enabled = true;
+
                 dj.enabled = true;
                 dj.connectedAnchor = grapplePoint;
                 dj.distance = closestDistance;
+
                 rb.gravityScale = baseGravity;
                 rb.linearVelocity *= 0.1f;
             }
@@ -281,6 +293,8 @@ public class PlayerController : MonoBehaviour
         if (!isGrappling) return;
 
         isGrappling = false;
+        currentSwingForce = 0f;
+        lockedSwingDirection = 0f;
 
         if (lr != null && dj != null)
         {
@@ -294,7 +308,6 @@ public class PlayerController : MonoBehaviour
         CheckIlluminationEffects();
         Gravity();
 
-        // Auto-activate queued glide when falling
         if (glideQueued && rb.linearVelocity.y <= 0f && !GroundCheck())
         {
             glideQueued = false;
@@ -310,13 +323,10 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Verifica se a colisão é com a porta em qualquer um dos seus estados.
-        // Isso garante que o contador de entrada funcione mesmo antes de coletar os itens.
         if (other.CompareTag("ExitReady") || other.CompareTag("ExitGate"))
         {
             if (GoalManager.Instance != null)
             {
-                // Informa ao GoalManager que um jogador entrou
                 GoalManager.Instance.EntrarPortao();
             }
         }
@@ -324,13 +334,10 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        // Verifica se o jogador está saindo da área da porta em qualquer um dos seus estados.
-        // Isso garante que o contador de saída funcione, prevenindo o travamento da transição.
         if (other.CompareTag("ExitReady") || other.CompareTag("ExitGate"))
         {
             if (GoalManager.Instance != null)
             {
-                // Informa ao GoalManager que um jogador saiu
                 GoalManager.Instance.SairPortao();
             }
         }
@@ -341,7 +348,6 @@ public class PlayerController : MonoBehaviour
         if (health == null || SistemaDiaNoite.Instance == null) return;
         if (!health.isAlive) return;
 
-        // 1. Verifica se a zona atual é Dia (BrightZone)
         bool isInBrightZone = SistemaDiaNoite.Instance.IsInBrightZone(transform.position.x);
 
         if (lightPlayer)
@@ -390,8 +396,8 @@ public class PlayerController : MonoBehaviour
         CheckGroundState();
         if (isGrappling)
         {
-            ApplySwingImpulse();
-            LimitSwingHeight();
+            HandleGrappleForces();
+            LimitVerticalMovement();
             return;
         }
         if (rb == null) return;
@@ -452,42 +458,95 @@ public class PlayerController : MonoBehaviour
             lastMoveDirection = Mathf.Sign(moveInput.x);
         }
         controlledAnimator.SetFloat("Direction", lastMoveDirection);
-        // CORREÇÃO DE SEGURANÇA: Evita erro se rb for destruído no meio da animação
         if (rb != null)
         {
             controlledAnimator.SetFloat("VerticalSpeed", rb.linearVelocity.y);
         }
     }
 
-    private void ApplySwingImpulse()
+    private void HandleGrappleForces()
     {
         Vector2 ropeVector = grapplePoint - (Vector2)transform.position;
-        Vector2 swingDirection = new Vector2(-ropeVector.y, ropeVector.x).normalized;
-        if (moveInput.x != 0)
+        Vector2 swingTangent = new Vector2(-ropeVector.y, ropeVector.x).normalized;
+
+
+        if (isAbilityButtonHeld)
         {
-            rb.AddForce(swingDirection * moveInput.x * swingImpulseForce * Time.fixedDeltaTime, ForceMode2D.Force);
+            currentSwingForce = Mathf.MoveTowards(
+                currentSwingForce,
+                swingImpulseForce,
+                forceChargeRate * Time.fixedDeltaTime
+            );
+        }
+        else
+        {
+
+            currentSwingForce = Mathf.MoveTowards(
+                currentSwingForce,
+                0f,
+                forceChargeRate * Time.fixedDeltaTime * 0.5f
+            );
+        }
+
+        float desiredDirection = 0f;
+        float forceToApply = 0f;
+
+
+        if (Mathf.Abs(moveInput.x) > 0.1f)
+        {
+            desiredDirection = Mathf.Sign(moveInput.x);
+
+            forceToApply = currentSwingForce;
+        }
+        else
+        {
+
+            desiredDirection = Mathf.Sign(rb.linearVelocity.x);
+
+
+            if (Mathf.Abs(desiredDirection) < 0.1f)
+            {
+                desiredDirection = lockedSwingDirection;
+            }
+
+
+            forceToApply = minReboundForce + currentSwingForce;
+        }
+
+
+        if (Mathf.Abs(desiredDirection) < 0.1f) return;
+
+
+        if (Mathf.Sign(swingTangent.x) != desiredDirection)
+        {
+            swingTangent *= -1f;
+        }
+
+
+        if (forceToApply > 0f)
+        {
+
+            rb.AddForce(swingTangent * forceToApply, ForceMode2D.Force);
         }
     }
-    private void LimitSwingHeight()
+
+    private void LimitVerticalMovement()
     {
-        if (dj == null) return;
-        float currentDistance = Vector2.Distance(transform.position, grapplePoint);
-        float originalDistance = dj.distance;
-        float maxAllowedDistance = originalDistance * maxSwingHeightRatio;
-        if (currentDistance < maxAllowedDistance && rb.linearVelocity.y > 0)
+
+        if (transform.position.y >= grapplePoint.y && rb.linearVelocity.y > 0)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
         }
     }
 
     void Balance()
     {
-        // Placeholder for future balance adjustments
+
     }
 
     void Glide()
     {
-        // Placeholder for future glide mechanics
+
     }
 
     void Jump(bool jumping)
@@ -495,7 +554,7 @@ public class PlayerController : MonoBehaviour
         if (isGrappling && jumping)
         {
             ReleaseGrapple();
-            // Dá um pequeno boost ao pular do gancho
+
             rb.linearVelocity = new Vector2(rb.linearVelocity.x * 1.5f, jumpForce * 1.2f);
             if (controlledAnimator != null && isAnimatorInitialized)
             {

@@ -339,8 +339,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   grapplePointTag: GrapplePoint
-  swingImpulseForce: 15
-  maxSwingHeightRatio: 0.8
+  swingImpulseForce: 10
+  maxSwingHeightRatio: 0.5
+  forceChargeRate: 50
+  minReboundForce: 15
   playerInput: {fileID: 299585397989469277}
   grappleCheckRadius: 0.1
   isGrappling: 0
@@ -368,8 +370,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85bd620b7a4046741b15944076060ad5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthController
-  currentHealth: 100
-  maximumHealth: 100
+  currentHealth: 10000
+  maximumHealth: 10000
 --- !u!232 &4383410643792069623
 DistanceJoint2D:
   m_ObjectHideFlags: 0
