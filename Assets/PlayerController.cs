@@ -147,11 +147,15 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
+        if (PlayerGlobalLock.movementLocked)
+            return;
         moveInput = ctx.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext ctx)
     {
+        if (PlayerGlobalLock.movementLocked)
+            return;
         if (ctx.performed)
             Jump(true);
         else if (ctx.canceled)
@@ -160,6 +164,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnAbility(InputAction.CallbackContext ctx)
     {
+        if (PlayerGlobalLock.movementLocked)
+            return;
         if (ctx.performed)
         {
             if (!lightPlayer) StartGlide();
@@ -174,8 +180,9 @@ public class PlayerController : MonoBehaviour
 
     void StartGlide()
     {
-        if (GroundCheck())
-            return;
+        //If i remove this line because of the base gravity change, the player can jump very high
+        //if (GroundCheck())
+            //return;
 
         if (rb.linearVelocity.y > 0f)
         {
@@ -291,6 +298,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (PlayerGlobalLock.movementLocked)
+        {
+            moveInput = Vector2.zero;
+            Gravity(); // or even skip gravity if you want a full freeze
+            return;
+        }
+
         CheckIlluminationEffects();
         Gravity();
 
@@ -369,8 +383,17 @@ public class PlayerController : MonoBehaviour
         }
         if (isGliding)
         {
+            if (rb.linearVelocity.y > 0f)
+            {
+                rb.gravityScale = baseGravity;
+                return;
+            }
             rb.gravityScale = glideGravityScale;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -maxFallSpeed / 3f));
+            if( rb.linearVelocity.y > 21f){
+                Debug.Log("Limiting glide upward speed");
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 21f);
+            }
             return;
         }
         if (rb.linearVelocity.y < 0)
@@ -386,6 +409,23 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        // If movement is globally locked, clear input and stop horizontal movement
+        if (PlayerGlobalLock.movementLocked)
+        {
+            moveInput = Vector2.zero;
+
+            if (rb != null)
+            {
+                rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            }
+
+            // Optional: also stop grapple and glide while locked
+            if (isGrappling) ReleaseGrapple();
+            if (isGliding)  StopGlide();
+
+            // Skip the rest of FixedUpdate
+            return;
+        }
 
         CheckGroundState();
         if (isGrappling)

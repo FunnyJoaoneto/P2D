@@ -7,13 +7,14 @@ public class MainMenu : MonoBehaviour
     public void SelectSingleKeyboard()
     {
         PlayerMode.SingleKeyboard = true;
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadSceneAsync(3);
     }
 
     public void SelectTwoDevices()
     {
-        PlayerMode.SingleKeyboard = false;
-        SceneManager.LoadSceneAsync(1);
+        //Needs to be true for now, because the game only supports single keyboard mode.
+        PlayerMode.SingleKeyboard = true;
+        SceneManager.LoadSceneAsync(3);
     }
 
 
