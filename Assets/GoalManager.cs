@@ -5,26 +5,26 @@ public class GoalManager : MonoBehaviour
 {
     public static GoalManager Instance;
 
-    [Header("Configurações dos Objetivos")]
+    [Header("Configuraï¿½ï¿½es dos Objetivos")]
     private bool solColetado = false;
     private bool luaColetada = false;
 
-    // --- NOVO: LÓGICA DE CONTROLE DE PORTÃO ---
-    [Header("Controle de Portão")]
+    // --- NOVO: Lï¿½GICA DE CONTROLE DE PORTï¿½O ---
+    [Header("Controle de Portï¿½o")]
     private int jogadoresNoPortao = 0;
-    private const int JOGADORES_NECESSARIOS = 2; // Define que 2 jogadores são necessários
+    private const int JOGADORES_NECESSARIOS = 2; // Define que 2 jogadores sï¿½o necessï¿½rios
     private bool transicaoIniciada = false;
     // ------------------------------------------
 
-    [Header("Objetos de Verificação")]
-    [Tooltip("O GameObject que representa o portão ou zona de vitória.")]
-    public GameObject portaDeSaida; // Referência da porta da cena atual
+    [Header("Objetos de Verificaï¿½ï¿½o")]
+    [Tooltip("O GameObject que representa o portï¿½o ou zona de vitï¿½ria.")]
+    public GameObject portaDeSaida; // Referï¿½ncia da porta da cena atual
 
-    [Header("Transição de Nível")]
-    [Tooltip("Nome da cena do próximo nível (ex: 'SampleScene2').")]
+    [Header("Transiï¿½ï¿½o de Nï¿½vel")]
+    [Tooltip("Nome da cena do prï¿½ximo nï¿½vel (ex: 'SampleScene2').")]
     public string nomeDaProximaCena = "SampleScene2";
 
-    // --- LÓGICA DO SETUP E REDEFINIÇÃO DE NÍVEL ---
+    // --- Lï¿½GICA DO SETUP E REDEFINIï¿½ï¿½O DE Nï¿½VEL ---
 
     void Awake()
     {
@@ -45,17 +45,17 @@ public class GoalManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Chamado sempre que uma nova cena é carregada.
+    /// Chamado sempre que uma nova cena ï¿½ carregada.
     /// </summary>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // 1. REDEFINIÇÃO DE ESTADO
+        // 1. REDEFINIï¿½ï¿½O DE ESTADO
         solColetado = false;
         luaColetada = false;
         jogadoresNoPortao = 0; // REINICIALIZA A CONTAGEM
-        transicaoIniciada = false; // REINICIALIZA A FLAG DE TRANSIÇÃO
+        transicaoIniciada = false; // REINICIALIZA A FLAG DE TRANSIï¿½ï¿½O
 
-        // 2. ENCONTRA A NOVA PORTA DE SAÍDA NO NOVO NÍVEL
+        // 2. ENCONTRA A NOVA PORTA DE SAï¿½DA NO NOVO Nï¿½VEL
         portaDeSaida = GameObject.FindGameObjectWithTag("ExitGate");
 
         if (portaDeSaida != null)
@@ -65,13 +65,13 @@ public class GoalManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("GoalManager: Objeto 'portaDeSaida' não encontrado com a Tag 'ExitGate' na nova cena.");
+            Debug.LogError("GoalManager: Objeto 'portaDeSaida' nï¿½o encontrado com a Tag 'ExitGate' na nova cena.");
         }
 
         Debug.Log("GoalManager: Estado redefinido para a nova cena.");
     }
 
-    // --- MÉTODOS PÚBLICOS PARA COLETA (MANTIDOS) ---
+    // --- Mï¿½TODOS Pï¿½BLICOS PARA COLETA (MANTIDOS) ---
 
     public void ColetarSol()
     {
@@ -89,21 +89,21 @@ public class GoalManager : MonoBehaviour
         VerificarCondicaoDePassagem();
     }
 
-    // --- LÓGICA DE VERIFICAÇÃO E TRANSIÇÃO (MODIFICADA) ---
+    // --- Lï¿½GICA DE VERIFICAï¿½ï¿½O E TRANSIï¿½ï¿½O (MODIFICADA) ---
 
     private void VerificarCondicaoDePassagem()
     {
         if (solColetado && luaColetada)
         {
-            Debug.Log("Objetivos completos! O Portão de Saída está pronto.");
+            Debug.Log("Objetivos completos! O Portï¿½o de Saï¿½da estï¿½ pronto.");
 
             if (portaDeSaida != null)
             {
                 // Mudar a Tag para ser detectada pelo PlayerController
                 portaDeSaida.tag = "ExitReady";
-                Debug.Log("Portão liberado com a Tag: ExitReady.");
+                Debug.Log("Portï¿½o liberado com a Tag: ExitReady.");
             }
-            // Verifica se a transição pode ocorrer imediatamente se os jogadores já estiverem lá
+            // Verifica se a transiï¿½ï¿½o pode ocorrer imediatamente se os jogadores jï¿½ estiverem lï¿½
             if (jogadoresNoPortao == JOGADORES_NECESSARIOS)
             {
                 IniciarTransicaoNivel();
@@ -112,7 +112,7 @@ public class GoalManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Chamado pelo PlayerController quando ele ENTRA na área da porta.
+    /// Chamado pelo PlayerController quando ele ENTRA na ï¿½rea da porta.
     /// </summary>
     public void EntrarPortao()
     {
@@ -120,16 +120,16 @@ public class GoalManager : MonoBehaviour
 
         // Aumenta a contagem de jogadores
         jogadoresNoPortao++;
-        Debug.Log($"Jogador entrou no portão. Total: {jogadoresNoPortao} / {JOGADORES_NECESSARIOS}");
+        Debug.Log($"Jogador entrou no portï¿½o. Total: {jogadoresNoPortao} / {JOGADORES_NECESSARIOS}");
 
-        // Verifica se todos os objetivos foram atingidos e se os dois jogadores estão no portão
+        // Verifica se todos os objetivos foram atingidos e se os dois jogadores estï¿½o no portï¿½o
         if (solColetado && luaColetada && jogadoresNoPortao >= JOGADORES_NECESSARIOS)
         {
             IniciarTransicaoNivel();
         }
         else if (!solColetado || !luaColetada)
         {
-            Debug.Log("Faltam colecionáveis.");
+            Debug.Log("Faltam colecionï¿½veis.");
         }
         else if (jogadoresNoPortao < JOGADORES_NECESSARIOS)
         {
@@ -138,8 +138,8 @@ public class GoalManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Chamado quando um PlayerController SAI da área da porta.
-    /// (Você deve chamar este método no OnTriggerExit do PlayerController ou da Porta)
+    /// Chamado quando um PlayerController SAI da ï¿½rea da porta.
+    /// (Vocï¿½ deve chamar este mï¿½todo no OnTriggerExit do PlayerController ou da Porta)
     /// </summary>
     public void SairPortao()
     {
@@ -148,18 +148,34 @@ public class GoalManager : MonoBehaviour
         // Diminui a contagem de jogadores
         jogadoresNoPortao--;
         if (jogadoresNoPortao < 0) jogadoresNoPortao = 0;
-        Debug.Log($"Jogador saiu do portão. Total: {jogadoresNoPortao} / {JOGADORES_NECESSARIOS}");
+        Debug.Log($"Jogador saiu do portï¿½o. Total: {jogadoresNoPortao} / {JOGADORES_NECESSARIOS}");
     }
 
     /// <summary>
-    /// Inicia a transição de nível após todas as condições serem atendidas.
+    /// Inicia a transiï¿½ï¿½o de nï¿½vel apï¿½s todas as condiï¿½ï¿½es serem atendidas.
     /// </summary>
     private void IniciarTransicaoNivel()
     {
         if (transicaoIniciada) return;
-
         transicaoIniciada = true;
-        Debug.Log("CONDIÇÃO DE VITÓRIA ATINGIDA! Transicionando para a próxima cena: " + nomeDaProximaCena);
-        SceneManager.LoadScene(nomeDaProximaCena);
+
+        Debug.Log("CONDIÃ‡ÃƒO DE VITÃ“RIA ATINGIDA! Transicionando para a prÃ³xima cena: " + nomeDaProximaCena);
+
+        // 1) Stop players
+        PlayerGlobalLock.movementLocked = true;
+
+        // 2) Start UI transition instead of instant load
+        if (LevelTransitionManager.Instance != null)
+        {
+            LevelTransitionManager.Instance.StartTransition(nomeDaProximaCena);
+        }
+        else
+        {
+            // Fallback in case something is misconfigured
+            SceneManager.LoadScene(nomeDaProximaCena);
+        }
+
+        // 3) Unlock player movement after scene load (handled in LevelTransitionManager)
+        PlayerGlobalLock.movementLocked = false;
     }
 }
