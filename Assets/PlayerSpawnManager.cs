@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 
 public class PlayerSpawnManager : MonoBehaviour
@@ -187,18 +188,12 @@ public class PlayerSpawnManager : MonoBehaviour
 
     private void HandlePlayerDeath()
     {
-        Invoke(nameof(RespawnAllPlayers), 2f);
+        Invoke(nameof(GameOver), 2f);
     }
 
-    private void RespawnAllPlayers()
+    private void GameOver()
     {
-        foreach (var player in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
-        {
-            var respawn = player.GetComponent<PlayerRespawn>();
-            var health = player.GetComponent<HealthController>();
-            if (respawn != null) respawn.Respawn();
-            if (health != null) health.AddHealth(health.maximumHealth);
-        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private GameObject GetNextPrefab()

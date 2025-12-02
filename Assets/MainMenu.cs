@@ -14,6 +14,8 @@ public class MainMenu : MonoBehaviour
     [Header("Selection UI Reference")]
     public MenuPlayerSelectUI selectionUI;
 
+    public LevelSelectUI levelSelectUI;
+
     private void Start()
     {
         // Enable or disable Continue depending on whether save exists
@@ -43,8 +45,6 @@ public class MainMenu : MonoBehaviour
             data.p2Character = PlayerSelectionData.Instance.p2Character;
             data.p2Scheme    = PlayerSelectionData.Instance.p2Scheme;
         }
-
-        data.lastScene = firstLevelSceneName;
 
         SaveSystem.Save(data);
 
@@ -84,8 +84,17 @@ public class MainMenu : MonoBehaviour
             selection.p2Scheme    = data.p2Scheme;
         }
 
-        // Load the last saved scene
-        SceneManager.LoadScene(data.lastScene);
+        // -------------------------------
+
+        int highest = data.highestUnlockedLevelIndex;
+
+        // Safety check (avoid out-of-range)
+        if (highest < 0 || highest >= levelSelectUI.allLevels.Count)
+            highest = 0;
+
+        string sceneToLoad = levelSelectUI.allLevels[highest].sceneName;
+
+        SceneManager.LoadScene(sceneToLoad);
     }
 
     public void QuitGame()

@@ -5,6 +5,8 @@ public class GoalManager : MonoBehaviour
 {
     public static GoalManager Instance;
 
+    private LevelAutoSaver levelAutoSaver;
+
     [Header("Configura��es dos Objetivos")]
     private bool solColetado = false;
     private bool luaColetada = false;
@@ -67,6 +69,10 @@ public class GoalManager : MonoBehaviour
         {
             Debug.LogError("GoalManager: Objeto 'portaDeSaida' n�o encontrado com a Tag 'ExitGate' na nova cena.");
         }
+
+        levelAutoSaver = FindFirstObjectByType<LevelAutoSaver>();
+        if (levelAutoSaver == null)
+            Debug.LogError("GoalManager: LevelAutoSaver not found in this scene!");
 
         Debug.Log("GoalManager: Estado redefinido para a nova cena.");
     }
@@ -163,6 +169,13 @@ public class GoalManager : MonoBehaviour
 
         // 1) Stop players
         PlayerGlobalLock.movementLocked = true;
+
+        // 1) SAVE LEVEL COMPLETION
+        if (levelAutoSaver != null)
+        {
+            // If you don’t track time yet, just use -1f
+            levelAutoSaver.RegisterLevelFinished(LevelTimer.timeElapsed);
+        }
 
         // 2) Start UI transition instead of instant load
         if (LevelTransitionManager.Instance != null)
