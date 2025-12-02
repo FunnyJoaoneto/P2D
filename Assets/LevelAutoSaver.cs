@@ -4,6 +4,9 @@ using System.Linq;
 
 public class LevelAutoSaver : MonoBehaviour
 {
+    [Tooltip("0 for Level1, 1 for Level2, etc.")]
+    public int levelIndex;
+
     void Start()
     {
         // If there is no save yet (somehow), create one using current
@@ -24,8 +27,10 @@ public class LevelAutoSaver : MonoBehaviour
             data.p2Scheme    = PlayerSelectionData.Instance.p2Scheme;
         }
 
-        // Current scene becomes the "latest" level
-        data.lastScene = SceneManager.GetActiveScene().name;
+        if (data.highestUnlockedLevelIndex < levelIndex)
+        {
+            data.highestUnlockedLevelIndex = levelIndex;
+        }
 
         SaveSystem.Save(data);
     }

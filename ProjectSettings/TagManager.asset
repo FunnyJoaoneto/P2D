@@ -58,6 +58,9 @@ TagManager:
   - name: PlatsTrees
     uniqueID: 2481443235
     locked: 0
+  - name: Ramos
+    uniqueID: 3849337661
+    locked: 0
   - name: Interactables
     uniqueID: 3979022973
     locked: 0
