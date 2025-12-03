@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = false;
     private bool wasGroundedLastFrame = false;
     private int jumpCount;
+    
+    // NOVO: Referência ao objeto interagível mais próximo
+    // (Lembrando que ObjetoInteragivel.cs é um script separado que você deve criar)
+    private ObjetoInteragivel objetoInteragivelProximo; 
 
     public float damagePerSecond = 10f;
     public float healPerSecond = 5f;
@@ -156,7 +160,10 @@ public class PlayerController : MonoBehaviour
         if (PlayerGlobalLock.movementLocked)
             return;
         if (ctx.performed)
+        {
+            Debug.Log("pulei");
             Jump(true);
+        }
         else if (ctx.canceled)
             Jump(false);
     }
@@ -179,11 +186,43 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // ==========================================================
+    // NOVO MÉTODO DE INPUT PARA INTERAÇÃO (Conectado ao Input Action "Interagir")
+    // ==========================================================
+   // Adicione esta nova função no PlayerController.cs
+public void OnInteract(InputAction.CallbackContext ctx)
+{
+    if (PlayerGlobalLock.movementLocked)
+        return;
+    
+    // Usamos ctx.performed para disparar a interação no toque/clique
+    if (ctx.performed)
+    {
+        // Debug para confirmar que a função foi chamada
+         Debug.Log("INTERAGI");
+        
+        if (objetoInteragivelProximo != null)
+        {
+            // O Jogador da Luz interage com alvos de PLATAFORMA
+            if (lightPlayer)
+            {
+                objetoInteragivelProximo.PressionarBotao("PLATAFORMA");
+            }
+            // O Jogador da Noite interage com alvos diferentes
+            else
+            {
+                objetoInteragivelProximo.PressionarBotao("VINHA"); 
+            }
+        }
+    }
+}
+    // ==========================================================
+
     void StartGlide()
     {
         //If i remove this line because of the base gravity change, the player can jump very high
         //if (GroundCheck())
-            //return;
+        //return;
 
         if (rb.linearVelocity.y > 0f)
         {
@@ -427,7 +466,7 @@ public class PlayerController : MonoBehaviour
 
             // Optional: also stop grapple and glide while locked
             if (isGrappling) ReleaseGrapple();
-            if (isGliding)  StopGlide();
+            if (isGliding)  StopGlide();
 
             // Skip the rest of FixedUpdate
             return;
@@ -623,6 +662,28 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    // ==========================================================
+    // FUNÇÕES DE COMUNICAÇÃO DE PROXIMIDADE (Chamadas pelo ObjetoInteragivel.cs)
+    // ==========================================================
+    // Chamado pelo Objeto Interagível quando o jogador ENTRA no trigger
+    public void SetProximoInteragivel(ObjetoInteragivel interagivel)
+    {
+        objetoInteragivelProximo = interagivel;
+        Debug.Log($"Jogador perto de {interagivel.gameObject.name}");
+    }
+
+    // Chamado pelo Objeto Interagível quando o jogador SAI do trigger
+    public void ClearProximoInteragivel(ObjetoInteragivel interagivel)
+    {
+        // Limpa a referência apenas se for o mesmo objeto
+        if (objetoInteragivelProximo == interagivel)
+        {
+            objetoInteragivelProximo = null;
+        }
+    }
+    // ==========================================================
+    
 
     private bool GroundCheck()
     {
