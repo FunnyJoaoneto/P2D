@@ -1,0 +1,923 @@
+fileFormatVersion: 2
+guid: 0700943b0afd7204e9c4b482d00e742b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1059276142169121973
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_0"
+  - first:
+      213: -1185440866457797474
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_1"
+  - first:
+      213: -2555372930315504387
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_2"
+  - first:
+      213: -6259854284609594512
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_3"
+  - first:
+      213: -2800740227679278320
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_4"
+  - first:
+      213: 3450837033415082105
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_5"
+  - first:
+      213: -4499396816940316997
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_6"
+  - first:
+      213: 2313044940864035720
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_7"
+  - first:
+      213: -4710061548686469981
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_8"
+  - first:
+      213: -688409510472640092
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_9"
+  - first:
+      213: 6356411982026441073
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_10"
+  - first:
+      213: -5077421873100091169
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_11"
+  - first:
+      213: 7465277534633739096
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_12"
+  - first:
+      213: -2614571421681221257
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_13"
+  - first:
+      213: 3403609717209126296
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_14"
+  - first:
+      213: -5206891094466343670
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_15"
+  - first:
+      213: 5977953518343942547
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_16"
+  - first:
+      213: 3238538387637577141
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_17"
+  - first:
+      213: 6812014947487510707
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_18"
+  - first:
+      213: 4227393276600441261
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_19"
+  - first:
+      213: -944073665882201430
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_20"
+  - first:
+      213: -3331372167779325176
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_21"
+  - first:
+      213: -5767596364034619041
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_22"
+  - first:
+      213: -4983904168872866802
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_23"
+  - first:
+      213: 3856339217573030551
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_24"
+  - first:
+      213: 5860065527820709215
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_25"
+  - first:
+      213: 323622426473221342
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_26"
+  - first:
+      213: 5935275714357034962
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_27"
+  - first:
+      213: 387121445175913206
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_28"
+  - first:
+      213: -6502925778101534726
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_29"
+  - first:
+      213: 4958204735292530326
+    second: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_30"
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_0"
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 1174
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4b96f206f1bc41f0800000000000000
+      internalID: -1059276142169121973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_1"
+      rect:
+        serializedVersion: 2
+        x: 763
+        y: 1170
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9c3d8c00d77c8fe0800000000000000
+      internalID: -1185440866457797474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_2"
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 166
+        width: 1137
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df435ebdbdd798cd0800000000000000
+      internalID: -2555372930315504387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_3"
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 1154
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07b532cb1b78029a0800000000000000
+      internalID: -6259854284609594512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_4"
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 866
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01ba7051a95c129d0800000000000000
+      internalID: -2800740227679278320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_5"
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 844
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9700872aff5d3ef20800000000000000
+      internalID: 3450837033415082105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_6"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 819
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb6cfbe0f6eee81c0800000000000000
+      internalID: -4499396816940316997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_7"
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 812
+        width: 13
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88b17b16e16991020800000000000000
+      internalID: 2313044940864035720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_8"
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 787
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a41158f9ff72aeb0800000000000000
+      internalID: -4710061548686469981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_9"
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 786
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a9174492374276f0800000000000000
+      internalID: -688409510472640092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_10"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 765
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17109ba1503863850800000000000000
+      internalID: 6356411982026441073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_11"
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 724
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd0121f25bf5989b0800000000000000
+      internalID: -5077421873100091169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_12"
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 719
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8534c817d5ef99760800000000000000
+      internalID: 7465277534633739096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_13"
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 710
+        width: 13
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7718dc2052d27bbd0800000000000000
+      internalID: -2614571421681221257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_14"
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 707
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8955154310d0c3f20800000000000000
+      internalID: 3403609717209126296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_15"
+      rect:
+        serializedVersion: 2
+        x: 1165
+        y: 233
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0d403a03286db7b0800000000000000
+      internalID: -5206891094466343670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_16"
+      rect:
+        serializedVersion: 2
+        x: 1183
+        y: 236
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 391ffa86d05f5f250800000000000000
+      internalID: 5977953518343942547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_17"
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 189
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b5aa9a418991fc20800000000000000
+      internalID: 3238538387637577141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_18"
+      rect:
+        serializedVersion: 2
+        x: 759
+        y: 194
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b0f4adc083298e50800000000000000
+      internalID: 6812014947487510707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_19"
+      rect:
+        serializedVersion: 2
+        x: 845
+        y: 188
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da9d4a199c7baaa30800000000000000
+      internalID: 4227393276600441261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_20"
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 183
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa26a47b00af5e2f0800000000000000
+      internalID: -944073665882201430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_21"
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 174
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80be3ece9a694c1d0800000000000000
+      internalID: -3331372167779325176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_22"
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 173
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f59c1e93aa165ffa0800000000000000
+      internalID: -5767596364034619041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_23"
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 171
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0c8eb3709d95dab0800000000000000
+      internalID: -4983904168872866802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_24"
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 157
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79a29dc2618748530800000000000000
+      internalID: 3856339217573030551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_25"
+      rect:
+        serializedVersion: 2
+        x: 799
+        y: 157
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5de342bc82235150800000000000000
+      internalID: 5860065527820709215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_26"
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 152
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edc494bd1ecbd7400800000000000000
+      internalID: 323622426473221342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_27"
+      rect:
+        serializedVersion: 2
+        x: 872
+        y: 146
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dff046d0d55e5250800000000000000
+      internalID: 5935275714357034962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_28"
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 138
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fa65a047e45f5500800000000000000
+      internalID: 387121445175913206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_29"
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 135
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afff6837577f0c5a0800000000000000
+      internalID: -6502925778101534726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014pink smoke cloud dust_6474067_30"
+      rect:
+        serializedVersion: 2
+        x: 791
+        y: 122
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69e55c2efe41fc440800000000000000
+      internalID: 4958204735292530326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_0": -1059276142169121973
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_1": -1185440866457797474
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_10": 6356411982026441073
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_11": -5077421873100091169
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_12": 7465277534633739096
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_13": -2614571421681221257
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_14": 3403609717209126296
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_15": -5206891094466343670
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_16": 5977953518343942547
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_17": 3238538387637577141
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_18": 6812014947487510707
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_19": 4227393276600441261
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_2": -2555372930315504387
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_20": -944073665882201430
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_21": -3331372167779325176
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_22": -5767596364034619041
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_23": -4983904168872866802
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_24": 3856339217573030551
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_25": 5860065527820709215
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_26": 323622426473221342
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_27": 5935275714357034962
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_28": 387121445175913206
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_29": -6502925778101534726
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_3": -6259854284609594512
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_30": 4958204735292530326
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_4": -2800740227679278320
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_5": 3450837033415082105
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_6": -4499396816940316997
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_7": 2313044940864035720
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_8": -4710061548686469981
+      "\u2014Pngtree\u2014pink smoke cloud dust_6474067_9": -688409510472640092
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
