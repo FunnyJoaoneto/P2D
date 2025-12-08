@@ -117,7 +117,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1527536097
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 70769958773904c02bc91efe3db06047, type: 3}
   m_Color: {r: 0.8396226, g: 0.25743148, b: 0.25743148, a: 1}
@@ -278,7 +278,19 @@ MonoBehaviour:
     m_ActionName: 'GamePlay/Ability[/Keyboard/q,/Sony Interactive Entertainment PC
       PS3 Android Gamepad/trigger]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9042148552116888769}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d8e4b75e-3cad-4f96-9718-f5c34917efd3
     m_ActionName: 'GamePlay/Interact[/Sony Interactive Entertainment PC PS3 Android
       Gamepad/button4,/Keyboard/e]'
@@ -303,7 +315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 835f630e0af1e1c478a8610660b7d4c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  damagePerSecond: 10
+  damagePerSecond: 3
   healPerSecond: 8
   moveSpeed: 10
   jumpForce: 24
@@ -327,6 +339,8 @@ MonoBehaviour:
   grapplePointTag: GrapplePoint
   swingImpulseForce: 15
   maxSwingHeightRatio: 0.8
+  forceChargeRate: 50
+  minReboundForce: 15
   playerInput: {fileID: 299585397989469277}
   grappleCheckRadius: 0.1
   isGrappling: 0
@@ -465,7 +479,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1527536097
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 1786781638142776040, guid: a28829035e7d3de418830c15b1d04912, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
