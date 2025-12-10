@@ -121,6 +121,7 @@ public class PlayerController : MonoBehaviour
             controlledAnimator.SetFloat("Direction", lastMoveDirection);
             controlledAnimator.SetBool("IsGrounded", true);
             controlledAnimator.SetFloat("VerticalSpeed", 0f);
+            controlledAnimator.SetBool("IsGrappling", false);
         }
     }
 
@@ -342,6 +343,7 @@ public void OnInteract(InputAction.CallbackContext ctx)
                 rb.linearVelocity *= 0.1f;
             }
         }
+        controlledAnimator.SetBool("IsGrappling", true);
     }
 
     private void ReleaseGrapple()
@@ -351,6 +353,7 @@ public void OnInteract(InputAction.CallbackContext ctx)
         isGrappling = false;
         currentSwingForce = 0f;
         lockedSwingDirection = 0f;
+        controlledAnimator.SetBool("IsGrappling", false);
 
         if (lr != null && dj != null)
         {
