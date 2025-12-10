@@ -21,6 +21,12 @@ public class PlayerSpawnManager : MonoBehaviour
 
     private PlayerInputManager pim;
 
+    [Header("Game Over")]
+    [SerializeField] private GameObject gameOverScreen; // root UI object
+    [SerializeField] private string mainMenuSceneName = "MainMenu";
+
+    private bool gameOverShown = false;
+
     private void Awake()
     {
         pim = GetComponent<PlayerInputManager>();
@@ -188,13 +194,36 @@ public class PlayerSpawnManager : MonoBehaviour
 
     private void HandlePlayerDeath()
     {
-        Invoke(nameof(GameOver), 2f);
+        if (gameOverShown) return;
+        gameOverShown = true;
+
+        // lock player input / movement
+        PlayerGlobalLock.movementLocked = true;
+
+        Time.timeScale = 0f;
+
+        if (gameOverScreen != null)
+            gameOverScreen.SetActive(true);
     }
 
-    private void GameOver()
+    public void OnRestartButtonPressed()
     {
+        // unpause
+        Time.timeScale = 1f;
+
+        // reload current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public void OnMainMenuButtonPressed()
+    {
+        Time.timeScale = 1f;
+
+        if (!string.IsNullOrEmpty(mainMenuSceneName))
+            SceneManager.LoadScene(mainMenuSceneName);
+    }
+
+
 
     private GameObject GetNextPrefab()
     {
