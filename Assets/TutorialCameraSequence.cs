@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Cinemachine;   // for CinemachineBrain
 
 public class TutorialCameraSequence : MonoBehaviour
 {
     [Header("Camera References")]
     public Camera cam;
-    public CoopCamera2D coopCam;
 
     [Header("Camera Walls")]
     public GameObject cameraWallsRoot;
@@ -43,7 +43,7 @@ public class TutorialCameraSequence : MonoBehaviour
     private Transform player1Transform;
     private Transform player2Transform;
 
-    // NEW: anchors above the heads
+    // anchors above the heads
     private Transform player1PingAnchor;
     private Transform player2PingAnchor;
 
@@ -54,20 +54,33 @@ public class TutorialCameraSequence : MonoBehaviour
     private bool skipRequested = false;
     public GameObject skipButton;
 
+    // Cinemachine brain on the main camera
+    private CinemachineBrain brain;
+
     private IEnumerator Start()
     {
-        //------------------------
-        // LOCK MOVEMENT
-        //------------------------
+        if (cam == null)
+            cam = Camera.main;
+
+        brain = cam != null ? cam.GetComponent<CinemachineBrain>() : null;
+
+        // Lock movement immediately so players don't move during setup
         PlayerGlobalLock.movementLocked = true;
 
-        yield return new WaitForSeconds(startDelay);
+        // Give Cinemachine one frame to position the camera at its gameplay start
+        yield return null;
 
-        if (skipRequested)
-            yield return SkipToGameplay();
+        // Optional delay BEFORE we take control, with Cinemachine still active
+        if (startDelay > 0f)
+            yield return new WaitForSeconds(startDelay);
 
-        initialCamPos = cam.transform.position;
+        // Capture the position/size that Cinemachine set
+        initialCamPos  = cam.transform.position;
         initialCamSize = cam.orthographicSize;
+
+        // Now disable Cinemachine so this script fully drives the camera
+        if (brain != null)
+            brain.enabled = false;
 
         //------------------------
         // FIND PLAYERS
@@ -83,7 +96,7 @@ public class TutorialCameraSequence : MonoBehaviour
         player1Transform = players[0].transform;
         player2Transform = players[1].transform;
 
-        // NEW: find PingAnchor child on each player
+        // find PingAnchor child on each player
         player1PingAnchor = player1Transform.Find("PingAnchor");
         player2PingAnchor = player2Transform.Find("PingAnchor");
 
@@ -94,12 +107,6 @@ public class TutorialCameraSequence : MonoBehaviour
         }
 
         //------------------------
-        // DISABLE COOP CAMERA
-        //------------------------
-        if (coopCam != null)
-            coopCam.enabled = false;
-
-        //------------------------
         // DISABLE CAMERA WALLS
         //------------------------
         if (cameraWallsRoot != null)
@@ -108,8 +115,11 @@ public class TutorialCameraSequence : MonoBehaviour
             cameraWallsRoot.SetActive(false);
         }
 
-        skipButton.SetActive(true);
+        if (skipButton != null)
+            skipButton.SetActive(true);
+
         tutorialText.gameObject.SetActive(true);
+
         //------------------------
         // INTRO STEP (NO CAMERA MOVE)
         //------------------------
@@ -120,7 +130,10 @@ public class TutorialCameraSequence : MonoBehaviour
         );
 
         if (skipRequested)
+        {
             yield return SkipToGameplay();
+            yield break;
+        }
 
         yield return new WaitForSeconds(2f);
 
@@ -131,16 +144,15 @@ public class TutorialCameraSequence : MonoBehaviour
         {
             if (skipRequested)
                 break;
+
             // Show message + pings
             yield return ShowStepMessage(step.message, step.pingTargets, step.pingDuration);
 
             if (skipRequested)
                 break;
+
             // Move camera to step target
             yield return MoveToStep(step);
-
-            if (skipRequested)
-                break;
         }
 
         if (skipRequested)
@@ -155,13 +167,14 @@ public class TutorialCameraSequence : MonoBehaviour
         // Smooth transition back to the initial camera view
         yield return SmoothBackToInitial(1.5f);
 
-        // NOW enable coop camera
-        coopCam.enabled = true;
+        // Give control back to Cinemachine
+        if (brain != null)
+            brain.enabled = true;
 
         if (cameraWallsRoot != null)
             cameraWallsRoot.SetActive(wallsInitiallyActive);
 
-        // HIDE TUTORIAL TEXT
+        // Hide tutorial text
         tutorialText.text = "";
         tutorialText.gameObject.SetActive(false);
 
@@ -173,25 +186,24 @@ public class TutorialCameraSequence : MonoBehaviour
 
     private IEnumerator SkipToGameplay()
     {
-        // smooth move to initial camera state
+        // Smooth move to initial camera state (still with Cinemachine disabled)
         yield return SmoothBackToInitial(1.5f);
 
-        // enable coop cam
-        if (coopCam != null)
-            coopCam.enabled = true;
+        // Give control back to Cinemachine
+        if (brain != null)
+            brain.enabled = true;
 
-        // restore camera walls
+        // Restore camera walls
         if (cameraWallsRoot != null)
             cameraWallsRoot.SetActive(wallsInitiallyActive);
 
-        // hide UI
+        // Hide UI
         tutorialText.text = "";
         tutorialText.gameObject.SetActive(false);
 
-        // unlock movement
+        // Unlock movement
         PlayerGlobalLock.movementLocked = false;
     }
-
 
     //-----------------------------------------
     // CAMERA MOVEMENT
@@ -244,7 +256,9 @@ public class TutorialCameraSequence : MonoBehaviour
 
     private IEnumerator SmoothBackToInitial(float duration)
     {
-        skipButton.SetActive(false);
+        if (skipButton != null)
+            skipButton.SetActive(false);
+
         Vector3 startPos = cam.transform.position;
         float startSize = cam.orthographicSize;
 
@@ -257,7 +271,6 @@ public class TutorialCameraSequence : MonoBehaviour
             yield return null;
         }
     }
-
 
     //-----------------------------------------
     // CREATE PING UI ELEMENT
@@ -278,6 +291,7 @@ public class TutorialCameraSequence : MonoBehaviour
     public void RequestSkip()
     {
         skipRequested = true;
-        skipButton.SetActive(false);
+        if (skipButton != null)
+            skipButton.SetActive(false);
     }
 }

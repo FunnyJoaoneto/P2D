@@ -38,6 +38,18 @@ public class HealthController : MonoBehaviour
         NotifyHealthChanged();
     }
 
+    /// <summary>
+    /// Instantly kills the character (used by death zones, spikes, etc.).
+    /// </summary>
+    public void KillInstantly()
+    {
+        if (!isAlive) return;
+
+        currentHealth = 0f;
+        NotifyHealthChanged();
+        Die();
+    }
+
     public void NotifyHealthChanged()
     {
         OnHealthChanged?.Invoke(currentHealth, maximumHealth);
