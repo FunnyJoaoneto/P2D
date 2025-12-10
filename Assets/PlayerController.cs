@@ -547,9 +547,12 @@ public void OnInteract(InputAction.CallbackContext ctx)
         if (!isAnimatorInitialized || controlledAnimator == null) return;
         if (Mathf.Abs(moveInput.x) > 0.1f)
         {
+        
             lastMoveDirection = Mathf.Sign(moveInput.x);
+                
         }
         controlledAnimator.SetFloat("Direction", lastMoveDirection);
+
         if (rb != null)
         {
             controlledAnimator.SetFloat("VerticalSpeed", rb.linearVelocity.y);
