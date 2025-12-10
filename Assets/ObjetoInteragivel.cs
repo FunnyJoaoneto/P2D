@@ -1,10 +1,17 @@
 using UnityEngine;
-using System.Collections; // Adicionado para uso futuro, se necessário
+using System.Collections;
 
 // Este script deve ser anexado ao botão/alavanca/área de interação.
-[RequireComponent(typeof(Collider2D))] // Garante que o objeto tem um collider (deve ser Trigger)
+[RequireComponent(typeof(Collider2D))]
 public class ObjetoInteragivel : MonoBehaviour
 {
+    [Header("Controle de Luz")]
+    [Tooltip("Cristal usado para PLATAFORMA (pulsando / par).")]
+    public CristalBrilhante controladorDeLuzPlataforma;   // NOVO
+
+    [Tooltip("Cristal usado para VINHA (spotlight que viaja até a vinha).")]
+    public Vagalume controladorDeLuzVinha;             // NOVO
+
     // --- Configurações no Inspector ---
 
     [Tooltip("ID único do objeto alvo (ex: Plataforma_A, Vinha_B). Deve corresponder ao ID do alvo.")]
@@ -27,25 +34,38 @@ public class ObjetoInteragivel : MonoBehaviour
     void Awake()
     {
         meuCollider = GetComponent<Collider2D>();
-        // Garante que o Collider é um Trigger para funcionar como área de proximidade
         if (meuCollider != null && !meuCollider.isTrigger)
         {
-            Debug.LogWarning($"O Collider do objeto interagível '{gameObject.name}' NÃO é um Trigger. Ele deve ser configurado como Trigger para funcionar corretamente.");
+            Debug.LogWarning($"O Collider do objeto interagível '{gameObject.name}' NÃO é um Trigger.");
+        }
+
+        // Opcional: tentar achar automaticamente o cristal de plataforma se não for atribuído
+        if (controladorDeLuzPlataforma == null)
+        {
+            controladorDeLuzPlataforma = GetComponent<CristalBrilhante>();
+        }
+
+        // Opcional: tentar achar automaticamente o cristal de vinha se não for atribuído
+        if (controladorDeLuzVinha == null)
+        {
+            controladorDeLuzVinha = GetComponent<Vagalume>();
+        }
+
+        // Se houver cristal de plataforma e a luz já estiver ligada, começa a pulsar.
+        if (controladorDeLuzPlataforma != null)
+        {
+            controladorDeLuzPlataforma.IniciarPulsacao();
         }
     }
-
-    // --- Comunicação com o PlayerController (Proximidade) ---
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag(tagDoJogador))
         {
-            // Tenta obter o PlayerController do objeto que entrou na área
-            PlayerController playerController = other.GetComponent<PlayerController>();
-            if (playerController != null)
+            Component playerControllerComponent = other.GetComponent("PlayerController");
+            if (playerControllerComponent != null)
             {
-                // Notifica o jogador que ele está perto de um objeto interagível
-                playerController.SetProximoInteragivel(this);
+                other.gameObject.SendMessage("SetProximoInteragivel", this, SendMessageOptions.DontRequireReceiver);
             }
         }
     }
@@ -54,22 +74,17 @@ public class ObjetoInteragivel : MonoBehaviour
     {
         if (other.CompareTag(tagDoJogador))
         {
-            // Tenta obter o PlayerController do objeto que saiu da área
-            PlayerController playerController = other.GetComponent<PlayerController>();
-            if (playerController != null)
+            Component playerControllerComponent = other.GetComponent("PlayerController");
+            if (playerControllerComponent != null)
             {
-                // Notifica o jogador que ele se afastou
-                playerController.ClearProximoInteragivel(this);
+                other.gameObject.SendMessage("ClearProximoInteragivel", this, SendMessageOptions.DontRequireReceiver);
             }
         }
     }
 
-    // --- Lógica de Interação (Chamada pelo PlayerController via Input) ---
-
     /// <summary>
-    /// Este método é chamado pelo PlayerController quando o jogador pressiona o botão de Interagir (E/L).
+    /// Chamado pelo PlayerController quando o jogador pressiona o botão de Interagir.
     /// </summary>
-    /// <param name="tipoAcaoDoJogador">O ID de ação que o jogador está tentando executar (ex: "PLATAFORMA" ou "VINHA").</param>
     public void PressionarBotao(string tipoAcaoDoJogador)
     {
         if (usoUnico && jaFoiAtivado)
@@ -78,76 +93,93 @@ public class ObjetoInteragivel : MonoBehaviour
             return;
         }
 
-        // 1. CHECA COMPATIBILIDADE: O tipo de ação do jogador deve corresponder ao tipo do botão.
         if (tipoAcaoDoJogador != idTipoAcao)
         {
-            Debug.Log($"Tentativa de interação: Tipo de ação '{tipoAcaoDoJogador}' do jogador não é compatível com o tipo de botão '{idTipoAcao}'.");
+            Debug.Log($"Tentativa de interação: Tipo '{tipoAcaoDoJogador}' não compatível com o botão '{idTipoAcao}'.");
             return;
         }
 
-        // 2. BUSCA E ATIVA O ALVO: Procura o script de controle do alvo pelo ID.
-        
-        // Se for um botão de Plataforma (Jogador Luz)
+        bool interacaoComAlvoSucesso = false;
+
+        // =============================
+        // CASO 1: PLATAFORMA (Sol)
+        // =============================
         if (idTipoAcao == "PLATAFORMA")
         {
             PlataformaMovel alvo = FindTarget<PlataformaMovel>(idDoObjetoAlvo);
             if (alvo != null)
             {
                 alvo.Interagir(idDoObjetoAlvo);
-                jaFoiAtivado = true;
+                interacaoComAlvoSucesso = true;
+
+                // Cristal de plataforma: para pulsar e ativa o par
+                if (controladorDeLuzPlataforma != null)
+                {
+                    controladorDeLuzPlataforma.AtivarCristal();
+                }
             }
             else
             {
-                Debug.LogError($"Alvo PlataformaMovel com ID '{idDoObjetoAlvo}' não encontrado na cena! Verifique o script PlataformaMovel.");
+                Debug.LogError($"PlataformaMovel com ID '{idDoObjetoAlvo}' não encontrada.");
             }
         }
-        // SE FOR UM BOTÃO DE VINHA (Jogador Noite)
+        // =============================
+        // CASO 2: VINHA (Noite)
+        // =============================
         else if (idTipoAcao == "VINHA")
         {
-            // Busca o script VinhaDestrutivel (que contém a lógica de atraso e destruição)
             VinhaDestrutivel alvoVinha = FindTarget<VinhaDestrutivel>(idDoObjetoAlvo);
             if (alvoVinha != null)
             {
-                alvoVinha.Interagir(idDoObjetoAlvo);
-                jaFoiAtivado = true;
+                // NÃO chamamos Interagir aqui diretamente.
+                // Deixamos o Vagalume mandar a luz e só ao chegar ele chama Interagir.
+                if (controladorDeLuzVinha != null)
+                {
+                    controladorDeLuzVinha.EnviarLuzParaVinha(alvoVinha);
+                }
+                else
+                {
+                    // Fallback: se não houver cristal de vinha, usa o comportamento antigo (some na hora).
+                    alvoVinha.Interagir(idDoObjetoAlvo);
+                }
+
+                interacaoComAlvoSucesso = true;
             }
             else
             {
-                Debug.LogError($"Alvo VinhaDestrutivel com ID '{idDoObjetoAlvo}' não encontrado na cena! Verifique o script VinhaDestrutivel.");
+                Debug.LogError($"VinhaDestrutivel com ID '{idDoObjetoAlvo}' não encontrada.");
             }
         }
-        // Se for de uso único, desabilita o collider ou o script após a ativação
-        if (usoUnico && jaFoiAtivado)
+
+        if (interacaoComAlvoSucesso)
         {
-            // Opcional: desabilita o collider para não interagir novamente
-            // meuCollider.enabled = false;
+            jaFoiAtivado = true;
+
+            if (usoUnico && meuCollider != null)
+            {
+                // Opcional: desabilitar interação depois de usar
+                // meuCollider.enabled = false;
+            }
         }
     }
 
-    // Função Genérica para encontrar o objeto alvo pelo ID.
+    // Função genérica para encontrar o objeto alvo pelo ID.
     private T FindTarget<T>(string targetID) where T : MonoBehaviour
     {
         foreach (T target in FindObjectsOfType<T>())
         {
-            // Checagem específica para PlataformaMovel
             if (typeof(T) == typeof(PlataformaMovel))
             {
                 PlataformaMovel pm = target as PlataformaMovel;
                 if (pm != null && pm.idPlataforma == targetID)
-                {
                     return target;
-                }
             }
-            // NOVO: Checagem específica para VinhaDestrutivel
             else if (typeof(T) == typeof(VinhaDestrutivel))
             {
                 VinhaDestrutivel vd = target as VinhaDestrutivel;
                 if (vd != null && vd.idVinha == targetID)
-                {
                     return target;
-                }
             }
-            // Adicionar mais checagens para outros tipos de alvo (ex: PortaMovel) aqui
         }
         return null;
     }
