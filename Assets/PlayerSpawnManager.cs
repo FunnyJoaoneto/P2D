@@ -211,6 +211,9 @@ public class PlayerSpawnManager : MonoBehaviour
         // unpause
         Time.timeScale = 1f;
 
+        // unlock player input / movement
+        PlayerGlobalLock.movementLocked = false;
+
         // reload current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
