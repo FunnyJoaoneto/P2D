@@ -5,6 +5,11 @@ using System.Collections; // Adicionado para uso futuro, se necessário
 [RequireComponent(typeof(Collider2D))] // Garante que o objeto tem um collider (deve ser Trigger)
 public class ObjetoInteragivel : MonoBehaviour
 {
+    // NOVO: Referência ao script de controle de luz/pulsação.
+    [Header("Controle de Luz")]
+    [Tooltip("O script CristalBrilhante deste objeto.")]
+    public CristalBrilhante controladorDeLuz; // ATRIBUA NO INSPECTOR!
+
     // --- Configurações no Inspector ---
 
     [Tooltip("ID único do objeto alvo (ex: Plataforma_A, Vinha_B). Deve corresponder ao ID do alvo.")]
@@ -32,6 +37,18 @@ public class ObjetoInteragivel : MonoBehaviour
         {
             Debug.LogWarning($"O Collider do objeto interagível '{gameObject.name}' NÃO é um Trigger. Ele deve ser configurado como Trigger para funcionar corretamente.");
         }
+
+        // NOVO: Tenta pegar o controlador de luz no Awake se não foi atribuído.
+        if (controladorDeLuz == null)
+        {
+            controladorDeLuz = GetComponent<CristalBrilhante>();
+        }
+        
+        // NOVO: Garante que a pulsação comece ao iniciar.
+        if (controladorDeLuz != null)
+        {
+            controladorDeLuz.IniciarPulsacao();
+        }
     }
 
     // --- Comunicação com o PlayerController (Proximidade) ---
@@ -41,11 +58,19 @@ public class ObjetoInteragivel : MonoBehaviour
         if (other.CompareTag(tagDoJogador))
         {
             // Tenta obter o PlayerController do objeto que entrou na área
-            PlayerController playerController = other.GetComponent<PlayerController>();
-            if (playerController != null)
+            // PlayerController playerController = other.GetComponent<PlayerController>(); // Assumindo que PlayerController existe
+            // if (playerController != null)
+            // {
+            //     // Notifica o jogador que ele está perto de um objeto interagível
+            //     playerController.SetProximoInteragivel(this);
+            // }
+            // Correção para usar o PlayerController
+            Component playerControllerComponent = other.GetComponent("PlayerController");
+            if (playerControllerComponent != null)
             {
-                // Notifica o jogador que ele está perto de um objeto interagível
-                playerController.SetProximoInteragivel(this);
+                // Usando SendMessage para evitar a necessidade de reescrever PlayerController.
+                // Idealmente, você usaria o tipo específico, mas manteremos o seu fluxo.
+                other.gameObject.SendMessage("SetProximoInteragivel", this, SendMessageOptions.DontRequireReceiver);
             }
         }
     }
@@ -55,11 +80,17 @@ public class ObjetoInteragivel : MonoBehaviour
         if (other.CompareTag(tagDoJogador))
         {
             // Tenta obter o PlayerController do objeto que saiu da área
-            PlayerController playerController = other.GetComponent<PlayerController>();
-            if (playerController != null)
+            // PlayerController playerController = other.GetComponent<PlayerController>(); // Assumindo que PlayerController existe
+            // if (playerController != null)
+            // {
+            //     // Notifica o jogador que ele se afastou
+            //     playerController.ClearProximoInteragivel(this);
+            // }
+            // Correção para usar o PlayerController
+            Component playerControllerComponent = other.GetComponent("PlayerController");
+            if (playerControllerComponent != null)
             {
-                // Notifica o jogador que ele se afastou
-                playerController.ClearProximoInteragivel(this);
+                other.gameObject.SendMessage("ClearProximoInteragivel", this, SendMessageOptions.DontRequireReceiver);
             }
         }
     }
@@ -85,6 +116,9 @@ public class ObjetoInteragivel : MonoBehaviour
             return;
         }
 
+        // Variável de controle para saber se a interação com o alvo foi bem-sucedida.
+        bool interacaoComAlvoSucesso = false;
+
         // 2. BUSCA E ATIVA O ALVO: Procura o script de controle do alvo pelo ID.
         
         // Se for um botão de Plataforma (Jogador Luz)
@@ -94,7 +128,7 @@ public class ObjetoInteragivel : MonoBehaviour
             if (alvo != null)
             {
                 alvo.Interagir(idDoObjetoAlvo);
-                jaFoiAtivado = true;
+                interacaoComAlvoSucesso = true;
             }
             else
             {
@@ -109,13 +143,26 @@ public class ObjetoInteragivel : MonoBehaviour
             if (alvoVinha != null)
             {
                 alvoVinha.Interagir(idDoObjetoAlvo);
-                jaFoiAtivado = true;
+                interacaoComAlvoSucesso = true;
             }
             else
             {
                 Debug.LogError($"Alvo VinhaDestrutivel com ID '{idDoObjetoAlvo}' não encontrado na cena! Verifique o script VinhaDestrutivel.");
             }
         }
+
+        // NOVO: LÓGICA DE ATIVAÇÃO DO CRISTAL
+        if (interacaoComAlvoSucesso)
+        {
+            jaFoiAtivado = true;
+            // Se o alvo foi ativado com sucesso, pare a pulsação do cristal
+            if (controladorDeLuz != null)
+            {
+                // Chama a função que desliga a luz deste cristal e liga a do par (se houver)
+                controladorDeLuz.AtivarCristal();
+            }
+        }
+
         // Se for de uso único, desabilita o collider ou o script após a ativação
         if (usoUnico && jaFoiAtivado)
         {
