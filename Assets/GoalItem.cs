@@ -17,6 +17,7 @@ public class GoalItem : MonoBehaviour
             {
                 GoalManager.Instance.ColetarSol();
                 GoalUI.Instance?.OnSunCollected();   // <- update UI
+                GoalObject.Instance?.OnSunCollected();
                 itemColetado = true;
                 Debug.Log("SunKnight coletou o Sol.");
             }
@@ -24,6 +25,7 @@ public class GoalItem : MonoBehaviour
             {
                 GoalManager.Instance.ColetarLua();
                 GoalUI.Instance?.OnMoonCollected();   // <- update UI
+                GoalObject.Instance?.OnMoonCollected();
                 itemColetado = true;
                 Debug.Log("NightGirl coletou a Lua.");
             }
