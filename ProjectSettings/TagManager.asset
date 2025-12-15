@@ -2,19 +2,24 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - GrapplePoint
+  - DayNightZone
+  - ExitReady
+  - tile
+  - ExitGate
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Fan
+  - GrapplePoint
+  - Player1
+  - Player2
   - 
   - 
   - 
@@ -41,3 +46,26 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 2655716301
+    locked: 0
+  - name: Ground
+    uniqueID: 4141718891
+    locked: 0
+  - name: Fans
+    uniqueID: 3137624223
+    locked: 0
+  - name: PlatsTrees
+    uniqueID: 2481443235
+    locked: 0
+  - name: Ramos
+    uniqueID: 3849337661
+    locked: 0
+  - name: Interactables
+    uniqueID: 3979022973
+    locked: 0
+  - name: Players
+    uniqueID: 2767431199
+    locked: 0
+  m_RenderingLayers:
+  - Default
