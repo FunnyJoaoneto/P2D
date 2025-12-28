@@ -355,9 +355,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   grapplePointTag: GrapplePoint
-  swingImpulseForce: 15
+  swingImpulseForce: 50
   maxSwingHeightRatio: 0.8
-  forceChargeRate: 50
+  forceChargeRate: 100
   minReboundForce: 15
   playerInput: {fileID: 299585397989469277}
   grappleCheckRadius: 0.1
