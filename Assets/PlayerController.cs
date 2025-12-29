@@ -26,6 +26,12 @@ public class PlayerController : MonoBehaviour
 
     public float moveSpeed = 5f;
 
+        [Header("Jump Tuning (Height + Time)")]
+        public float jumpHeight = 4.5f;   // world units
+        public float timeToApex = 0.35f;  // seconds (smaller = snappier)
+        public float lowJumpMultiplier = 2.0f; // extra gravity when jump released early
+
+        private bool jumpHeld;
     public float jumpForce = 7f;
     public int maxJumps = 2;
 
@@ -82,6 +88,7 @@ public class PlayerController : MonoBehaviour
         dj = GetComponent<DistanceJoint2D>();
 
         InitializeAnimator();
+        RecalculateJump();
 
         if (dj != null)
         {
@@ -94,6 +101,14 @@ public class PlayerController : MonoBehaviour
 
         if (lr != null) lr.enabled = false;
     }
+
+        private void OnValidate()
+        {
+                if (timeToApex < 0.05f) timeToApex = 0.05f;
+                if (jumpHeight < 0.1f) jumpHeight = 0.1f;
+                RecalculateJump();
+        }
+
 
     private void InitializeAnimator()
     {
@@ -231,15 +246,18 @@ public void OnInteract(InputAction.CallbackContext ctx)
 
     void StartGlide()
     {
-        //If i remove this line because of the base gravity change, the player can jump very high
-        //if (GroundCheck())
-        //return;
-
-        if (rb.linearVelocity.y > 0f)
+        
+        if (GroundCheck())
         {
             glideQueued = true;
             return;
         }
+
+        if (rb.linearVelocity.y > 0f)
+        {
+            glideQueued = true;
+            return;
+        }
 
         ActivateGlide();
     }
@@ -434,36 +452,53 @@ public void OnInteract(InputAction.CallbackContext ctx)
     }
 
     private void Gravity()
-    {
-        if (isGrappling)
-        {
-            rb.gravityScale = baseGravity;
-            return;
-        }
-        if (isGliding)
-        {
-            if (rb.linearVelocity.y > 0f)
-            {
-                rb.gravityScale = baseGravity;
-                return;
-            }
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -maxFallSpeed / 3f));
-            if( rb.linearVelocity.y > 21f){
-                Debug.Log("Limiting glide upward speed");
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 21f);
-            }
-            return;
-        }
-        if (rb.linearVelocity.y < 0)
-        {
-            rb.gravityScale = baseGravity * fallSpeedMultiplier;
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -maxFallSpeed));
-        }
-        else
-        {
-            rb.gravityScale = baseGravity;
-        }
-    }
+{
+    if (rb == null) return;
+
+    if (isGrappling)
+    {
+        rb.gravityScale = baseGravity;
+        return;
+    }
+
+        if (isGliding)
+        {
+        // Always use glide gravity while gliding (so updrafts can actually lift you)
+        rb.gravityScale = glideGravityScale;
+
+        // Only limit downward speed while gliding
+        if (rb.linearVelocity.y < 0f)
+        {
+                rb.linearVelocity = new Vector2(
+                rb.linearVelocity.x,
+                Mathf.Max(rb.linearVelocity.y, -maxFallSpeed / 3f)
+                );
+        }
+
+        // Optional: cap extreme upward boost if needed
+        if (rb.linearVelocity.y > 30f)
+        {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 30f);
+        }
+
+        return;
+        }
+
+    // Normal jump/fall gravity
+    float g = baseGravity;
+
+    if (rb.linearVelocity.y < 0f)
+        g *= fallSpeedMultiplier;                 // faster fall
+    else if (rb.linearVelocity.y > 0f && !jumpHeld)
+        g *= lowJumpMultiplier;                   // short hop / less floaty apex
+
+    rb.gravityScale = g;
+
+    // Clamp ONLY falling speed
+    if (rb.linearVelocity.y < -maxFallSpeed)
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, -maxFallSpeed);
+}
+
 
     void FixedUpdate()
     {
@@ -507,10 +542,11 @@ public void OnInteract(InputAction.CallbackContext ctx)
             }
         }
 
-        if (rb.linearVelocity.y > 25f)
+        /*if (rb.linearVelocity.y > 25f)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 25f);
         }
+             */
     }
 
     private void CheckGroundState()
@@ -519,6 +555,7 @@ public void OnInteract(InputAction.CallbackContext ctx)
         if (isGrounded && !wasGroundedLastFrame)
         {
             StopGlide();
+            glideQueued = false;
         }
         if (controlledAnimator != null && isAnimatorInitialized)
         {
@@ -642,42 +679,55 @@ public void OnInteract(InputAction.CallbackContext ctx)
 
     }
 
-    void Jump(bool jumping)
-    {
-        // NOTA: A lógica que liberava o grapple com o pulo foi desabilitada
-        // pela nova lógica de retorno em OnJump(), mas é mantida aqui para referência.
-        if (isGrappling && jumping)
-        {
-            ReleaseGrapple();
+        private void RecalculateJump()
+        {
+        float gravity = (2f * jumpHeight) / (timeToApex * timeToApex); // m/s^2
+        jumpForce = gravity * timeToApex;                               // m/s
 
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x * 1.5f, jumpForce * 1.2f);
-            if (controlledAnimator != null && isAnimatorInitialized)
-            {
-                controlledAnimator.SetBool("IsGrounded", false);
-                controlledAnimator.SetFloat("VerticalSpeed", rb.linearVelocity.y);
-            }
-            return;
-        }
-        if (jumping)
-        {
-            if (GroundCheck())
-            {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-                if (controlledAnimator != null && isAnimatorInitialized)
-                {
-                    controlledAnimator.SetBool("IsGrounded", false);
-                    controlledAnimator.SetFloat("VerticalSpeed", rb.linearVelocity.y);
-                }
-            }
-        }
-        else
-        {
-            if (rb.linearVelocity.y > 0)
-            {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
-            }
-        }
-    }
+        baseGravity = gravity / Mathf.Abs(Physics2D.gravity.y);         // gravityScale
+        }
+
+
+   void Jump(bool jumping)
+{
+    if (rb == null) return;
+
+    if (jumping)
+    {
+        jumpHeld = true;
+
+        if (isGrappling)
+        {
+            ReleaseGrapple();
+
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x * 1.5f, jumpForce * 1.2f);
+
+            if (controlledAnimator != null && isAnimatorInitialized)
+            {
+                controlledAnimator.SetBool("IsGrounded", false);
+                controlledAnimator.SetFloat("VerticalSpeed", rb.linearVelocity.y);
+            }
+            return;
+        }
+
+        if (GroundCheck())
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+
+            if (controlledAnimator != null && isAnimatorInitialized)
+            {
+                controlledAnimator.SetBool("IsGrounded", false);
+                controlledAnimator.SetFloat("VerticalSpeed", rb.linearVelocity.y);
+            }
+        }
+    }
+    else
+    {
+        // released
+        jumpHeld = false;
+    }
+}
+
 
     // ==========================================================
     // FUNÇÕES DE COMUNICAÇÃO DE PROXIMIDADE (Chamadas pelo ObjetoInteragivel.cs)

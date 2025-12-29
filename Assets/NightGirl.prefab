@@ -330,20 +330,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   damagePerSecond: 3
   healPerSecond: 8
-  moveSpeed: 10
-  jumpForce: 24
-  maxJumps: 2
+  moveSpeed: 18
+  jumpHeight: 16
+  timeToApex: 0.5
+  lowJumpMultiplier: 2
+  jumpForce: 64
+  maxJumps: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
   groundCheckPos: {fileID: 5407359180012701830}
   groundCheckSize: {x: 2.1, y: 0.4}
-  baseGravity: 2
-  fallSpeedMultiplier: 2
-  maxFallSpeed: 20
+  baseGravity: 13.04791
+  fallSpeedMultiplier: 1.5
+  maxFallSpeed: 45
   lightPlayer: 0
-  glideGravityScale: 1
-  glideUpBoost: 3
+  glideGravityScale: 2
+  glideUpBoost: 4
   isGliding: 0
   maxGrappleDistance: 15
   grapplePointLayer:
