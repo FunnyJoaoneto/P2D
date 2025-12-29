@@ -246,15 +246,18 @@ public void OnInteract(InputAction.CallbackContext ctx)
 
     void StartGlide()
     {
-        //If i remove this line because of the base gravity change, the player can jump very high
-        //if (GroundCheck())
-        //return;
-
-        if (rb.linearVelocity.y > 0f)
+        
+        if (GroundCheck())
         {
             glideQueued = true;
             return;
         }
+
+        if (rb.linearVelocity.y > 0f)
+        {
+            glideQueued = true;
+            return;
+        }
 
         ActivateGlide();
     }
@@ -552,6 +555,7 @@ public void OnInteract(InputAction.CallbackContext ctx)
         if (isGrounded && !wasGroundedLastFrame)
         {
             StopGlide();
+            glideQueued = false;
         }
         if (controlledAnimator != null && isAnimatorInitialized)
         {
