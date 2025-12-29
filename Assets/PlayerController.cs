@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
     private bool glideQueued = false;
 
     [Header("Grapple Settings")]
+    public Vector2 grappleAnchorOffset = new Vector2(2f, 3f);
     public float maxGrappleDistance = 15f;
     public LayerMask grapplePointLayer;
     public string grapplePointTag = "GrapplePoint";
@@ -332,7 +333,8 @@ public class PlayerController : MonoBehaviour
                 dj.enabled = true;
                 dj.connectedAnchor = grapplePoint;
                 dj.distance = closestDistance;
-
+                Vector2 worldAnchor = transform.TransformPoint(dj.anchor);
+                dj.distance = Vector2.Distance(worldAnchor, grapplePoint);
                 rb.gravityScale = baseGravity;
                 rb.linearVelocity *= 0.1f;
             }
@@ -354,6 +356,9 @@ public class PlayerController : MonoBehaviour
             lr.enabled = false;
             dj.enabled = false;
         }
+
+        // Reseta a rotação ao soltar
+        transform.rotation = Quaternion.identity;
     }
 
     void Update()
@@ -376,8 +381,18 @@ public class PlayerController : MonoBehaviour
 
         if (isGrappling && lr != null)
         {
-            lr.SetPosition(0, transform.position);
+            lr.SetPosition(0, transform.TransformPoint(dj.anchor));
             lr.SetPosition(1, grapplePoint);
+
+            // ADIÇÃO: Rotação do personagem em direção ao ponto do gancho
+            Vector2 direction = grapplePoint - (Vector2)transform.position;
+            float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, targetAngle), Time.deltaTime * 10f);
+        }
+        else
+        {
+            // Retorna suavemente para a rotação normal quando não estiver pendurado
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, Time.deltaTime * 10f);
         }
     }
 
@@ -598,7 +613,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // --- MECÂNICA ESTILO RAYMAN: FRENAGEM SUAVE ---
     private void LimitVerticalMovement()
     {
         if (!isGrappling) return;
@@ -606,31 +620,23 @@ public class PlayerController : MonoBehaviour
         Vector2 directionToPlayer = (Vector2)transform.position - grapplePoint;
         float currentAngle = Vector2.SignedAngle(Vector2.right, directionToPlayer);
 
-        // Define as fronteiras baseadas no maxGrappleAngle (ex: 10° acima da horizontal)
         float extraAngle = (maxGrappleAngle - 180f) / 2f;
         float topLimit = 180f - extraAngle;
         float bottomLimit = extraAngle;
 
-        // Apenas processa se estiver na metade superior do círculo (ângulos positivos)
         if (currentAngle > 0 && currentAngle < 180)
         {
             float proximity = 0f;
 
-            // Lado Esquerdo (90° a 180°)
             if (currentAngle < topLimit && currentAngle > 90)
                 proximity = Mathf.InverseLerp(90f, topLimit, currentAngle);
-            // Lado Direito (0° a 90°)
             else if (currentAngle > bottomLimit && currentAngle <= 90)
                 proximity = Mathf.InverseLerp(90f, bottomLimit, currentAngle);
 
-            // Se o jogador estiver subindo e na zona de frenagem
             if (proximity > 0.05f && rb.linearVelocity.y > 0)
             {
-                // Aplica uma força contrária (gravidade extra) proporcional à proximidade do limite
                 float brakingIntensity = Mathf.Pow(proximity, brakingSmoothness);
                 rb.AddForce(Vector2.down * brakingIntensity * grappleBrakingForce, ForceMode2D.Force);
-
-                // Amortecimento cinético suave para evitar o efeito 'estilingue'
                 rb.linearVelocity *= (1f - (0.05f * proximity));
             }
         }

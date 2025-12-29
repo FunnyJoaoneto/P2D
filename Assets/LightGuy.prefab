@@ -350,13 +350,16 @@ MonoBehaviour:
   glideGravityScale: 0.3
   glideUpBoost: 2
   isGliding: 0
+  grappleAnchorOffset: {x: 0.1, y: 0.8}
   maxGrappleDistance: 15
   grapplePointLayer:
     serializedVersion: 2
     m_Bits: 0
   grapplePointTag: GrapplePoint
   swingImpulseForce: 50
-  maxSwingHeightRatio: 0.8
+  maxGrappleAngle: 200
+  grappleBrakingForce: 20
+  brakingSmoothness: 3
   forceChargeRate: 100
   minReboundForce: 15
   playerInput: {fileID: 299585397989469277}
@@ -403,7 +406,7 @@ DistanceJoint2D:
   m_BreakTorque: Infinity
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: 0}
+  m_Anchor: {x: 0.1, y: 0.6}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 0
   m_Distance: 10
