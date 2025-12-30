@@ -78,7 +78,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool isGrappling = false;
     private Vector2 grapplePoint;
     private float lastMoveDirection = 1f;
-    private float lockedSwingDirection = 0f;
 
     private InputAction moveAction;
     private InputAction jumpAction;
@@ -161,10 +160,6 @@ public class PlayerController : MonoBehaviour
         if (PlayerGlobalLock.movementLocked)
             return;
         moveInput = ctx.ReadValue<Vector2>();
-        if (isGrappling && Mathf.Abs(moveInput.x) > 0.1f)
-        {
-            lockedSwingDirection = Mathf.Sign(moveInput.x);
-        }
     }
 
     public void OnJump(InputAction.CallbackContext ctx)
@@ -324,8 +319,6 @@ public class PlayerController : MonoBehaviour
             controlledAnimator.SetBool("IsGrappling", true);
             currentSwingForce = 0f;
 
-            lockedSwingDirection = (grapplePoint.x > transform.position.x) ? 1f : -1f;
-
             if (lr != null && dj != null)
             {
                 lr.enabled = true;
@@ -349,7 +342,6 @@ public class PlayerController : MonoBehaviour
         controlledAnimator.SetBool("IsGrappling", false);
         isGrappling = false;
         currentSwingForce = 0f;
-        lockedSwingDirection = 0f;
 
         if (lr != null && dj != null)
         {
@@ -357,7 +349,6 @@ public class PlayerController : MonoBehaviour
             dj.enabled = false;
         }
 
-        // Reseta a rotação ao soltar
         transform.rotation = Quaternion.identity;
     }
 
@@ -384,14 +375,12 @@ public class PlayerController : MonoBehaviour
             lr.SetPosition(0, transform.TransformPoint(dj.anchor));
             lr.SetPosition(1, grapplePoint);
 
-            // ADIÇÃO: Rotação do personagem em direção ao ponto do gancho
             Vector2 direction = grapplePoint - (Vector2)transform.position;
             float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, targetAngle), Time.deltaTime * 10f);
         }
         else
         {
-            // Retorna suavemente para a rotação normal quando não estiver pendurado
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, Time.deltaTime * 10f);
         }
     }
@@ -591,25 +580,41 @@ public class PlayerController : MonoBehaviour
             );
         }
 
-        float desiredDirection = 0f;
-        float forceToApply = 0f;
+        // --- LÓGICA DE PÊNDULO RESTRITA ---
+        // Verifica se o jogador está abaixo do ponto de ancoragem (Y menor que o ponto)
+        bool isBelowGrapple = transform.position.y < grapplePoint.y;
 
-        if (Mathf.Abs(moveInput.x) > 0.1f)
+        if (isBelowGrapple)
         {
-            desiredDirection = Mathf.Sign(moveInput.x);
-            forceToApply = currentSwingForce + minReboundForce;
-        }
+            float pendulumDirection = 0f;
 
-        if (Mathf.Abs(desiredDirection) < 0.1f) return;
+            // Se o jogador estiver se movendo, aplica força na direção do movimento
+            if (Mathf.Abs(rb.linearVelocity.x) > 0.1f)
+            {
+                pendulumDirection = Mathf.Sign(rb.linearVelocity.x);
+            }
+            else
+            {
+                // Impulso inicial se estiver parado
+                pendulumDirection = (transform.position.x < grapplePoint.x) ? 1f : -1f;
+            }
 
-        if (Mathf.Sign(swingTangent.x) != desiredDirection)
-        {
-            swingTangent *= -1f;
-        }
+            float forceToApply = currentSwingForce + minReboundForce;
 
-        if (forceToApply > 0f)
-        {
+            if (Mathf.Sign(swingTangent.x) != pendulumDirection)
+            {
+                swingTangent *= -1f;
+            }
+
+            // Só aplica força se o personagem estiver "descendo" ou no fundo (Velocity.y <= 0)
+            // ou se ainda não atingiu a altura crítica lateral (90 graus)
             rb.AddForce(swingTangent * forceToApply, ForceMode2D.Force);
+        }
+        else
+        {
+            // Se ultrapassar os 180 graus (Y >= Grapple Point Y), a velocidade é reduzida suavemente
+            // Isso impede o loop infinito
+            rb.linearVelocity *= 0.98f;
         }
     }
 

@@ -358,7 +358,7 @@ MonoBehaviour:
   grapplePointTag: GrapplePoint
   swingImpulseForce: 50
   maxGrappleAngle: 200
-  grappleBrakingForce: 20
+  grappleBrakingForce: 31.1
   brakingSmoothness: 3
   forceChargeRate: 100
   minReboundForce: 15
