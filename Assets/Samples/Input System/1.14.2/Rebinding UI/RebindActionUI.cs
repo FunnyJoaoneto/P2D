@@ -66,6 +66,12 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             }
         }
 
+        public void Start()
+        {
+            UpdateActionLabel();
+            UpdateBindingDisplay();
+        }
+
         public void SaveActionBinding()
         {
             var map = actionReference.action.actionMap;
