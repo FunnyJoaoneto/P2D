@@ -389,10 +389,20 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             m_RebindOverlay?.SetActive(true);
             if (m_RebindText != null)
             {
-                var text = !string.IsNullOrEmpty(m_RebindOperation.expectedControlType)
-                    ? $"{partName}Waiting for {m_RebindOperation.expectedControlType} input..."
-                    : $"{partName}Waiting for input...";
-                m_RebindText.text = text;
+                var actionName = action.name;
+                var part = action.bindings[bindingIndex].isPartOfComposite
+                    ? action.bindings[bindingIndex].name
+                    : null;
+
+                var targetName = part != null
+                    ? $"{actionName} – {part}"
+                    : actionName;
+
+                var controlType = string.IsNullOrEmpty(m_RebindOperation.expectedControlType)
+                    ? "input"
+                    : m_RebindOperation.expectedControlType;
+
+                m_RebindText.text = $"Rebinding {targetName}\nWaiting for {controlType}...";
             }
 
             // If we have no rebind overlay and no callback but we have a binding text label,
@@ -521,11 +531,31 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
         private void UpdateActionLabel()
         {
-            if (m_ActionLabel != null)
+            if (m_ActionLabel == null)
+                return;
+
+            var action = m_Action?.action;
+            if (action == null)
             {
-                var action = m_Action?.action;
-                m_ActionLabel.text = action != null ? action.name : string.Empty;
+                m_ActionLabel.text = string.Empty;
+                return;
             }
+
+            var label = action.name;
+
+            if (!string.IsNullOrEmpty(m_BindingId))
+            {
+                var bindingId = new Guid(m_BindingId);
+                var bindingIndex = action.bindings.IndexOf(b => b.id == bindingId);
+
+                if (bindingIndex != -1 && action.bindings[bindingIndex].isPartOfComposite)
+                {
+                    var partName = action.bindings[bindingIndex].name;
+                    label = $"{label} {partName}";
+                }
+            }
+
+            m_ActionLabel.text = label;
         }
 
         [Serializable]
