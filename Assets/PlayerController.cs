@@ -84,6 +84,12 @@ public class PlayerController : MonoBehaviour
     private InputAction jumpAction;
     private InputAction abilityAction;
 
+    [Header("Configurações de Áudio")]
+    public AudioSource footstepSource; // Arraste um AudioSource aqui
+    public AudioClip footstepClip;     // Arraste o som de passo aqui
+    public float stepRate = 0.3f;      // Velocidade entre um passo e outro
+    private float nextStepTime;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -360,7 +366,16 @@ public class PlayerController : MonoBehaviour
         // Reseta a rotação ao soltar
         transform.rotation = Quaternion.identity;
     }
-
+    private void PlayFootstep()
+    {
+        if (footstepSource != null && footstepClip != null)
+        {
+            // Em vez de PlayOneShot, usamos o .Play() que interrompe o anterior
+            footstepSource.clip = footstepClip;
+            footstepSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+            footstepSource.Play();
+        }
+    }
     void Update()
     {
         if (PlayerGlobalLock.movementLocked)
@@ -372,6 +387,24 @@ public class PlayerController : MonoBehaviour
 
         CheckIlluminationEffects();
         Gravity();
+        bool estaMovendo = Mathf.Abs(moveInput.x) > 0.1f;
+
+        if (estaMovendo && GroundCheck())
+        {
+            if (Time.time > nextStepTime)
+            {
+                PlayFootstep();
+                nextStepTime = Time.time + stepRate;
+            }
+        }
+        else
+        {
+            // Se parou de andar ou pulou, o som de 3 segundos corta NA HORA
+            if (footstepSource.isPlaying)
+            {
+                footstepSource.Stop();
+            }
+        }
 
         if (glideQueued && rb.linearVelocity.y <= 0f && !GroundCheck())
         {
