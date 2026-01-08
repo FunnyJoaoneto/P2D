@@ -235,6 +235,12 @@ public class PlayerController : MonoBehaviour
 
     void StartGlide()
     {
+        if (GroundCheck())
+        {
+            glideQueued = true;
+            return;
+        }
+
         if (rb.linearVelocity.y > 0f)
         {
             glideQueued = true;
@@ -564,6 +570,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && !wasGroundedLastFrame)
         {
             StopGlide();
+            glideQueued = false;
         }
         if (controlledAnimator != null && isAnimatorInitialized)
         {
