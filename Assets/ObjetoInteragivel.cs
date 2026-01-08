@@ -5,6 +5,12 @@ using System.Collections;
 [RequireComponent(typeof(Collider2D))]
 public class ObjetoInteragivel : MonoBehaviour
 {
+    [Header("Configurações de Áudio da Plataforma")]
+    [Tooltip("O AudioSource que está lá na PLATAFORMA (não aqui no botão).")]
+    public AudioSource audioPlataforma;
+    [Tooltip("O som de engrenagens ou motor da plataforma.")]
+    public AudioClip somMovimentoPlataforma;
+
     [Header("Controle de Luz")]
     [Tooltip("Cristal usado para PLATAFORMA (pulsando / par).")]
     public CristalBrilhante controladorDeLuzPlataforma;   // NOVO
@@ -99,6 +105,7 @@ public class ObjetoInteragivel : MonoBehaviour
             return;
         }
 
+
         bool interacaoComAlvoSucesso = false;
 
         // =============================
@@ -117,6 +124,8 @@ public class ObjetoInteragivel : MonoBehaviour
                 {
                     controladorDeLuzPlataforma.AtivarCristal();
                 }
+
+                AtivarSomDaPlataforma();
             }
             else
             {
@@ -182,5 +191,23 @@ public class ObjetoInteragivel : MonoBehaviour
             }
         }
         return null;
+    }
+    private void AtivarSomDaPlataforma()
+    {
+        if (audioPlataforma != null && somMovimentoPlataforma != null)
+        {
+            // Configuramos o clip e o loop antes de dar o Play
+            audioPlataforma.clip = somMovimentoPlataforma;
+            audioPlataforma.loop = true;
+
+            // Essa configuração ajuda a manter o áudio na memória para o loop ser limpo
+            audioPlataforma.ignoreListenerPause = false;
+
+            // Se já estiver tocando, não reinicie (evita o estalo de som sobreposto)
+            if (!audioPlataforma.isPlaying)
+            {
+                audioPlataforma.Play();
+            }
+        }
     }
 }

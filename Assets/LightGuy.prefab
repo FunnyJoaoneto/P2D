@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 4383410643792069623}
   - component: {fileID: 6785294789101171052}
   - component: {fileID: 8117512822253277744}
+  - component: {fileID: 1706995758907120171}
   m_Layer: 8
   m_Name: LightGuy
   m_TagString: Player
@@ -350,18 +351,24 @@ MonoBehaviour:
   glideGravityScale: 0.3
   glideUpBoost: 2
   isGliding: 0
+  grappleAnchorOffset: {x: 0.1, y: 0.8}
   maxGrappleDistance: 15
   grapplePointLayer:
     serializedVersion: 2
     m_Bits: 0
   grapplePointTag: GrapplePoint
-  swingImpulseForce: 15
-  maxSwingHeightRatio: 0.8
-  forceChargeRate: 50
+  swingImpulseForce: 50
+  maxGrappleAngle: 200
+  grappleBrakingForce: 20
+  brakingSmoothness: 3
+  forceChargeRate: 100
   minReboundForce: 15
   playerInput: {fileID: 299585397989469277}
   grappleCheckRadius: 0.1
   isGrappling: 0
+  footstepSource: {fileID: 1706995758907120171}
+  footstepClip: {fileID: 8300000, guid: b8327a83e148ccf4e86a1124347c7426, type: 3}
+  stepRate: 0.6
 --- !u!114 &-2892948482663150535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,7 +410,7 @@ DistanceJoint2D:
   m_BreakTorque: Infinity
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: 0}
+  m_Anchor: {x: 0.1, y: 0.6}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 0
   m_Distance: 10
@@ -530,6 +537,103 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65dd72a55dfd5a542a88c1c8b61a0bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseRelay
+--- !u!82 &1706995758907120171
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520645146781339332}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6190409987011553172
 GameObject:
   m_ObjectHideFlags: 0
