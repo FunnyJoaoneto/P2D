@@ -1,9 +1,11 @@
 using UnityEngine;
-
 public class GoalItem : MonoBehaviour
 {
     [Tooltip("Marque se este item � o Sol (para o Cavaleiro da Luz).")]
     public bool isSun = true;
+
+    [SerializeField] private AudioClip collectSound;
+    [SerializeField, Range(0f, 1f)] private float volume = 1f;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -32,6 +34,10 @@ public class GoalItem : MonoBehaviour
 
             if (itemColetado)
             {
+                if (collectSound != null)
+                {
+                    AudioSource.PlayClipAtPoint(collectSound, transform.position, volume);
+                }
                 gameObject.SetActive(false);
             }
         }
