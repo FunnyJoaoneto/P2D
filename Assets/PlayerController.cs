@@ -54,6 +54,9 @@ public class PlayerController : MonoBehaviour
     public LayerMask grapplePointLayer;
     public string grapplePointTag = "GrapplePoint";
     public float swingImpulseForce = 15f;
+    public GameObject handGrapple;
+    private GameObject presentHand;
+    public float handOffset;
 
     [Tooltip("Limite total do arco de balanço (200 recomendado).")]
     public float maxGrappleAngle = 200f;
@@ -333,6 +336,11 @@ public class PlayerController : MonoBehaviour
         {
             grapplePoint = bestGrapplePoint;
             isGrappling = true;
+
+            if (handGrapple != null) {
+                presentHand = Instantiate (handGrapple, grapplePoint, Quaternion.identity);
+                Debug.Log ("Funfou");
+            }
             controlledAnimator.SetBool("IsGrappling", true);
             currentSwingForce = 0f;
 
@@ -369,6 +377,11 @@ public class PlayerController : MonoBehaviour
             dj.enabled = false;
         }
 
+        if (presentHand != null)
+        {
+            Destroy(presentHand);
+            presentHand = null;
+        }
         // Reseta a rotação ao soltar
         transform.rotation = Quaternion.identity;
     }
@@ -421,12 +434,19 @@ public class PlayerController : MonoBehaviour
         if (isGrappling && lr != null)
         {
             lr.SetPosition(0, transform.TransformPoint(dj.anchor));
-            lr.SetPosition(1, grapplePoint);
+            
+            if (presentHand != null) lr.SetPosition(1, presentHand.transform.position);
+
+            else lr.SetPosition(1, grapplePoint);
+
+            if (presentHand != null) presentHand.transform.position = new Vector2 (grapplePoint.x, grapplePoint.y + handOffset);
 
             // ADIÇÃO: Rotação do personagem em direção ao ponto do gancho
             Vector2 direction = grapplePoint - (Vector2)transform.position;
             float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, targetAngle), Time.deltaTime * 10f);
+            if (presentHand != null) presentHand.transform.rotation = Quaternion.Euler (0,0, targetAngle);
+
         }
         else
         {

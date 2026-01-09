@@ -358,6 +358,8 @@ MonoBehaviour:
     m_Bits: 0
   grapplePointTag: GrapplePoint
   swingImpulseForce: 50
+  handGrapple: {fileID: 7102806396640869086, guid: 990e7290a774e1d41b5ba998ffb9c06c, type: 3}
+  handOffset: -1
   maxGrappleAngle: 200
   grappleBrakingForce: 20
   brakingSmoothness: 3
@@ -423,13 +425,13 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1520645146781339332}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 0
-  m_LightProbeUsage: 0
+  m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
@@ -441,7 +443,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: b3c2b3aa2203e8649b74a9050a3134cf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -486,7 +488,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.9150943, g: 0.09927912, b: 0.09927912, a: 1}
+      key0: {r: 0.9882353, g: 1, b: 0.5568628, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -517,7 +519,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 2
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
