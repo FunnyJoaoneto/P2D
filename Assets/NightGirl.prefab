@@ -365,8 +365,8 @@ MonoBehaviour:
   grappleCheckRadius: 0.1
   isGrappling: 0
   footstepSource: {fileID: 1585640022126075972}
-  footstepClip: {fileID: 8300000, guid: d6a2ac02089225e42a8c6452fe100f34, type: 3}
-  stepRate: 0.6
+  footstepClip: {fileID: 8300000, guid: 88ca68fec5de26f489f904c1d3960af1, type: 3}
+  stepRate: 0.35
 --- !u!114 &-2892948482663150535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,7 +418,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.56
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -462,7 +462,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
