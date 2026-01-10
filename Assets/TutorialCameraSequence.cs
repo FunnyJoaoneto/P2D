@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.Cinemachine;   // CinemachineBrain
+using UnityEngine.InputSystem;
+using System;
+using System.Text;
+using System.Text.RegularExpressions;
 
 public class TutorialCameraSequence : MonoBehaviour
 {
@@ -55,6 +59,16 @@ public class TutorialCameraSequence : MonoBehaviour
     public GameObject pingPrefab;
     public Canvas uiCanvas;
 
+    [Header("Players (for control text)")]
+    public PlayerInput p1Input;
+    public PlayerInput p2Input;
+
+    // These are filled from menu selection (light vs night swapping)
+    private PlayerInput playerAInput;   // Light player
+    private PlayerInput playerBInput;   // Night player
+    private string playerAGroup;
+    private string playerBGroup;
+
     // internal
     private bool wallsInitiallyActive = true;
 
@@ -69,6 +83,10 @@ public class TutorialCameraSequence : MonoBehaviour
 
     private readonly List<GameObject> activeStepPings = new List<GameObject>();
     private readonly HashSet<Transform> activeStepPingTargets = new HashSet<Transform>();
+
+    private Dictionary<string, System.Func<string>> tokenMap;
+    private static readonly Regex TokenRegex = new Regex(@"\{([A-Z0-9_]+)\}", RegexOptions.Compiled);
+
 
     private void Awake()
     {
@@ -87,6 +105,10 @@ public class TutorialCameraSequence : MonoBehaviour
 
     private IEnumerator Start()
     {
+        SetupPlayersAndSchemesFromMenu();
+        BuildTokenMap();
+
+
         if (cam == null)
             cam = Camera.main;
 
@@ -191,7 +213,7 @@ public class TutorialCameraSequence : MonoBehaviour
         if (balloonText == null)
             yield break;
 
-        balloonText.text = msg ?? "";
+        balloonText.text = ResolveTokens(msg ?? "");
         balloonText.maxVisibleCharacters = 0;
 
         // Setup mesh/colors for fade
@@ -239,6 +261,170 @@ public class TutorialCameraSequence : MonoBehaviour
         while (!nextRequested)
             yield return null;
     }
+
+    private void SetupPlayersAndSchemesFromMenu()
+    {
+        var data = PlayerSelectionData.Instance;
+
+        bool p1IsLight = data.p1Character == "LightGuy";
+
+        // Player A = LIGHT, Player B = NIGHT
+        playerAInput = p1IsLight ? p1Input : p2Input;
+        playerBInput = p1IsLight ? p2Input : p1Input;
+
+        // IMPORTANT: use the GROUP names you saved from the menu
+        // These must match the Binding Groups in your Input Actions asset
+        playerAGroup = p1IsLight ? data.p1Scheme : data.p2Scheme;
+        playerBGroup = p1IsLight ? data.p2Scheme : data.p1Scheme;
+    }
+
+    private void BuildTokenMap()
+    {
+        // Assumes you already set:
+        // playerAInput/playerAGroup = LIGHT
+        // playerBInput/playerBGroup = NIGHT
+        tokenMap = new Dictionary<string, System.Func<string>>()
+        {
+            // LIGHT (Player A)
+            ["LIGHT_LEFT"]     = () => GetMovePart(playerAInput, playerAGroup, "left"),
+            ["LIGHT_RIGHT"]    = () => GetMovePart(playerAInput, playerAGroup, "right"),
+            ["LIGHT_UP"]       = () => GetMovePart(playerAInput, playerAGroup, "up"),
+            ["LIGHT_DOWN"]     = () => GetMovePart(playerAInput, playerAGroup, "down"),
+            ["LIGHT_JUMP"]     = () => GetActionBinding(playerAInput, playerAGroup, "Jump"),
+            ["LIGHT_ABILITY"]  = () => GetActionBinding(playerAInput, playerAGroup, "Ability"),
+            ["LIGHT_INTERACT"] = () => GetActionBinding(playerAInput, playerAGroup, "Interact"),
+
+            // NIGHT (Player B)
+            ["NIGHT_LEFT"]     = () => GetMovePart(playerBInput, playerBGroup, "left"),
+            ["NIGHT_RIGHT"]    = () => GetMovePart(playerBInput, playerBGroup, "right"),
+            ["NIGHT_UP"]       = () => GetMovePart(playerBInput, playerBGroup, "up"),
+            ["NIGHT_DOWN"]     = () => GetMovePart(playerBInput, playerBGroup, "down"),
+            ["NIGHT_JUMP"]     = () => GetActionBinding(playerBInput, playerBGroup, "Jump"),
+            ["NIGHT_ABILITY"]  = () => GetActionBinding(playerBInput, playerBGroup, "Ability"),
+            ["NIGHT_INTERACT"] = () => GetActionBinding(playerBInput, playerBGroup, "Interact"),
+        };
+    }
+
+    private string ResolveTokens(string text)
+    {
+        if (tokenMap == null || tokenMap.Count == 0)
+            return text;
+
+        return TokenRegex.Replace(text, match =>
+        {
+            string key = match.Groups[1].Value; // inside {...}
+            if (tokenMap.TryGetValue(key, out var getter))
+                return getter?.Invoke() ?? "?";
+            return match.Value; // unknown token -> keep as-is
+        });
+    }
+
+    private string GetActionBinding(PlayerInput p, string group, string actionName)
+    {
+        if (p == null) return "?";
+        var action = p.actions.FindAction(actionName, false);
+        if (action == null) return "?";
+
+        // Try find binding IN THIS GROUP (prevents grabbing Gamepad "A")
+        int idx = FindFirstBindingIndexInGroup(action, group);
+        if (idx >= 0)
+            return action.GetBindingDisplayString(idx);
+
+        // Fallback: prefer keyboard if possible
+        int kb = FindFirstBindingMatchingPath(action, "<Keyboard>");
+        if (kb >= 0)
+            return action.GetBindingDisplayString(kb);
+
+        // Last fallback: first non-composite binding
+        for (int i = 0; i < action.bindings.Count; i++)
+            if (!action.bindings[i].isComposite && !action.bindings[i].isPartOfComposite)
+                return action.GetBindingDisplayString(i);
+
+        return "?";
+    }
+
+    private int FindFirstBindingIndexInGroup(InputAction action, string group)
+    {
+        if (string.IsNullOrWhiteSpace(group))
+            return -1;
+
+        for (int i = 0; i < action.bindings.Count; i++)
+        {
+            var b = action.bindings[i];
+            if (b.isComposite || b.isPartOfComposite) continue;
+            if (BindingHasGroup(b, group)) return i;
+        }
+        return -1;
+    }
+
+    private int FindFirstBindingMatchingPath(InputAction action, string contains)
+    {
+        for (int i = 0; i < action.bindings.Count; i++)
+        {
+            var b = action.bindings[i];
+            if (b.isComposite || b.isPartOfComposite) continue;
+
+            var path = b.effectivePath;
+            if (!string.IsNullOrEmpty(path) && path.Contains(contains))
+                return i;
+        }
+        return -1;
+    }
+
+    private string GetMovePart(PlayerInput p, string group, string partName)
+    {
+        if (p == null) return "?";
+        var action = p.actions.FindAction("Move", false);
+        if (action == null) return "?";
+
+        var bindings = action.bindings;
+
+        for (int i = 0; i < bindings.Count; i++)
+        {
+            if (!bindings[i].isComposite) continue;
+
+            // We accept a composite if:
+            // - composite has the group, OR
+            // - ANY of its parts has the group
+            bool compositeMatches = BindingHasGroup(bindings[i], group);
+
+            int end = i + 1;
+            while (end < bindings.Count && bindings[end].isPartOfComposite) end++;
+
+            bool anyPartMatches = false;
+            for (int j = i + 1; j < end; j++)
+                if (BindingHasGroup(bindings[j], group))
+                    anyPartMatches = true;
+
+            if (!compositeMatches && !anyPartMatches)
+                continue;
+
+            // Find the requested part (left/right/up/down)
+            for (int j = i + 1; j < end; j++)
+            {
+                if (string.Equals(bindings[j].name, partName, System.StringComparison.OrdinalIgnoreCase))
+                    return action.GetBindingDisplayString(j);
+            }
+        }
+
+        return "?";
+    }
+
+    private bool BindingHasGroup(InputBinding binding, string group)
+    {
+        if (string.IsNullOrEmpty(group) || string.IsNullOrEmpty(binding.groups))
+            return false;
+
+        // groups are separated by ';'
+        var groups = binding.groups.Split(InputBinding.Separator);
+        for (int i = 0; i < groups.Length; i++)
+            if (string.Equals(groups[i], group, System.StringComparison.OrdinalIgnoreCase))
+                return true;
+
+        return false;
+    }
+
+
 
     private IEnumerator FadeChar(int charIndex, float fadeTime)
     {
