@@ -12,6 +12,16 @@ public class ObjetoInteragivel : MonoBehaviour
     public AudioClip somMovimentoPlataforma;
     [Range(0f, 2f)] public float volumeBasePlataforma = 1.0f;
 
+    public AudioSource audioInteracaoCristal;
+    public AudioClip somInteracaoCristal;
+    public float volumeBaseCristal = 1.0f;
+
+    public AudioSource audioInteracaoFada;
+    public AudioClip somInteracaoFada;
+    public float volumeBaseFada = 1.0f;
+    public AudioSource audioLoopFada;
+
+
 
     [Header("Controle de Luz")]
     [Tooltip("Cristal usado para PLATAFORMA (pulsando / par).")]
@@ -139,6 +149,19 @@ public class ObjetoInteragivel : MonoBehaviour
         // =============================
         else if (idTipoAcao == "VINHA")
         {
+            if(audioLoopFada != null && audioLoopFada.isPlaying)
+            {
+                audioLoopFada.Stop();
+            }
+            audioInteracaoFada.clip = somInteracaoFada;
+            // audioInteracaoCristal.loop = false;
+            audioInteracaoFada.volume = volumeBaseFada; // Define o volume inicial alto
+
+            if (!audioInteracaoFada.isPlaying)
+            {
+                audioInteracaoFada.Play();
+
+            }
             VinhaDestrutivel alvoVinha = FindTarget<VinhaDestrutivel>(idDoObjetoAlvo);
             if (alvoVinha != null)
             {
@@ -146,6 +169,7 @@ public class ObjetoInteragivel : MonoBehaviour
                 // Deixamos o Vagalume mandar a luz e só ao chegar ele chama Interagir.
                 if (controladorDeLuzVinha != null)
                 {
+                   
                     controladorDeLuzVinha.EnviarLuzParaVinha(alvoVinha);
                 }
                 else
@@ -167,6 +191,7 @@ public class ObjetoInteragivel : MonoBehaviour
             jaFoiAtivado = true;
             if (idTipoAcao == "PLATAFORMA")
             {
+
                 DesativarObjetoVisualmente();
             }
             if (usoUnico && meuCollider != null)
@@ -177,7 +202,18 @@ public class ObjetoInteragivel : MonoBehaviour
     }
     private void DesativarObjetoVisualmente()
     {
-        // 1. Esconde o Sprite/Arte
+        if (audioPlataforma != null && somInteracaoCristal != null)
+        {
+            audioInteracaoCristal.clip = somInteracaoCristal;
+            // audioInteracaoCristal.loop = false;
+            audioInteracaoCristal.volume = volumeBaseCristal; // Define o volume inicial alto
+
+            if (!audioInteracaoCristal.isPlaying)
+            {
+                audioInteracaoCristal.Play();
+                
+            }
+        }
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
         foreach (Renderer r in renderers) r.enabled = false;
 

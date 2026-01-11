@@ -6,7 +6,9 @@ public class FanZone : MonoBehaviour
     private AreaEffector2D effector;
     private bool girlInside = false;
     private PlayerController girlRef;
-
+    public AudioSource fanSource;
+    public AudioClip fanClip;
+    
     void Awake()
     {
         effector = GetComponent<AreaEffector2D>();
@@ -49,6 +51,7 @@ public class FanZone : MonoBehaviour
         {
             girlInside = false;
             girlRef = null;
+            fanSource.PlayOneShot(fanClip);
             UpdateEffectorState();
             Debug.Log("👧 Girl left fan zone");
         }
@@ -65,6 +68,7 @@ public class FanZone : MonoBehaviour
 
     private void UpdateEffectorState()
     {
+       
         bool shouldEnable = girlInside && girlRef != null && girlRef.isGliding;
         effector.enabled = shouldEnable;
 
