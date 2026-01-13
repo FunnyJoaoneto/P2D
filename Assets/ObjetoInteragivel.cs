@@ -10,6 +10,18 @@ public class ObjetoInteragivel : MonoBehaviour
     public AudioSource audioPlataforma;
     [Tooltip("O som de engrenagens ou motor da plataforma.")]
     public AudioClip somMovimentoPlataforma;
+    [Range(0f, 2f)] public float volumeBasePlataforma = 1.0f;
+
+    public AudioSource audioInteracaoCristal;
+    public AudioClip somInteracaoCristal;
+    public float volumeBaseCristal = 1.0f;
+
+    public AudioSource audioInteracaoFada;
+    public AudioClip somInteracaoFada;
+    public float volumeBaseFada = 1.0f;
+    public AudioSource audioLoopFada;
+
+
 
     [Header("Controle de Luz")]
     [Tooltip("Cristal usado para PLATAFORMA (pulsando / par).")]
@@ -22,13 +34,13 @@ public class ObjetoInteragivel : MonoBehaviour
 
     [Tooltip("ID único do objeto alvo (ex: Plataforma_A, Vinha_B). Deve corresponder ao ID do alvo.")]
     public string idDoObjetoAlvo;
-    
+
     [Tooltip("Tipo de Ação que este botão realiza (ex: PLATAFORMA para o Luz, VINHA para o Noite).")]
-    public string idTipoAcao = "PLATAFORMA"; 
+    public string idTipoAcao = "PLATAFORMA";
 
     [Tooltip("A Tag do Player que pode interagir (geralmente 'Player').")]
     public string tagDoJogador = "Player";
-    
+
     [Tooltip("Se o botão só pode ser usado uma vez.")]
     public bool usoUnico = true;
 
@@ -137,6 +149,19 @@ public class ObjetoInteragivel : MonoBehaviour
         // =============================
         else if (idTipoAcao == "VINHA")
         {
+            if(audioLoopFada != null && audioLoopFada.isPlaying)
+            {
+                audioLoopFada.Stop();
+            }
+            audioInteracaoFada.clip = somInteracaoFada;
+            // audioInteracaoCristal.loop = false;
+            audioInteracaoFada.volume = volumeBaseFada; // Define o volume inicial alto
+
+            if (!audioInteracaoFada.isPlaying)
+            {
+                audioInteracaoFada.Play();
+
+            }
             VinhaDestrutivel alvoVinha = FindTarget<VinhaDestrutivel>(idDoObjetoAlvo);
             if (alvoVinha != null)
             {
@@ -144,6 +169,7 @@ public class ObjetoInteragivel : MonoBehaviour
                 // Deixamos o Vagalume mandar a luz e só ao chegar ele chama Interagir.
                 if (controladorDeLuzVinha != null)
                 {
+                   
                     controladorDeLuzVinha.EnviarLuzParaVinha(alvoVinha);
                 }
                 else
@@ -163,13 +189,44 @@ public class ObjetoInteragivel : MonoBehaviour
         if (interacaoComAlvoSucesso)
         {
             jaFoiAtivado = true;
+            if (idTipoAcao == "PLATAFORMA")
+            {
 
+                DesativarObjetoVisualmente();
+            }
             if (usoUnico && meuCollider != null)
             {
-                // Opcional: desabilitar interação depois de usar
-                // meuCollider.enabled = false;
+                
             }
         }
+    }
+    private void DesativarObjetoVisualmente()
+    {
+        if (audioPlataforma != null && somInteracaoCristal != null)
+        {
+            audioInteracaoCristal.clip = somInteracaoCristal;
+            // audioInteracaoCristal.loop = false;
+            audioInteracaoCristal.volume = volumeBaseCristal; // Define o volume inicial alto
+
+            if (!audioInteracaoCristal.isPlaying)
+            {
+                audioInteracaoCristal.Play();
+                
+            }
+        }
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        foreach (Renderer r in renderers) r.enabled = false;
+
+        // 2. Desativa Colisor (impede nova interação)
+        if (meuCollider != null) meuCollider.enabled = false;
+
+        // 3. Muta o AudioSource LOCAL (o que estiver neste cristal)
+        AudioSource audioDesteObjeto = GetComponent<AudioSource>();
+        if (audioDesteObjeto != null) audioDesteObjeto.mute = true;
+
+        // 4. (Opcional) Desativa Luzes 2D se existirem
+        var lights = GetComponentsInChildren<UnityEngine.Rendering.Universal.Light2D>();
+        foreach (var l in lights) l.enabled = false;
     }
 
     // Função genérica para encontrar o objeto alvo pelo ID.
@@ -196,18 +253,46 @@ public class ObjetoInteragivel : MonoBehaviour
     {
         if (audioPlataforma != null && somMovimentoPlataforma != null)
         {
-            // Configuramos o clip e o loop antes de dar o Play
             audioPlataforma.clip = somMovimentoPlataforma;
             audioPlataforma.loop = true;
+            audioPlataforma.volume = volumeBasePlataforma; // Define o volume inicial alto
 
-            // Essa configuração ajuda a manter o áudio na memória para o loop ser limpo
-            audioPlataforma.ignoreListenerPause = false;
-
-            // Se já estiver tocando, não reinicie (evita o estalo de som sobreposto)
             if (!audioPlataforma.isPlaying)
             {
                 audioPlataforma.Play();
+                StartCoroutine(VariarSomNaturalmente());
             }
+        }
+    }
+
+    IEnumerator VariarSomNaturalmente()
+    {
+        while (audioPlataforma.isPlaying)
+        {
+            // Variação leve de tom (Pitch)
+            float novoPitch = UnityEngine.Random.Range(0.87f, 1.13f);
+
+            // Variação leve de volume (sempre próxima ao volume base que você definiu)
+            float variacaoVolume = UnityEngine.Random.Range(0.9f, 1.1f);
+            float novoVolume = volumeBasePlataforma * variacaoVolume;
+
+            float tempoDeTransicao = 0.8f; // Transição mais lenta para ser menos perceptível
+            float tempoPassado = 0;
+
+            float pitchInicial = audioPlataforma.pitch;
+            float volumeInicial = audioPlataforma.volume;
+
+            while (tempoPassado < tempoDeTransicao)
+            {
+                tempoPassado += Time.deltaTime;
+                float t = tempoPassado / tempoDeTransicao;
+
+                audioPlataforma.pitch = Mathf.Lerp(pitchInicial, novoPitch, t);
+                audioPlataforma.volume = Mathf.Lerp(volumeInicial, novoVolume, t);
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(UnityEngine.Random.Range(0.5f, 1.5f));
         }
     }
 }

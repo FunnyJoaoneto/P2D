@@ -67,5 +67,8 @@ TagManager:
   - name: Players
     uniqueID: 2767431199
     locked: 0
+  - name: Filters
+    uniqueID: 1538641059
+    locked: 0
   m_RenderingLayers:
   - Default
