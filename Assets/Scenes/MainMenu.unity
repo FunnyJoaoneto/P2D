@@ -4974,10 +4974,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelSelectUI
   allLevels:
-  - sceneName: Tutorial
+  - sceneName: TutorialStep1
     displayName: Tutorial
   - sceneName: Tutorial 1
     displayName: Level1
+  - sceneName: Tutorial 2
+    displayName: Level2
   gridParent: {fileID: 2007370159}
   levelButtonPrefab: {fileID: 3946391882330508704, guid: b8654e337fa10f741842aa74e55de6e5, type: 3}
   prevPageButton: {fileID: 1661360370}
@@ -5258,7 +5260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   newGameButton: {fileID: 1232812658}
   continueButton: {fileID: 520509471}
-  firstLevelSceneName: Tutorial
+  firstLevelSceneName: TutorialStep1
   selectionUI: {fileID: 123129041}
   levelSelectUI: {fileID: 1532499692}
 --- !u!82 &1540976441
