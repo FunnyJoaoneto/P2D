@@ -412,7 +412,7 @@ DistanceJoint2D:
   m_BreakTorque: Infinity
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0.1, y: 0.6}
+  m_Anchor: {x: 0, y: 0.6}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 0
   m_Distance: 10
@@ -475,7 +475,7 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.01719284
+        time: 0
         value: 1
         inSlope: 0
         outSlope: 0
