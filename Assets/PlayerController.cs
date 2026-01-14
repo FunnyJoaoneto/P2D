@@ -168,6 +168,7 @@ public class PlayerController : MonoBehaviour
             controlledAnimator.SetBool("IsGrounded", true);
             controlledAnimator.SetFloat("VerticalSpeed", 0f);
             controlledAnimator.SetBool("IsGrappling", false);
+            controlledAnimator.SetBool("IsDead", false);
         }
     }
 
@@ -468,6 +469,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (health!=null && !health.isAlive)
+        {             
+            controlledAnimator.SetBool("IsDead", true);
+        }
         if (PlayerGlobalLock.movementLocked)
         {
             moveInput = Vector2.zero;
