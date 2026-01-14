@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2c56f4a0dee56894a82657344a3ec25b
+guid: 302a432e6f1d1e74d8be081260390965
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5760202260919997367
-    second: BackGround_0
+      213: -1618326880645785397
+    second: MDeath E 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,10 +72,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 16384
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BackGround_0
+      name: MDeath E 1_0
       rect:
         serializedVersion: 2
-        x: 12
+        x: 0
         y: 0
-        width: 5226
-        height: 9589
+        width: 731
+        height: 1589
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7b3d98cff6950ff40800000000000000
-      internalID: 5760202260919997367
+      spriteID: bc854acb64c8a89e0800000000000000
+      internalID: -1618326880645785397
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BackGround_0: 5760202260919997367
+      MDeath E 1_0: -1618326880645785397
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

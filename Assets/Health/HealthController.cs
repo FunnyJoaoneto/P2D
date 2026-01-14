@@ -11,7 +11,7 @@ public class HealthController : MonoBehaviour
 
     public event Action<float, float> OnHealthChanged;
     // args: (currentHealth, maximumHealth)
-
+    
     public event Action OnDeath;
 
     private void Awake()
@@ -59,6 +59,7 @@ public class HealthController : MonoBehaviour
     private void Die()
     {
         if (isAlive) return; // prevents multiple triggers
+
         OnDeath?.Invoke();
         Debug.Log($"{gameObject.name} has died!");
     }

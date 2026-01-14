@@ -122,6 +122,7 @@ public class PlayerController : MonoBehaviour
             controlledAnimator.SetBool("IsGrounded", true);
             controlledAnimator.SetFloat("VerticalSpeed", 0f);
             controlledAnimator.SetBool("IsGrappling", false);
+            controlledAnimator.SetBool("isDead", false);
         }
     }
 
@@ -365,6 +366,13 @@ public void OnInteract(InputAction.CallbackContext ctx)
 
     void Update()
     {
+        if (health!= null && !health.isAlive) 
+        {
+        
+            controlledAnimator.SetBool("isDead", true);
+            return;
+        }
+
         if (PlayerGlobalLock.movementLocked)
         {
             moveInput = Vector2.zero;
@@ -413,8 +421,7 @@ public void OnInteract(InputAction.CallbackContext ctx)
     private void CheckIlluminationEffects()
     {
         if (health == null || SistemaDiaNoite.Instance == null) return;
-        if (!health.isAlive) return;
-
+        
         bool isInBrightZone = SistemaDiaNoite.Instance.IsInBrightZone(transform.position.x);
 
         if (lightPlayer)
