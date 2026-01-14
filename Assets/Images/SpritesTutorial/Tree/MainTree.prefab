@@ -98,7 +98,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 522476653055000023}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 7477988627806167329}
   - component: {fileID: 8378768243552996998}
   - component: {fileID: 6727395973766077290}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tree (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
