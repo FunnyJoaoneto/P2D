@@ -1,0 +1,663 @@
+fileFormatVersion: 2
+guid: faf1341e0acc39d4aa39d51b673f1806
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4500167491127645117
+    second: SDeath E 6_0
+  - first:
+      213: -3721961159856799782
+    second: SDeath E 6_1
+  - first:
+      213: 3227333250860748788
+    second: SDeath E 6_2
+  - first:
+      213: 3493154011585843967
+    second: SDeath E 6_3
+  - first:
+      213: -3030742831602133932
+    second: SDeath E 6_4
+  - first:
+      213: -5745025062349048870
+    second: SDeath E 6_5
+  - first:
+      213: 7682074960766510804
+    second: SDeath E 6_6
+  - first:
+      213: 3299711979264223651
+    second: SDeath E 6_7
+  - first:
+      213: 2511141452998812499
+    second: SDeath E 6_8
+  - first:
+      213: 1906230893426539960
+    second: SDeath E 6_9
+  - first:
+      213: 2372764584281041463
+    second: SDeath E 6_10
+  - first:
+      213: 2899014285699704195
+    second: SDeath E 6_11
+  - first:
+      213: -5770587553315881530
+    second: SDeath E 6_12
+  - first:
+      213: -2321542179207884766
+    second: SDeath E 6_13
+  - first:
+      213: 8443171896497752026
+    second: SDeath E 6_14
+  - first:
+      213: 3824084269326939157
+    second: SDeath E 6_15
+  - first:
+      213: -5835895692522163099
+    second: SDeath E 6_16
+  - first:
+      213: 7889453988735260843
+    second: SDeath E 6_17
+  - first:
+      213: -7504482936071874039
+    second: SDeath E 6_18
+  - first:
+      213: 6595982618727737413
+    second: SDeath E 6_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SDeath E 6_0
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 1598
+        width: 147
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db39c628d7ec37e30800000000000000
+      internalID: 4500167491127645117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_1
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 1400
+        width: 113
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adf3fee7b00f85cc0800000000000000
+      internalID: -3721961159856799782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_2
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 1469
+        width: 110
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ff8c551e7ac9cc20800000000000000
+      internalID: 3227333250860748788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_3
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 1290
+        width: 152
+        height: 145
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff21e46e01d2a7030800000000000000
+      internalID: 3493154011585843967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_4
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 1127
+        width: 155
+        height: 147
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4541bc4c373a0f5d0800000000000000
+      internalID: -3030742831602133932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_5
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 1154
+        width: 113
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad3f7fce4229540b0800000000000000
+      internalID: -5745025062349048870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_6
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 1136
+        width: 143
+        height: 143
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d62966b9763c9a60800000000000000
+      internalID: 7682074960766510804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_7
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 958
+        width: 94
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a92521009eeacd20800000000000000
+      internalID: 3299711979264223651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_8
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 918
+        width: 103
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 353a0cec8dd59d220800000000000000
+      internalID: 2511141452998812499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_9
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 849
+        width: 115
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bd709ed5ea447a10800000000000000
+      internalID: 1906230893426539960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_10
+      rect:
+        serializedVersion: 2
+        x: 776
+        y: 958
+        width: 113
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73ae2b561d0cde020800000000000000
+      internalID: 2372764584281041463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 731
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 385e9e9122e5b3820800000000000000
+      internalID: 2899014285699704195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_12
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 664
+        width: 109
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cdf053b131caefa0800000000000000
+      internalID: -5770587553315881530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_13
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 665
+        width: 146
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2205a3520b938cfd0800000000000000
+      internalID: -2321542179207884766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_14
+      rect:
+        serializedVersion: 2
+        x: 838
+        y: 748
+        width: 157
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad74f442b1c2c2570800000000000000
+      internalID: 8443171896497752026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_15
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 443
+        width: 149
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5143460d160e11530800000000000000
+      internalID: 3824084269326939157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_16
+      rect:
+        serializedVersion: 2
+        x: 553
+        y: 421
+        width: 110
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 564fbfc99cbb20fa0800000000000000
+      internalID: -5835895692522163099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_17
+      rect:
+        serializedVersion: 2
+        x: 659
+        y: 207
+        width: 143
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba89a564a98fc7d60800000000000000
+      internalID: 7889453988735260843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_18
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 0
+        width: 146
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90a9474b788bad790800000000000000
+      internalID: -7504482936071874039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath E 6_19
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 8
+        width: 104
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 548eae5ae33a98b50800000000000000
+      internalID: 6595982618727737413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SDeath E 6_0: 4500167491127645117
+      SDeath E 6_1: -3721961159856799782
+      SDeath E 6_10: 2372764584281041463
+      SDeath E 6_11: 2899014285699704195
+      SDeath E 6_12: -5770587553315881530
+      SDeath E 6_13: -2321542179207884766
+      SDeath E 6_14: 8443171896497752026
+      SDeath E 6_15: 3824084269326939157
+      SDeath E 6_16: -5835895692522163099
+      SDeath E 6_17: 7889453988735260843
+      SDeath E 6_18: -7504482936071874039
+      SDeath E 6_19: 6595982618727737413
+      SDeath E 6_2: 3227333250860748788
+      SDeath E 6_3: 3493154011585843967
+      SDeath E 6_4: -3030742831602133932
+      SDeath E 6_5: -5745025062349048870
+      SDeath E 6_6: 7682074960766510804
+      SDeath E 6_7: 3299711979264223651
+      SDeath E 6_8: 2511141452998812499
+      SDeath E 6_9: 1906230893426539960
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
