@@ -5260,7 +5260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   newGameButton: {fileID: 1232812658}
   continueButton: {fileID: 520509471}
-  firstLevelSceneName: TutorialStep1
+  firstLevelSceneName: Intro
   selectionUI: {fileID: 123129041}
   levelSelectUI: {fileID: 1532499692}
 --- !u!82 &1540976441
