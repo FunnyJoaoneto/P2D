@@ -1,6 +1,7 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
 using System;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -20,7 +21,6 @@ public class PlayerController : MonoBehaviour
 
     public float damagePerSecond = 10f;
     public float healPerSecond = 5f;
-
 
     public float moveSpeed = 5f;
 
@@ -89,9 +89,26 @@ public class PlayerController : MonoBehaviour
 
     [Header("Configurações de Áudio")]
     public AudioSource footstepSource; // Arraste um AudioSource aqui
-    public AudioClip footstepClip;     // Arraste o som de passo aqui
+    public AudioClip footstepClip;      // Arraste o som de passo aqui
     public float stepRate = 0.3f;      // Velocidade entre um passo e outro
     private float nextStepTime;
+
+    [Header("Grapple Audio")]
+    public AudioSource grappleSource; // AudioSource extra para o loop de balanç
+    public AudioClip somConexaoPonto;
+    public AudioClip somBalançoLoop;
+    public AudioSource impactSource;
+    public AudioSource glideSource;
+    public AudioSource jumpSource;
+    public AudioClip jumpClip;
+    public AudioSource groundImpactSource;
+    public AudioClip groundImpactClip;
+    private float lastAudioSampleTime = 0f;
+    private float currentPitchVariation = 0f;
+
+    private int updraftCount = 0;
+    private bool InUpdraft => updraftCount > 0;
+
 
     void Awake()
     {
@@ -123,7 +140,6 @@ public class PlayerController : MonoBehaviour
         if (jumpHeight < 0.1f) jumpHeight = 0.1f;
         RecalculateJump();
     }
-
 
     private void InitializeAnimator()
     {
@@ -175,9 +191,20 @@ public class PlayerController : MonoBehaviour
             lockedSwingDirection = Mathf.Sign(moveInput.x);
         }
     }
-
+    private void PlayJumpSound()
+    {
+        if (jumpSource != null && jumpClip != null)
+        {
+            jumpSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+            jumpSource.PlayOneShot(jumpClip);
+        }
+    }
     public void OnJump(InputAction.CallbackContext ctx)
     {
+        jumpSource.clip = jumpClip;
+        jumpSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+        jumpSource.PlayOneShot(jumpClip);
+            
         if (PlayerGlobalLock.movementLocked)
             return;
 
@@ -188,7 +215,6 @@ public class PlayerController : MonoBehaviour
 
         if (ctx.performed)
         {
-            Debug.Log("pulei");
             Jump(true);
         }
         else if (ctx.canceled)
@@ -220,8 +246,6 @@ public class PlayerController : MonoBehaviour
 
         if (ctx.performed)
         {
-            Debug.Log("INTERAGI");
-
             if (objetoInteragivelProximo != null)
             {
                 if (lightPlayer)
@@ -240,7 +264,14 @@ public class PlayerController : MonoBehaviour
     {
         if (GroundCheck())
         {
-            glideQueued = true;
+            if (InUpdraft)
+            {
+                ActivateGlide();  // lets the flower throw you up without jumping
+            }
+            else
+            {
+                glideQueued = true;
+            }
             return;
         }
 
@@ -251,11 +282,23 @@ public class PlayerController : MonoBehaviour
         }
 
         ActivateGlide();
+        
     }
 
     void ActivateGlide()
     {
+        
         isGliding = true;
+        glideSource.clip = somBalançoLoop;
+        if (isGliding == true)
+        {
+            glideSource.loop = true;
+            if (!glideSource.isPlaying)
+            {
+                glideSource.Play();
+            }
+        }
+
         rb.gravityScale = glideGravityScale;
         OnGlideStateChanged?.Invoke(this, true);
     }
@@ -263,10 +306,17 @@ public class PlayerController : MonoBehaviour
     void StopGlide()
     {
         glideQueued = false;
-
         if (isGliding)
         {
             isGliding = false;
+            if (isGliding != true)
+            {
+                glideSource.loop = false;
+                if (glideSource.isPlaying)
+                {
+                    glideSource.Pause();
+                }
+            }
             rb.gravityScale = baseGravity;
             OnGlideStateChanged?.Invoke(this, false);
         }
@@ -332,6 +382,7 @@ public class PlayerController : MonoBehaviour
                 bestGrapplePoint = targetPosition;
             }
         }
+
         if (bestGrapplePoint != Vector2.zero)
         {
             grapplePoint = bestGrapplePoint;
@@ -341,6 +392,20 @@ public class PlayerController : MonoBehaviour
                 presentHand = Instantiate (handGrapple, grapplePoint, Quaternion.identity);
                 Debug.Log ("Funfou");
             }
+            lastAudioSampleTime = 0f;
+
+            // USAMOS O FOOTSTEPSOURCE para o impacto inicial (ele não tem o volume zerado)
+            
+                impactSource.PlayOneShot(somConexaoPonto);
+
+            if (grappleSource != null && somBalançoLoop != null)
+            {
+                grappleSource.clip = somBalançoLoop;
+                grappleSource.loop = true;
+                grappleSource.volume = 0f; // O loop começa mudo e aumenta no HandleGrappleForces
+                grappleSource.Play();
+            }
+
             controlledAnimator.SetBool("IsGrappling", true);
             currentSwingForce = 0f;
 
@@ -349,7 +414,6 @@ public class PlayerController : MonoBehaviour
             if (lr != null && dj != null)
             {
                 lr.enabled = true;
-
                 dj.enabled = true;
                 dj.connectedAnchor = grapplePoint;
                 dj.distance = closestDistance;
@@ -359,12 +423,18 @@ public class PlayerController : MonoBehaviour
                 rb.linearVelocity *= 0.1f;
             }
         }
-
     }
 
     private void ReleaseGrapple()
     {
         if (!isGrappling) return;
+
+        PlayJumpSound();
+        // Para o som de balanço
+        if (grappleSource != null)
+        {
+            grappleSource.Stop();
+        }
 
         controlledAnimator.SetBool("IsGrappling", false);
         isGrappling = false;
@@ -385,16 +455,17 @@ public class PlayerController : MonoBehaviour
         // Reseta a rotação ao soltar
         transform.rotation = Quaternion.identity;
     }
+
     private void PlayFootstep()
     {
         if (footstepSource != null && footstepClip != null)
         {
-            // Em vez de PlayOneShot, usamos o .Play() que interrompe o anterior
             footstepSource.clip = footstepClip;
             footstepSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
             footstepSource.Play();
         }
     }
+
     void Update()
     {
         if (PlayerGlobalLock.movementLocked)
@@ -418,7 +489,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            // Se parou de andar ou pulou, o som de 3 segundos corta NA HORA
             if (footstepSource.isPlaying)
             {
                 footstepSource.Stop();
@@ -441,7 +511,6 @@ public class PlayerController : MonoBehaviour
 
             if (presentHand != null) presentHand.transform.position = new Vector2 (grapplePoint.x, grapplePoint.y + handOffset);
 
-            // ADIÇÃO: Rotação do personagem em direção ao ponto do gancho
             Vector2 direction = grapplePoint - (Vector2)transform.position;
             float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, targetAngle), Time.deltaTime * 10f);
@@ -450,13 +519,17 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            // Retorna suavemente para a rotação normal quando não estiver pendurado
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, Time.deltaTime * 10f);
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag("Updraft"))
+        {
+            updraftCount++;
+        }
+
         if (other.CompareTag("ExitReady") || other.CompareTag("ExitGate"))
         {
             if (GoalManager.Instance != null)
@@ -468,6 +541,11 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
+        if (other.CompareTag("Updraft"))
+        {
+            updraftCount = Mathf.Max(0, updraftCount - 1);
+        }
+
         if (other.CompareTag("ExitReady") || other.CompareTag("ExitGate"))
         {
             if (GoalManager.Instance != null)
@@ -517,8 +595,8 @@ public class PlayerController : MonoBehaviour
             if (rb.linearVelocity.y < 0f)
             {
                 rb.linearVelocity = new Vector2(
-                rb.linearVelocity.x,
-                Mathf.Max(rb.linearVelocity.y, -maxFallSpeed / 3f)
+                    rb.linearVelocity.x,
+                    Mathf.Max(rb.linearVelocity.y, -maxFallSpeed / 3f)
                 );
             }
 
@@ -542,7 +620,6 @@ public class PlayerController : MonoBehaviour
         if (rb.linearVelocity.y < -maxFallSpeed)
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, -maxFallSpeed);
     }
-
 
     void FixedUpdate()
     {
@@ -589,7 +666,29 @@ public class PlayerController : MonoBehaviour
         isGrounded = GroundCheck();
         if (isGrounded && !wasGroundedLastFrame)
         {
-            StopGlide();
+            if (!isGrounded && wasGroundedLastFrame && rb.linearVelocity.y <= 0.1f)
+            {
+                
+                if (!lightPlayer)
+                {
+                    if (!isGliding && !glideQueued) PlayJumpSound();
+                }
+                else 
+                {
+                    PlayJumpSound();
+                }
+            }
+            if (groundImpactClip != null && groundImpactSource != null && !isGrappling)
+            {
+                groundImpactSource.clip = groundImpactClip;
+                groundImpactSource.pitch = UnityEngine.Random.Range(0.8f, 1.1f);
+                groundImpactSource.PlayOneShot(groundImpactClip);
+                
+            }
+        }
+        if (isGrounded && !InUpdraft)
+        {
+            if (isGliding) StopGlide();
             glideQueued = false;
         }
         if (controlledAnimator != null && isAnimatorInitialized)
@@ -614,6 +713,7 @@ public class PlayerController : MonoBehaviour
         controlledAnimator.SetFloat("Speed", speed);
         controlledAnimator.SetFloat("Direction", lastMoveDirection);
     }
+
     private void HandleAirborneAnimation()
     {
         if (!isAnimatorInitialized || controlledAnimator == null) return;
@@ -633,6 +733,8 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 ropeVector = grapplePoint - (Vector2)transform.position;
         Vector2 swingTangent = new Vector2(-ropeVector.y, ropeVector.x).normalized;
+
+        bool hasInput = Mathf.Abs(moveInput.x) > 0.1f;
 
         if (isAbilityButtonHeld)
         {
@@ -660,6 +762,32 @@ public class PlayerController : MonoBehaviour
             forceToApply = currentSwingForce + minReboundForce;
         }
 
+        // --- LÓGICA DE ÁUDIO DINÂMICO CORRIGIDA ---
+        if (grappleSource != null && isGrappling)
+        {
+            float intensity = currentSwingForce / swingImpulseForce;
+
+            if (hasInput)
+            {
+                // Variação de pitch para o som de vento
+                if (grappleSource.time < lastAudioSampleTime)
+                    currentPitchVariation = UnityEngine.Random.Range(-0.05f, 0.05f);
+
+                lastAudioSampleTime = grappleSource.time;
+
+                // Aumenta o volume do vento conforme a força do balanço
+                grappleSource.volume = Mathf.Lerp(grappleSource.volume, Mathf.Clamp(intensity, 0.2f, 1.0f), Time.fixedDeltaTime * 8f);
+                grappleSource.pitch = Mathf.Lerp(grappleSource.pitch, 0.8f + intensity * 0.3f + currentPitchVariation, Time.fixedDeltaTime * 4f);
+            }
+            else
+            {
+                // Se soltar o direcional, apenas o som de loop (vento) silencia
+                grappleSource.volume = Mathf.Lerp(grappleSource.volume, 0f, Time.fixedDeltaTime * 10f);
+            }
+
+        }
+        // ------------------------------------------
+
         if (Mathf.Abs(desiredDirection) < 0.1f) return;
 
         if (Mathf.Sign(swingTangent.x) != desiredDirection)
@@ -672,7 +800,6 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(swingTangent * forceToApply, ForceMode2D.Force);
         }
     }
-
     private void LimitVerticalMovement()
     {
         if (!isGrappling) return;
@@ -704,12 +831,10 @@ public class PlayerController : MonoBehaviour
 
     private void RecalculateJump()
     {
-        float gravity = (2f * jumpHeight) / (timeToApex * timeToApex); // m/s^2
-        jumpForce = gravity * timeToApex;                               // m/s
-
-        baseGravity = gravity / Mathf.Abs(Physics2D.gravity.y);         // gravityScale
+        float gravity = (2f * jumpHeight) / (timeToApex * timeToApex);
+        jumpForce = gravity * timeToApex;
+        baseGravity = gravity / Mathf.Abs(Physics2D.gravity.y);
     }
-
 
     void Jump(bool jumping)
     {
@@ -752,7 +877,6 @@ public class PlayerController : MonoBehaviour
     public void SetProximoInteragivel(ObjetoInteragivel interagivel)
     {
         objetoInteragivelProximo = interagivel;
-        Debug.Log($"Jogador perto de {interagivel.gameObject.name}");
     }
 
     public void ClearProximoInteragivel(ObjetoInteragivel interagivel)
@@ -771,6 +895,7 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;
