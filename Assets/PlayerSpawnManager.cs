@@ -200,7 +200,7 @@ public class PlayerSpawnManager : MonoBehaviour
         // lock player input / movement
         PlayerGlobalLock.movementLocked = true;
 
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
 
         if (gameOverScreen != null)
             gameOverScreen.SetActive(true);
