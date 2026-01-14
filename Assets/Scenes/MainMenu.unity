@@ -1361,7 +1361,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5760202260919997367, guid: 2c56f4a0dee56894a82657344a3ec25b, type: 3}
+  m_Sprite: {fileID: 3312702712402791007, guid: 956720ae3cd60504a89051b04380ed27, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4976,9 +4976,9 @@ MonoBehaviour:
   allLevels:
   - sceneName: TutorialStep1
     displayName: Tutorial
-  - sceneName: Tutorial 1
+  - sceneName: Tutorial
     displayName: Level1
-  - sceneName: Tutorial 2
+  - sceneName: Tutorial 1
     displayName: Level2
   gridParent: {fileID: 2007370159}
   levelButtonPrefab: {fileID: 3946391882330508704, guid: b8654e337fa10f741842aa74e55de6e5, type: 3}
