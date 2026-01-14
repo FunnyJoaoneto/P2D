@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tutorial 1.unity
     guid: e63f20d4f06dcce41a0514431c0b3a06
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Tutorial 2v1.unity
     guid: 9a0986655a093114e9c90c9e4eace9a6
   - enabled: 1
@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TutorialStep3.unity
     guid: 4ef226f14e53d894b8b23733608c2198
+  - enabled: 1
+    path: Assets/Scenes/Intro.unity
+    guid: 8f15fe4770db59f4ab9cfb23f5731d1f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
