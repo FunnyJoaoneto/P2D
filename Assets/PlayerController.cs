@@ -103,6 +103,10 @@ public class PlayerController : MonoBehaviour
     private float lastAudioSampleTime = 0f;
     private float currentPitchVariation = 0f;
 
+    private int updraftCount = 0;
+    private bool InUpdraft => updraftCount > 0;
+
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -257,7 +261,14 @@ public class PlayerController : MonoBehaviour
     {
         if (GroundCheck())
         {
-            glideQueued = true;
+            if (InUpdraft)
+            {
+                ActivateGlide();  // lets the flower throw you up without jumping
+            }
+            else
+            {
+                glideQueued = true;
+            }
             return;
         }
 
@@ -493,6 +504,11 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag("Updraft"))
+        {
+            updraftCount++;
+        }
+
         if (other.CompareTag("ExitReady") || other.CompareTag("ExitGate"))
         {
             if (GoalManager.Instance != null)
@@ -504,6 +520,11 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
+        if (other.CompareTag("Updraft"))
+        {
+            updraftCount = Mathf.Max(0, updraftCount - 1);
+        }
+
         if (other.CompareTag("ExitReady") || other.CompareTag("ExitGate"))
         {
             if (GoalManager.Instance != null)
@@ -643,7 +664,10 @@ public class PlayerController : MonoBehaviour
                 groundImpactSource.PlayOneShot(groundImpactClip);
                 
             }
-            StopGlide();
+        }
+        if (isGrounded && !InUpdraft)
+        {
+            if (isGliding) StopGlide();
             glideQueued = false;
         }
         if (controlledAnimator != null && isAnimatorInitialized)

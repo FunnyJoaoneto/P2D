@@ -9,6 +9,7 @@ TagManager:
   - ExitReady
   - tile
   - ExitGate
+  - Updraft
   layers:
   - Default
   - TransparentFX
