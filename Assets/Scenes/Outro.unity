@@ -617,7 +617,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   videoPlayer: {fileID: 1435289196}
   skipButton: {fileID: 1508087590}
-  nextSceneName: MainMenu
+  allowSkip: 1
+  nextSceneName: Credits
   showSkipAfterSeconds: 1
 --- !u!1 &1508087590
 GameObject:
