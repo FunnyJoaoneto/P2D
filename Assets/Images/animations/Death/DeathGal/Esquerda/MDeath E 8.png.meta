@@ -1,0 +1,689 @@
+fileFormatVersion: 2
+guid: e06a7886067e9b644b6cf0735f58d704
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1481439251766021470
+    second: MDeath E 8_0
+  - first:
+      213: 2888208235166216153
+    second: MDeath E 8_1
+  - first:
+      213: 1857769509835100743
+    second: MDeath E 8_2
+  - first:
+      213: -8842277998738761557
+    second: MDeath E 8_3
+  - first:
+      213: 6381413863246186336
+    second: MDeath E 8_4
+  - first:
+      213: 264869555192030223
+    second: MDeath E 8_5
+  - first:
+      213: 2364060752268119270
+    second: MDeath E 8_6
+  - first:
+      213: 6642346996679766937
+    second: MDeath E 8_7
+  - first:
+      213: 4160129009850069302
+    second: MDeath E 8_8
+  - first:
+      213: -2886722906670443426
+    second: MDeath E 8_9
+  - first:
+      213: 5884969540152881280
+    second: MDeath E 8_10
+  - first:
+      213: -1024775647737205734
+    second: MDeath E 8_11
+  - first:
+      213: 8431061994599155148
+    second: MDeath E 8_12
+  - first:
+      213: -2816314772163837412
+    second: MDeath E 8_13
+  - first:
+      213: -3505330508380862013
+    second: MDeath E 8_14
+  - first:
+      213: -158970049252971906
+    second: MDeath E 8_15
+  - first:
+      213: -3421332958438570451
+    second: MDeath E 8_16
+  - first:
+      213: -1523005446675202967
+    second: MDeath E 8_17
+  - first:
+      213: -8196445363894293458
+    second: MDeath E 8_18
+  - first:
+      213: -8886678074231590254
+    second: MDeath E 8_19
+  - first:
+      213: -3153533574738962569
+    second: MDeath E 8_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MDeath E 8_0
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 1667
+        width: 87
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5d85d586212f8410800000000000000
+      internalID: 1481439251766021470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_1
+      rect:
+        serializedVersion: 2
+        x: 791
+        y: 1561
+        width: 51
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9dfa076661af41820800000000000000
+      internalID: 2888208235166216153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_2
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 1483
+        width: 63
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 742d54cb68f18c910800000000000000
+      internalID: 1857769509835100743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_3
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 1420
+        width: 94
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba89cef220be94580800000000000000
+      internalID: -8842277998738761557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_4
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 1227
+        width: 83
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 067ca8339165f8850800000000000000
+      internalID: 6381413863246186336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_5
+      rect:
+        serializedVersion: 2
+        x: 974
+        y: 1236
+        width: 67
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f04690505710da300800000000000000
+      internalID: 264869555192030223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_6
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 1050
+        width: 51
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ec42669ab4dec020800000000000000
+      internalID: 2364060752268119270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_7
+      rect:
+        serializedVersion: 2
+        x: 979
+        y: 1000
+        width: 63
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 993fafb966b5e2c50800000000000000
+      internalID: 6642346996679766937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_8
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 887
+        width: 60
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63139eb0b4fbbb930800000000000000
+      internalID: 4160129009850069302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_9
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 872
+        width: 62
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e54dce69fcc40f7d0800000000000000
+      internalID: -2886722906670443426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 774
+        width: 92
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0807ecaed9c9ba150800000000000000
+      internalID: 5884969540152881280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_11
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 771
+        width: 44
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1c27265af347c1f0800000000000000
+      internalID: -1024775647737205734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_12
+      rect:
+        serializedVersion: 2
+        x: 1081
+        y: 799
+        width: 79
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc50163e636210570800000000000000
+      internalID: 8431061994599155148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_13
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 765
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c124d7dd2a07ae8d0800000000000000
+      internalID: -2816314772163837412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_14
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 674
+        width: 55
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c98e9389709a5fc0800000000000000
+      internalID: -3505330508380862013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_15
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 605
+        width: 86
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7aa95c15993bcdf0800000000000000
+      internalID: -158970049252971906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_16
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 405
+        width: 93
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d26cee12dcbf480d0800000000000000
+      internalID: -3421332958438570451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_17
+      rect:
+        serializedVersion: 2
+        x: 763
+        y: 428
+        width: 51
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96c70ff8d923ddae0800000000000000
+      internalID: -1523005446675202967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_18
+      rect:
+        serializedVersion: 2
+        x: 886
+        y: 261
+        width: 69
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2cee204e50604e80800000000000000
+      internalID: -8196445363894293458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_19
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 0
+        width: 76
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2927c28006d2ca480800000000000000
+      internalID: -8886678074231590254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDeath E 8_20
+      rect:
+        serializedVersion: 2
+        x: 797
+        y: 11
+        width: 52
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7779a620ce56c34d0800000000000000
+      internalID: -3153533574738962569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      MDeath E 8_0: 1481439251766021470
+      MDeath E 8_1: 2888208235166216153
+      MDeath E 8_10: 5884969540152881280
+      MDeath E 8_11: -1024775647737205734
+      MDeath E 8_12: 8431061994599155148
+      MDeath E 8_13: -2816314772163837412
+      MDeath E 8_14: -3505330508380862013
+      MDeath E 8_15: -158970049252971906
+      MDeath E 8_16: -3421332958438570451
+      MDeath E 8_17: -1523005446675202967
+      MDeath E 8_18: -8196445363894293458
+      MDeath E 8_19: -8886678074231590254
+      MDeath E 8_2: 1857769509835100743
+      MDeath E 8_20: -3153533574738962569
+      MDeath E 8_3: -8842277998738761557
+      MDeath E 8_4: 6381413863246186336
+      MDeath E 8_5: 264869555192030223
+      MDeath E 8_6: 2364060752268119270
+      MDeath E 8_7: 6642346996679766937
+      MDeath E 8_8: 4160129009850069302
+      MDeath E 8_9: -2886722906670443426
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

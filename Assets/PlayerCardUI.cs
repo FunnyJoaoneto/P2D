@@ -8,6 +8,9 @@ public class PlayerCardUI : MonoBehaviour
     [SerializeField] private Image characterImage;
     public Sprite lightSprite;
     public Sprite nightSprite;
+
+    [SerializeField] private Vector2 lightSize = new Vector2(300, 300);
+    [SerializeField] private Vector2 nightSize = new Vector2(260, 340);
     [SerializeField] private TextMeshProUGUI characterLabel;
 
     [Header("Scheme")]
@@ -95,15 +98,19 @@ public class PlayerCardUI : MonoBehaviour
 
     void RefreshCharacter()
     {
+        var rt = characterImage.rectTransform;
+
         if (CharacterIndex == 0)
         {
             characterImage.sprite = lightSprite;
             characterLabel.text = "Light";
+            rt.sizeDelta = lightSize;
         }
         else
         {
             characterImage.sprite = nightSprite;
             characterLabel.text = "Night";
+            rt.sizeDelta = nightSize;
         }
     }
 

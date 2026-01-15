@@ -1,0 +1,689 @@
+fileFormatVersion: 2
+guid: d11f96ca9a788604fb2e1857a327b412
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8518030204817202103
+    second: SDeath D 8_0
+  - first:
+      213: -116089134076908975
+    second: SDeath D 8_1
+  - first:
+      213: 6574873392726101688
+    second: SDeath D 8_2
+  - first:
+      213: 6162781090045128899
+    second: SDeath D 8_3
+  - first:
+      213: 528427262728971866
+    second: SDeath D 8_4
+  - first:
+      213: -2716489939293723380
+    second: SDeath D 8_5
+  - first:
+      213: -2968032314842357893
+    second: SDeath D 8_6
+  - first:
+      213: 1190834349187793894
+    second: SDeath D 8_7
+  - first:
+      213: -2781204830019570003
+    second: SDeath D 8_8
+  - first:
+      213: -7925381013610060376
+    second: SDeath D 8_9
+  - first:
+      213: -1973433010429631500
+    second: SDeath D 8_10
+  - first:
+      213: 7802071928634464935
+    second: SDeath D 8_11
+  - first:
+      213: 8520021518727831484
+    second: SDeath D 8_12
+  - first:
+      213: 3787239201128725367
+    second: SDeath D 8_13
+  - first:
+      213: -8449981176855487920
+    second: SDeath D 8_14
+  - first:
+      213: -8602160435684537344
+    second: SDeath D 8_15
+  - first:
+      213: -6639619295408136279
+    second: SDeath D 8_16
+  - first:
+      213: 3636607322461746251
+    second: SDeath D 8_17
+  - first:
+      213: -6607415961507383404
+    second: SDeath D 8_18
+  - first:
+      213: 8696171439646898772
+    second: SDeath D 8_19
+  - first:
+      213: -3254981390834880875
+    second: SDeath D 8_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SDeath D 8_0
+      rect:
+        serializedVersion: 2
+        x: 736
+        y: 1667
+        width: 87
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bb5d20475f163670800000000000000
+      internalID: 8518030204817202103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_1
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 1561
+        width: 51
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15a20113c81936ef0800000000000000
+      internalID: -116089134076908975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_2
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 1420
+        width: 94
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8be4b98f384ae3b50800000000000000
+      internalID: 6574873392726101688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_3
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 1483
+        width: 63
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c072a4efb8968550800000000000000
+      internalID: 6162781090045128899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_4
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 1236
+        width: 67
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a56a794bbc9555700800000000000000
+      internalID: 528427262728971866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_5
+      rect:
+        serializedVersion: 2
+        x: 899
+        y: 1227
+        width: 83
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c05a974fac61d4ad0800000000000000
+      internalID: -2716489939293723380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_6
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 1000
+        width: 63
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7fd0ffb55e6fc6d0800000000000000
+      internalID: -2968032314842357893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_7
+      rect:
+        serializedVersion: 2
+        x: 976
+        y: 1050
+        width: 51
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e30ca10881b68010800000000000000
+      internalID: 1190834349187793894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_8
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 872
+        width: 62
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da6351b41fc2769d0800000000000000
+      internalID: -2781204830019570003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_9
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 887
+        width: 60
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a5a52665f3630290800000000000000
+      internalID: -7925381013610060376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 799
+        width: 79
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f3ef49f125fc94e0800000000000000
+      internalID: -1973433010429631500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_11
+      rect:
+        serializedVersion: 2
+        x: 1032
+        y: 771
+        width: 44
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aadd4af417864c60800000000000000
+      internalID: 7802071928634464935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_12
+      rect:
+        serializedVersion: 2
+        x: 1068
+        y: 774
+        width: 92
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbfd4762e623d3670800000000000000
+      internalID: 8520021518727831484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_13
+      rect:
+        serializedVersion: 2
+        x: 939
+        y: 765
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77b36bedcf9fe8430800000000000000
+      internalID: 3787239201128725367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_14
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 605
+        width: 86
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05a9acab3e2abba80800000000000000
+      internalID: -8449981176855487920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_15
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 674
+        width: 55
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00c8a12f8acfe9880800000000000000
+      internalID: -8602160435684537344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_16
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 428
+        width: 51
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9af5e55dd655bd3a0800000000000000
+      internalID: -6639619295408136279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_17
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 405
+        width: 93
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b44baea9713d77230800000000000000
+      internalID: 3636607322461746251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_18
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 261
+        width: 69
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4973b1bc03ebd44a0800000000000000
+      internalID: -6607415961507383404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_19
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 11
+        width: 52
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45afc0e99d10fa870800000000000000
+      internalID: 8696171439646898772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDeath D 8_20
+      rect:
+        serializedVersion: 2
+        x: 913
+        y: 0
+        width: 76
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59ea7c0bbabf3d2d0800000000000000
+      internalID: -3254981390834880875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SDeath D 8_0: 8518030204817202103
+      SDeath D 8_1: -116089134076908975
+      SDeath D 8_10: -1973433010429631500
+      SDeath D 8_11: 7802071928634464935
+      SDeath D 8_12: 8520021518727831484
+      SDeath D 8_13: 3787239201128725367
+      SDeath D 8_14: -8449981176855487920
+      SDeath D 8_15: -8602160435684537344
+      SDeath D 8_16: -6639619295408136279
+      SDeath D 8_17: 3636607322461746251
+      SDeath D 8_18: -6607415961507383404
+      SDeath D 8_19: 8696171439646898772
+      SDeath D 8_2: 6574873392726101688
+      SDeath D 8_20: -3254981390834880875
+      SDeath D 8_3: 6162781090045128899
+      SDeath D 8_4: 528427262728971866
+      SDeath D 8_5: -2716489939293723380
+      SDeath D 8_6: -2968032314842357893
+      SDeath D 8_7: 1190834349187793894
+      SDeath D 8_8: -2781204830019570003
+      SDeath D 8_9: -7925381013610060376
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
