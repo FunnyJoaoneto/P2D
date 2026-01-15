@@ -5449,8 +5449,10 @@ MonoBehaviour:
     displayName: Tutorial
   - sceneName: Tutorial
     displayName: Level1
-  - sceneName: Tutorial 1
+  - sceneName: Level1
     displayName: Level2
+  - sceneName: Level2
+    displayName: Level3
   gridParent: {fileID: 2007370159}
   levelButtonPrefab: {fileID: 3946391882330508704, guid: b8654e337fa10f741842aa74e55de6e5, type: 3}
   prevPageButton: {fileID: 1661360370}
