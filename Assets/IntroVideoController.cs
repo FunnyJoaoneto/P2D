@@ -9,6 +9,7 @@ public class IntroVideoController : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject skipButton; // set inactive in scene
+    [SerializeField] private bool allowSkip = true; // optional
 
     [Header("Next Scene")]
     [SerializeField] private string nextSceneName = "Level01";
@@ -41,8 +42,11 @@ public class IntroVideoController : MonoBehaviour
     {
         if (isLoading) return;
 
-        if (skipButton && !skipButton.activeSelf && Time.time - startTime >= showSkipAfterSeconds)
-            skipButton.SetActive(true);
+        if (allowSkip)
+        {
+            if (skipButton && !skipButton.activeSelf && Time.time - startTime >= showSkipAfterSeconds)
+                skipButton.SetActive(true);
+        }
     }
 
     private void OnPrepared(VideoPlayer vp)
