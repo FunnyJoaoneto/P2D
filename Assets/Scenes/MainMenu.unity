@@ -4717,6 +4717,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1646547296}
     m_Modifications:
+    - target: {fileID: -6503663611072946412, guid: d74f0053dfcc5dd478773aa4ef68339e, type: 3}
+      propertyPath: lightSize.x
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: -6503663611072946412, guid: d74f0053dfcc5dd478773aa4ef68339e, type: 3}
+      propertyPath: lightSize.y
+      value: 290
+      objectReference: {fileID: 0}
+    - target: {fileID: -6503663611072946412, guid: d74f0053dfcc5dd478773aa4ef68339e, type: 3}
+      propertyPath: nightSize.x
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: -6503663611072946412, guid: d74f0053dfcc5dd478773aa4ef68339e, type: 3}
+      propertyPath: nightSize.y
+      value: 290
+      objectReference: {fileID: 0}
     - target: {fileID: 4559621767372621291, guid: d74f0053dfcc5dd478773aa4ef68339e, type: 3}
       propertyPath: m_fontStyle
       value: 1
@@ -5012,7 +5028,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1429282829
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5211,6 +5227,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1646547296}
     m_Modifications:
+    - target: {fileID: -6503663611072946412, guid: d74f0053dfcc5dd478773aa4ef68339e, type: 3}
+      propertyPath: lightSize.x
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: -6503663611072946412, guid: d74f0053dfcc5dd478773aa4ef68339e, type: 3}
+      propertyPath: lightSize.y
+      value: 290
+      objectReference: {fileID: 0}
+    - target: {fileID: -6503663611072946412, guid: d74f0053dfcc5dd478773aa4ef68339e, type: 3}
+      propertyPath: nightSize.x
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: -6503663611072946412, guid: d74f0053dfcc5dd478773aa4ef68339e, type: 3}
+      propertyPath: nightSize.y
+      value: 290
+      objectReference: {fileID: 0}
     - target: {fileID: 4559621767372621291, guid: d74f0053dfcc5dd478773aa4ef68339e, type: 3}
       propertyPath: m_fontStyle
       value: 1
