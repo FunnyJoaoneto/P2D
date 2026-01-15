@@ -39,8 +39,7 @@ public class LevelTransitionManager : MonoBehaviour
         // Ensure starting state
         fadeGroup.alpha = 0f;
         levelCompleteText.gameObject.SetActive(false);
-        nextLevelText.gameObject.SetActive(false);
-
+        
         // 1) Fade to black
         float t = 0f;
         while (t < fadeDuration)
@@ -55,11 +54,6 @@ public class LevelTransitionManager : MonoBehaviour
         levelCompleteText.gameObject.SetActive(true);
         yield return new WaitForSeconds(textDelay);
 
-        // 3) Show "Going to level X"
-        nextLevelText.text = "Going to " + nextScene + "...";
-        nextLevelText.gameObject.SetActive(true);
-        yield return new WaitForSeconds(waitBeforeScene);
-
         // 4) Load next scene (async)
         AsyncOperation op = SceneManager.LoadSceneAsync(nextScene);
         while (!op.isDone)
@@ -67,7 +61,6 @@ public class LevelTransitionManager : MonoBehaviour
 
         // 5) Hide texts, then fade from black
         levelCompleteText.gameObject.SetActive(false);
-        nextLevelText.gameObject.SetActive(false);
 
         t = 0f;
         while (t < fadeDuration)
