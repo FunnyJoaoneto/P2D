@@ -222,6 +222,9 @@ public class PlayerSpawnManager : MonoBehaviour
     {
         Time.timeScale = 1f;
 
+        // unlock player input / movement
+        PlayerGlobalLock.movementLocked = false;
+
         if (!string.IsNullOrEmpty(mainMenuSceneName))
             SceneManager.LoadScene(mainMenuSceneName);
     }
